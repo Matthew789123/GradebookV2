@@ -49,9 +49,8 @@ namespace GradebookV2.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Adres e-mail")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Login")]
+        public string Username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
