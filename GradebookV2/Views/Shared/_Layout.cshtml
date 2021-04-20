@@ -10,16 +10,103 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Nazwa aplikacji", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+ 
+    @if (HttpContext.Current.User.IsInRole("Admin"))
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("News", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Create accounts", "Create", "Users")</li>
+                        <li>@Html.ActionLink("Create class", "Create", "Classes")</li>
+                        <li>@Html.ActionLink("Assign teachers", "Create", "Users")</li>
+                        <li>@Html.ActionLink("Teachers", "Teachers", "Users")</li>
+                        <li>@Html.ActionLink("Students", "Students", "Users")</li>
+                        <li>@Html.ActionLink("Parents", "Parents", "Users")</li>
+                        <li>@Html.ActionLink("Classes", "Index", "Classes")</li>
+                    </ul>
+                </div>
             </div>
+        </div>
+
+    }
+    else if (HttpContext.Current.User.IsInRole("Teacher"))
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("News", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Grades", "Teachers", "Users")</li>
+                        <li>@Html.ActionLink("Subjects", "Students", "Users")</li>
+                        <li>@Html.ActionLink("Messages", "Parents", "Users")</li>
+                        <li>@Html.ActionLink("Tests", "Index", "Tests")</li>
+                        <li>@Html.ActionLink("My Profile", "Parents", "Users")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    else if (HttpContext.Current.User.IsInRole("Student"))
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("News", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Grades", "Parents", "Users")</li>
+                        <li>@Html.ActionLink("Tests", "Parents", "Users")</li>
+                        <li>@Html.ActionLink("Lessons", "Parents", "Users")</li>
+                        <li>@Html.ActionLink("My Profile", "Parents", "Users")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    else if (HttpContext.Current.User.IsInRole("Parent"))
+    {
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("News", "Index", "News", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Grades", "Parents", "Users")</li>
+                        <li>@Html.ActionLink("Messages", "Parents", "Users")</li>
+                        <li>@Html.ActionLink("My Profile", "Parents", "Users")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
@@ -28,7 +115,6 @@
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
-        </div>
     </div>
     <div class="container body-content">
         @RenderBody()
