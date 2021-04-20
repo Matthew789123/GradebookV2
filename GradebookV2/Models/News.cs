@@ -18,6 +18,6 @@ namespace GradebookV2.Models
         public DateTime Date { get; set; }
         [Required]
         public int TeacherId { get; set; }
-        public virtual User Author { get; set; }
+        public virtual ApplicationUser Author { get; set; }
     }
 }

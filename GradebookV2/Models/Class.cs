@@ -18,8 +18,8 @@ namespace GradebookV2.Models
         public int TeacherId { get; set; }
 
         [Required]
-        public virtual User HomeroomTeacher { get; set; }
-        public virtual ICollection<User> Students { get; set; }
+        public virtual ApplicationUser HomeroomTeacher { get; set; }
+        public virtual ICollection<ApplicationUser> Students { get; set; }
         public virtual ICollection<SubjectClassTeacher> SubjectClassTeachers { get; set; }
 
     }

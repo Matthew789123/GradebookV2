@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +18,17 @@ namespace GradebookV2.Models
             // Dodaj tutaj niestandardowe oświadczenia użytkownika
             return userIdentity;
         }
+
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime? BirthDate { get; set; }
+        public string Sex { get; set; }
+        public int? ParentId { get; set; }
+        public int? ClassId { get; set; }
+        public ICollection<News> News { get; set; }
+        public ICollection<Message> Messages { get; set; }
+        public Class Class { get; set; }
+        public ApplicationUser Parent { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -40,6 +53,5 @@ namespace GradebookV2.Models
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<SubjectClassTeacher> SubjectClassTeacher { get; set; }
         public DbSet<Test> Tests { get; set; }
-        public DbSet<User> Users { get; set; }
     }
 }

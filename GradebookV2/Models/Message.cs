@@ -20,7 +20,7 @@ namespace GradebookV2.Models
         public int ParentId { get; set; }
         [Required]
         public int TeacherId { get; set; }
-        public virtual User Parent { get; set; }
-        public virtual User Teacher { get; set; }
+        public virtual ApplicationUser Parent { get; set; }
+        public virtual ApplicationUser Teacher { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace GradebookV2.Models
         public int SubjectId { get; set; }
 
         public virtual Subject Subject { get; set; }
-        public virtual User Teacher { get; set; }
+        public virtual ApplicationUser Teacher { get; set; }
         public virtual Class Class { get; set; }
         public virtual ICollection<Test> Tests { get; set; }
     }

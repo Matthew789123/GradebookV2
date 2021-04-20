@@ -123,3 +123,5 @@ C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.c
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.csproj.CopyComplete
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.dll
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.pdb
+C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.init.resources
+C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.csproj.GenerateResource.cache
