@@ -21,7 +21,7 @@ namespace GradebookV2.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("GradebookCS", throwIfV1Schema: false)
         {
         }
 
@@ -29,5 +29,17 @@ namespace GradebookV2.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Class> Classes { get; set; }
+        public DbSet<File> Files { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<News> News { get; set; }
+        public DbSet<Question> Questions { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<SubjectClassTeacher> SubjectClassTeacher { get; set; }
+        public DbSet<Test> Tests { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

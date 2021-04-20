@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace Gradebook.Models
+namespace GradebookV2.Models
 {
     public class News
     {
