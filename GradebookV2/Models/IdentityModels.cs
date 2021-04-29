@@ -23,7 +23,7 @@ namespace GradebookV2.Models
         public string Surname { get; set; }
         public DateTime? BirthDate { get; set; }
         public string Sex { get; set; }
-        public int? ParentId { get; set; }
+        public string ParentId { get; set; }
         public int? ClassId { get; set; }
         public ICollection<News> News { get; set; }
         public ICollection<Message> Messages { get; set; }

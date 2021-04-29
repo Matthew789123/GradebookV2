@@ -13,9 +13,9 @@ namespace GradebookV2.Models
         [Required]
         public int ClassId { get; set; }
         [Required]
-        public int TeacherId { get; set; }
+        public string TeacherId { get; set; }
         [Required]
-        public int SubjectId { get; set; }
+        public string SubjectId { get; set; }
 
         public virtual Subject Subject { get; set; }
         public virtual ApplicationUser Teacher { get; set; }
