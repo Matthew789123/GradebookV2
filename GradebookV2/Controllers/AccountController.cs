@@ -483,6 +483,11 @@ namespace GradebookV2.Controllers
         }
         #endregion
 
+        public ActionResult create()
+        {
+            return View("view");
+        }
+
         public ActionResult createUsers(int quantity, string role)
         {
             ApplicationUser[] users = new ApplicationUser[quantity];
