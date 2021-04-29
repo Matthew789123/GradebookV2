@@ -17,6 +17,7 @@ namespace GradebookV2.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        public ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -481,5 +482,28 @@ namespace GradebookV2.Controllers
             }
         }
         #endregion
+
+        public ActionResult createUsers(int quantity, string role)
+        {
+            ApplicationUser[] users = new ApplicationUser[quantity];
+            Random rnd = new Random();
+            int countID = db.Users.Count();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+            for (int i = 0; i < quantity; i++)
+            {
+                string login = countID.ToString(), password = "";
+
+                for (int j = 0; j < 6; j++)
+                {
+                    login += chars[rnd.Next(chars.Length - 1)];
+                    password += chars[rnd.Next(chars.Length - 1)];
+                }
+                users[i] = new ApplicationUser();
+                users[i].UserName = login;
+                UserManager.Create(users[i], password);
+                UserManager.AddToRole(db.Users.First(x => x.UserName == users[i].UserName).Id, role);
+            }
+            return View("CreatedUsers", users);
+        }
     }
 }
