@@ -488,6 +488,8 @@ namespace GradebookV2.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult createUsers(int quantity, string role)
         {
             ApplicationUser[] users = new ApplicationUser[quantity];
@@ -506,7 +508,7 @@ namespace GradebookV2.Controllers
                 users[i] = new ApplicationUser();
                 users[i].UserName = login;
                 UserManager.Create(users[i], password);
-                UserManager.AddToRole(db.Users.First(x => x.UserName == users[i].UserName).Id, role);
+                UserManager.AddToRole(users[i].Id, role);
             }
             return View("CreatedUsers", users);
         }

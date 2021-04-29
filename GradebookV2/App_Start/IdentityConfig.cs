@@ -47,7 +47,7 @@ namespace GradebookV2
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
                 AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
+                RequireUniqueEmail = false
             };
 
             // Konfiguruj logikę weryfikacji haseł
