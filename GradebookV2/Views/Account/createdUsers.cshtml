@@ -1,0 +1,19 @@
+﻿@model  GradebookV2.Models.ApplicationUser[]
+    @{
+        ViewBag.Title = "createdUsers";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Created Users</h2>
+
+    <table>
+        @foreach (GradebookV2.Models.ApplicationUser u in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => u.UserName)
+                </td>
+            </tr>
+
+        }
+    </table>

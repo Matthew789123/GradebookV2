@@ -509,6 +509,7 @@ namespace GradebookV2.Controllers
                 users[i].UserName = login;
                 UserManager.Create(users[i], password);
                 UserManager.AddToRole(users[i].Id, role);
+                countID++;
             }
             return View("CreatedUsers", users);
         }
