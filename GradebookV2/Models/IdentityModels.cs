@@ -29,6 +29,8 @@ namespace GradebookV2.Models
         public ICollection<Message> Messages { get; set; }
         public Class Class { get; set; }
         public ApplicationUser Parent { get; set; }
+
+  
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>

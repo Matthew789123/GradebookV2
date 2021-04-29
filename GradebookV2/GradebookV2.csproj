@@ -258,6 +258,7 @@
     <Content Include="Views\News\Index.cshtml" />
     <Content Include="Views\Account\create.cshtml" />
     <Content Include="Views\Account\createdUsers.cshtml" />
+    <Content Include="Views\Account\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

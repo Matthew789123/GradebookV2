@@ -513,5 +513,20 @@ namespace GradebookV2.Controllers
             }
             return View("CreatedUsers", users);
         }
+
+        public ActionResult Teachers()
+        {
+            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").ToList());
+        }
+
+        public ActionResult Students()
+        {
+            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "3").ToList());
+        }
+
+        public ActionResult Parents()
+        {
+            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "4").ToList());
+        }
     }
 }
