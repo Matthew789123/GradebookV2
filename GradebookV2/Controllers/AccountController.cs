@@ -485,7 +485,7 @@ namespace GradebookV2.Controllers
 
         public ActionResult create()
         {
-            return View("view");
+            return View();
         }
 
         public ActionResult createUsers(int quantity, string role)
