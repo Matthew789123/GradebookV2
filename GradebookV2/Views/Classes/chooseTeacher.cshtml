@@ -2,22 +2,24 @@
 @{
     ViewBag.Title = "chooseTeacher";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    string id = null;
 }
-
 <h2>Assign Teacher</h2>
-
+<p>@ViewBag.ErrorMessage</p>
 @using (Html.BeginForm("assignTeacher", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
 <div class="form-horizontal">
     <hr />
+    
     <div>
         <label>Class: </label>
         <select name="classId">
             @foreach (GradebookV2.Models.Class c in ViewBag.Classes)
             {
                 <option value="@c.ClassId">@(c.Grade + " " + c.Name)</option>
+
             }
         </select>
     </div>
@@ -33,6 +35,7 @@
     <div>
         <label>Subject:</label>
         <select name="subjectId">
+
             @foreach (GradebookV2.Models.Subject s in ViewBag.Subjects)
             {
                 <option value="@s.SubjectId">@(s.Name)</option>
@@ -45,4 +48,6 @@
         </div>
     </div>
 </div>
+
 }
+<script>@id = document.getElementById("classId").nodeValue </script>

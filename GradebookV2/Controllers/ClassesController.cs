@@ -40,7 +40,7 @@ namespace GradebookV2.Controllers
         // GET: Classes/Create
         public ActionResult Create()
         {
-            var teachers = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2");
+            var teachers = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").Where(u => u.ClassId == null);
             ViewBag.Teachers = teachers;
             return View();
         }
@@ -56,8 +56,12 @@ namespace GradebookV2.Controllers
             c.Grade = grade;
             c.Name = name;
             c.TeacherId = teacher;
-            c.HomeroomTeacher = db.Users.First(u => u.Id == teacher);
+            var t = db.Users.First(u => u.Id == teacher);
+            c.HomeroomTeacher = t;
+            t.Class = c;
+            t.ClassId = c.ClassId;
             db.Classes.Add(c);
+            
             db.SaveChanges();
             return View("Index", db.Classes.ToList());
         }
@@ -144,6 +148,12 @@ namespace GradebookV2.Controllers
             ApplicationUser t =  db.Users.Single(te => te.Id == teacherId);
             Subject s = db.Subjects.Single(su => su.SubjectId == subjectId);
             SubjectClassTeacher sct = new SubjectClassTeacher();
+            SubjectClassTeacher exists = db.SubjectClassTeacher.FirstOrDefault(u => u.ClassId == c.ClassId && u.SubjectId == s.SubjectId);
+            if (exists != null)
+            {
+                ViewBag.ErrorMessage = "Klasa ma przypisanego nauczyciela do tego przedmiotu";
+                return RedirectToAction("chooseTeacher");
+            }
             sct.ClassId = classId;
             sct.Class = c;
             sct.TeacherId = teacherId;
