@@ -15,12 +15,14 @@ namespace GradebookV2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Subjects
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
             return View(db.Subjects.ToList());
         }
 
         // GET: Subjects/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +38,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: Subjects/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -45,6 +48,7 @@ namespace GradebookV2.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "SubjectId,Name")] Subject subject)
         {
@@ -59,6 +63,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: Subjects/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +83,7 @@ namespace GradebookV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "SubjectId,Name")] Subject subject)
         {
             if (ModelState.IsValid)
@@ -90,6 +96,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: Subjects/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +112,7 @@ namespace GradebookV2.Controllers
         }
 
         // POST: Subjects/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

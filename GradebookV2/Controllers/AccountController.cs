@@ -490,6 +490,7 @@ namespace GradebookV2.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult createUsers(int quantity, string role)
         {
             ApplicationUser[] users = new ApplicationUser[quantity];

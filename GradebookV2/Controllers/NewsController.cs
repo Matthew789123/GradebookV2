@@ -36,6 +36,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: News/Create
+        [Authorize(Roles = "Admin,Teacher")]
         public ActionResult Create()
         {
             return View();
@@ -46,6 +47,7 @@ namespace GradebookV2.Controllers
         // Aby uzyskać więcej szczegółów, zobacz https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Teacher")]
         public ActionResult Create([Bind(Include = "NewsId,Title,Content,Date,TeacherId")] News news)
         {
             if (ModelState.IsValid)
@@ -59,6 +61,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: News/Edit/5
+        [Authorize(Roles = "Admin,Teacher")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -78,6 +81,7 @@ namespace GradebookV2.Controllers
         // Aby uzyskać więcej szczegółów, zobacz https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Teacher")]
         public ActionResult Edit([Bind(Include = "NewsId,Title,Content,Date,TeacherId")] News news)
         {
             if (ModelState.IsValid)
@@ -90,6 +94,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: News/Delete/5
+        [Authorize(Roles = "Admin,Teacher")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -105,6 +110,7 @@ namespace GradebookV2.Controllers
         }
 
         // POST: News/Delete/5
+        [Authorize(Roles = "Admin,Teacher")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

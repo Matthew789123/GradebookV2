@@ -16,6 +16,7 @@ namespace GradebookV2.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Classes
+        [Authorize(Roles = "Admin")]
         public ActionResult Index()
         {
 
@@ -23,6 +24,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: Classes/Details/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +40,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: Classes/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             var teachers = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").Where(u => u.ClassId == null);
@@ -50,6 +53,7 @@ namespace GradebookV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(int grade, string name, string teacher)
         {
             Class c = new Class();
@@ -67,6 +71,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: Classes/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -86,6 +91,7 @@ namespace GradebookV2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit([Bind(Include = "ClassId,Grade,Name,TeacherId")] Class @class)
         {
             if (ModelState.IsValid)
@@ -98,6 +104,7 @@ namespace GradebookV2.Controllers
         }
 
         // GET: Classes/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -113,6 +120,7 @@ namespace GradebookV2.Controllers
         }
 
         // POST: Classes/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -131,7 +139,7 @@ namespace GradebookV2.Controllers
             }
             base.Dispose(disposing);
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult chooseTeacher()
         {
             ViewBag.Teachers = db.Users.Where(t => t.Roles.FirstOrDefault().RoleId == "2").ToList();
@@ -139,21 +147,24 @@ namespace GradebookV2.Controllers
             ViewBag.Subjects = db.Subjects.ToList();
             return View("chooseTeacher");
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult assignTeacher(int classId, string teacherId, int subjectId)
         {
-            Class c = db.Classes.Single(cl => cl.ClassId == classId);
-            ApplicationUser t =  db.Users.Single(te => te.Id == teacherId);
-            Subject s = db.Subjects.Single(su => su.SubjectId == subjectId);
-            SubjectClassTeacher sct = new SubjectClassTeacher();
-            SubjectClassTeacher exists = db.SubjectClassTeacher.FirstOrDefault(u => u.ClassId == c.ClassId && u.SubjectId == s.SubjectId);
-            if (exists != null)
+          
+            if (db.SubjectClassTeacher.FirstOrDefault(u => u.ClassId == classId && u.SubjectId == subjectId) != null)
             {
                 ViewBag.ErrorMessage = "Klasa ma przypisanego nauczyciela do tego przedmiotu";
-                return RedirectToAction("chooseTeacher");
+                ViewBag.Teachers = db.Users.Where(a => a.Roles.FirstOrDefault().RoleId == "2").ToList();
+                ViewBag.Classes = db.Classes.ToList();
+                ViewBag.Subjects = db.Subjects.ToList();
+                return View("chooseTeacher");
             }
+            Class c = db.Classes.Single(cl => cl.ClassId == classId);
+            ApplicationUser t = db.Users.Single(te => te.Id == teacherId);
+            Subject s = db.Subjects.Single(su => su.SubjectId == subjectId);
+            SubjectClassTeacher sct = new SubjectClassTeacher();
             sct.ClassId = classId;
             sct.Class = c;
             sct.TeacherId = teacherId;
@@ -164,5 +175,23 @@ namespace GradebookV2.Controllers
             db.SaveChanges();
             return RedirectToAction("chooseTeacher");
         }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult AddStudents()
+        {
+            ViewBag.Students = db.Users.Where(t => t.Roles.FirstOrDefault().RoleId == "3").ToList();
+            ViewBag.Classes = db.Classes.ToList();
+            ViewBag.Subjects = db.Subjects.ToList();
+            return View("AddStudents");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddStudents(int classId, string studentId)
+        {
+            return View();
+        }
+
     }
 }
