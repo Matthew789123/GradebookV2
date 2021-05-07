@@ -269,6 +269,7 @@
     <Content Include="Views\Classes\Details.cshtml" />
     <Content Include="Views\Classes\Edit.cshtml" />
     <Content Include="Views\Classes\Index.cshtml" />
+    <Content Include="Views\Classes\chooseTeacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

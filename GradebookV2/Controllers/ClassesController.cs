@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using GradebookV2.Models;
 
 namespace GradebookV2.Controllers
@@ -125,6 +126,24 @@ namespace GradebookV2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult chooseTeacher()
+        {
+            ViewBag.Teachers = db.Users.Where(t => t.Roles.FirstOrDefault().RoleId == "2").ToList();
+            ViewBag.Classes = db.Classes.ToList();
+            return View("chooseTeacher");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult assignTeacher(int classId, string teacherId)
+        {
+            Class c = db.Classes.Single(cl => cl.ClassId == classId);
+            c.TeacherId = teacherId;
+            c.HomeroomTeacher = db.Users.Single(t => t.Id == teacherId);
+            db.SaveChanges();
+            return RedirectToAction("chooseTeacher");
         }
     }
 }

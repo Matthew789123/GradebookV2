@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "chooseTeacher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Assign Teacher</h2>
+
+@using (Html.BeginForm("assignTeacher", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <div>
+            <label>Class: </label>
+            <select name="classId">
+                @foreach (GradebookV2.Models.Class c in ViewBag.Classes)
+                {
+                    <option value="@c.ClassId">@(c.Grade + " " + c.Name)</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label>Homeroom teacher:</label>
+            <select name="teacherId">
+                @foreach (GradebookV2.Models.ApplicationUser u in ViewBag.Teachers)
+                {
+                    <option value="@u.Id">@(u.Name +" " + u.Surname)</option>
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
