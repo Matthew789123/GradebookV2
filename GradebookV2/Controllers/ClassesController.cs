@@ -132,17 +132,24 @@ namespace GradebookV2.Controllers
         {
             ViewBag.Teachers = db.Users.Where(t => t.Roles.FirstOrDefault().RoleId == "2").ToList();
             ViewBag.Classes = db.Classes.ToList();
+            ViewBag.Subjects = db.Subjects.ToList();
             return View("chooseTeacher");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult assignTeacher(int classId, string teacherId)
+        public ActionResult assignTeacher(int classId, string teacherId, int subjectId)
         {
             Class c = db.Classes.Single(cl => cl.ClassId == classId);
-            c.TeacherId = teacherId;
-            c.HomeroomTeacher = db.Users.Single(t => t.Id == teacherId);
-            db.SaveChanges();
+            ApplicationUser t =  db.Users.Single(te => te.Id == teacherId);
+            Subject s = db.Subjects.Single(su => su.SubjectId == subjectId);
+            SubjectClassTeacher sct = new SubjectClassTeacher();
+            sct.ClassId = classId;
+            sct.Class = c;
+            sct.TeacherId = teacherId;
+            sct.Teacher = t;
+            //sct.SubjectId = subjectId;
+            sct.Subject = s;
             return RedirectToAction("chooseTeacher");
         }
     }
