@@ -148,8 +148,10 @@ namespace GradebookV2.Controllers
             sct.Class = c;
             sct.TeacherId = teacherId;
             sct.Teacher = t;
-            //sct.SubjectId = subjectId;
+            sct.SubjectId = subjectId;
             sct.Subject = s;
+            db.SubjectClassTeacher.Add(sct);
+            db.SaveChanges();
             return RedirectToAction("chooseTeacher");
         }
     }
