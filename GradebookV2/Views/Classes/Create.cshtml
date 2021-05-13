@@ -5,22 +5,20 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
+    <h4>Create class</h4>
     <div class="form-horizontal">
-        <h4>Class</h4>
         <hr />
         <div>
             <label>Grade: </label>
-            <input type="text" name="grade"></input>
+            <input type="text" name="grade"/>
         </div>
         <div>
             <label>Name: </label>
-            <input type="text" name="name"></input>
+            <input type="text" name="name"/>
         </div>
         <div>
             <label>Homeroom teacher:</label>
@@ -39,6 +37,40 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+<hr />
+
+@using (Html.BeginForm("changeTeacher", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <h4>Change teacher</h4>
+
+    <div class="form-horizontal">
+        <div>
+            <label>Class: </label>
+            <select name="classId">
+                @foreach (GradebookV2.Models.Class c in ViewBag.classes)
+                {
+                    <option value="@c.ClassId">@c.Grade@c.Name</option>
+                }
+            </select>
+        </div>
+
+        <div>
+            <label>Homeroom teacher: </label>
+            <select name="teacherId">
+                @foreach (GradebookV2.Models.ApplicationUser t in ViewBag.TeachersAll)
+                {
+                    <option value="@t.Id">@(t.Name + " " + t.Surname)</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Edit" class="btn btn-default" />
+            </div>
+        </div>
+
+    </div>
+}

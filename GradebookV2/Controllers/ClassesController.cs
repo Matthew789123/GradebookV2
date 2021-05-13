@@ -43,8 +43,9 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
-            var teachers = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").Where(u => u.ClassId == null);
-            ViewBag.Teachers = teachers;
+            ViewBag.Teachers = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2" && u.ClassId == null).ToList(); 
+            ViewBag.Classes = db.Classes.ToList();
+            ViewBag.TeachersAll = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").ToList();
             return View();
         }
 
@@ -63,11 +64,35 @@ namespace GradebookV2.Controllers
             var t = db.Users.First(u => u.Id == teacher);
             c.HomeroomTeacher = t;
             t.Class = c;
-            t.ClassId = c.ClassId;
             db.Classes.Add(c);
             
             db.SaveChanges();
+
+            t.ClassId = db.Classes.First(cl => cl.TeacherId == teacher).ClassId;
+            db.SaveChanges();
             return View("Index", db.Classes.ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult changeTeacher(int classId, string teacherId)
+        {
+            Class c = db.Classes.First(cl => cl.ClassId == classId);
+            ApplicationUser t = db.Users.Single(u => u.Id == teacherId);
+            if (t.ClassId != null)
+            {
+                Class c2 = db.Classes.First(cl => cl.ClassId == t.ClassId);
+                c2.TeacherId = null;
+                c2.HomeroomTeacher = null;
+            }
+            c.TeacherId = teacherId;
+            c.HomeroomTeacher = t;
+            t.ClassId = classId;
+            t.Class = c;
+            db.SaveChanges();
+
+            return RedirectToAction("Create");
         }
 
         // GET: Classes/Edit/5
