@@ -65,12 +65,12 @@ namespace GradebookV2.Controllers
             c.HomeroomTeacher = t;
             t.Class = c;
             db.Classes.Add(c);
-            
+
             db.SaveChanges();
 
             t.ClassId = db.Classes.First(cl => cl.TeacherId == teacher).ClassId;
             db.SaveChanges();
-            return View("Index", db.Classes.ToList());
+            return RedirectToAction("Create");
         }
 
         [Authorize(Roles = "Admin")]
@@ -79,7 +79,13 @@ namespace GradebookV2.Controllers
         public ActionResult changeTeacher(int classId, string teacherId)
         {
             Class c = db.Classes.First(cl => cl.ClassId == classId);
-            ApplicationUser t = db.Users.Single(u => u.Id == teacherId);
+            ApplicationUser t = db.Users.First(u => u.Id == teacherId);
+            if (c.TeacherId != null)
+            {
+                ApplicationUser t2 = db.Users.First(u => u.Id == c.TeacherId);
+                t2.ClassId = null;
+                t2.Class = null;
+            }
             if (t.ClassId != null)
             {
                 Class c2 = db.Classes.First(cl => cl.ClassId == t.ClassId);
