@@ -11,7 +11,7 @@ using GradebookV2.Models;
 
 namespace GradebookV2.Controllers
 {
-    public class ClassesController : Controller
+    public class ClassesController : MyController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -92,6 +92,7 @@ namespace GradebookV2.Controllers
                 c2.TeacherId = null;
                 c2.HomeroomTeacher = null;
             }
+
             c.TeacherId = teacherId;
             c.HomeroomTeacher = t;
             t.ClassId = classId;

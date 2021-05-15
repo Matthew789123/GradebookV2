@@ -10,7 +10,7 @@ using GradebookV2.Models;
 
 namespace GradebookV2.Controllers
 {
-    public class NewsController : Controller
+    public class NewsController : MyController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 

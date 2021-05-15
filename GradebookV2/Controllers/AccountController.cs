@@ -58,6 +58,10 @@ namespace GradebookV2.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "News");
+            }
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -140,6 +144,10 @@ namespace GradebookV2.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "News");
+            }
             return View();
         }
 

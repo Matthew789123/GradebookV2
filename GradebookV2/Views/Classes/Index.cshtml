@@ -33,7 +33,11 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @(item.HomeroomTeacher.Name + " " + item.HomeroomTeacher.Surname)
+            @if (item.HomeroomTeacher != null)
+            {
+                @(item.HomeroomTeacher.Name + " " + item.HomeroomTeacher.Surname)
+            }
+
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ClassId }) |
