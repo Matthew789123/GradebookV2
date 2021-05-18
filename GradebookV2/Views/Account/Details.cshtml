@@ -1,0 +1,29 @@
+﻿@model GradebookV2.Models.ApplicationUser
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+@Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+@Html.DisplayFor(model => model.Name)
+<br />
+@Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label" })
+@Html.DisplayFor(model => model.Surname)
+<br />
+@Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label" })
+@Html.DisplayFor(model => model.BirthDate)
+<br />
+@Html.LabelFor(model => model.Sex, htmlAttributes: new { @class = "control-label" })
+@Html.DisplayFor(model => model.Sex)
+<br />
+@Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label" })
+@Html.DisplayFor(model => model.Email)
+<br />
+@Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label" })
+@Html.DisplayFor(model => model.PhoneNumber)
+<br />
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+<br />
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id })

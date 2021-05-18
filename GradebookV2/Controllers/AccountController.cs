@@ -564,5 +564,29 @@ namespace GradebookV2.Controllers
             db.SaveChanges();
             return View("Edit", user);
         }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Details(string id)
+        {
+            return View("Details", db.Users.First(u => u.Id == id));
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(string id)
+        {
+            ApplicationUser user = db.Users.First(u => u.Id == id);
+            string role = user.Roles.FirstOrDefault().RoleId;
+            db.Users.Remove(user);
+            db.SaveChanges();
+            switch (role)
+            {
+                case "2":
+                    return RedirectToAction("Teachers");
+                case "3":
+                    return RedirectToAction("Students");
+                default:
+                    return RedirectToAction("Parents");
+            }
+        }
     }
 }
