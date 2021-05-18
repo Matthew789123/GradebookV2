@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GradebookV2.Models;
+using System.Data.Entity;
 
 namespace GradebookV2.Controllers
 {
@@ -523,19 +524,45 @@ namespace GradebookV2.Controllers
             return View("CreatedUsers", users);
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Teachers()
         {
             return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Students()
         {
             return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "3").ToList());
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult Parents()
         {
             return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "4").ToList());
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit(string id)
+        {
+            return View("Edit", db.Users.First(u => u.Id == id));
+        }
+
+        [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult EditUser(string Id, string Name, string Surname, DateTime? BirthDate, string Sex, string Email, string PhoneNumber)
+        {
+            ApplicationUser user = db.Users.First(u => u.Id == Id);
+            user.Name = Name;
+            user.Surname = Surname;
+            user.BirthDate = BirthDate;
+            user.Sex = Sex;
+            user.Email = Email;
+            user.PhoneNumber = PhoneNumber;
+
+            db.SaveChanges();
+            return View("Edit", user);
         }
     }
 }
