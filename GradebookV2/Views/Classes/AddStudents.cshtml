@@ -1,0 +1,42 @@
+﻿@using GradebookV2.Models
+@{
+    ViewBag.Title = "AddStudents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@model ApplicationUser
+<h2>AddStudents</h2>
+@using (Html.BeginForm("AddStudents", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div>
+            
+            @Html.DropDownListFor(m => m.Class, new SelectList(ViewBag.Classes,"ClassId","Grade"), "Choose class")
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Surname</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(ApplicationUser s in ViewBag.Students)
+                {
+                    int counter = 1;
+                <tr>
+                    <th scope="col">@Html.Display((counter ++ + 1).ToString())</th>
+                    <th scope="col">@Html.DisplayFor(item => s.Name)</th>
+                    <th scope="col">@Html.DisplayFor(item => s.Surname)</th>
+                </tr>
+                }
+            </tbody>
+            
+        </table>
+
+    </div>
+}
+
