@@ -18,7 +18,7 @@ namespace GradebookV2.Controllers
         // GET: News
         public ActionResult Index()
         {
-            return View(db.News.ToList());
+            return View(db.News.OrderByDescending(n => n.Date).ToList());
         }
 
         // GET: News/Details/5

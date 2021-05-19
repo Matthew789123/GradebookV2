@@ -529,19 +529,19 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult Teachers()
         {
-            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").ToList());
+            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").OrderBy(u => u.Surname).ThenBy(u => u.Name).ToList());
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Students()
         {
-            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "3").ToList());
+            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "3").OrderBy(u => u.Surname).ThenBy(u => u.Name).ToList());
         }
 
         [Authorize(Roles = "Admin")]
         public ActionResult Parents()
         {
-            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "4").ToList());
+            return View("Users", db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "4").OrderBy(u => u.Surname).ThenBy(u => u.Name).ToList());
         }
 
         [Authorize(Roles = "Admin")]
