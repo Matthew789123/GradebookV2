@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using GradebookV2.Models;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace GradebookV2.Controllers
 {
@@ -520,6 +521,7 @@ namespace GradebookV2.Controllers
                 UserManager.Create(users[i], password);
                 UserManager.AddToRole(users[i].Id, role);
                 countID++;
+                users[i].PasswordHash = password;
             }
             return View("CreatedUsers", users);
         }
@@ -590,3 +592,4 @@ namespace GradebookV2.Controllers
         }
     }
 }
+//	3jJv2a

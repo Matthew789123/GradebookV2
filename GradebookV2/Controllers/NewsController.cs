@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GradebookV2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GradebookV2.Controllers
 {
@@ -48,16 +49,18 @@ namespace GradebookV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Teacher")]
-        public ActionResult Create([Bind(Include = "NewsId,Title,Content,Date,TeacherId")] News news)
+        public ActionResult Create(string title, string content)
         {
-            if (ModelState.IsValid)
-            {
-                db.News.Add(news);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(news);
+            News news = new News();
+            news.Title = title;
+            news.Content = content;
+            news.Date = DateTime.Now;
+            news.TeacherId = User.Identity.GetUserId();
+            string id = User.Identity.GetUserId();
+            news.Author = db.Users.First(u => u.Id == id);
+            db.News.Add(news);
+            db.SaveChanges();
+            return RedirectToAction("yourNews");
         }
 
         // GET: News/Edit/5
@@ -95,30 +98,11 @@ namespace GradebookV2.Controllers
 
         // GET: News/Delete/5
         [Authorize(Roles = "Admin,Teacher")]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            News news = db.News.Find(id);
-            if (news == null)
-            {
-                return HttpNotFound();
-            }
-            return View(news);
-        }
-
-        // POST: News/Delete/5
-        [Authorize(Roles = "Admin,Teacher")]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            News news = db.News.Find(id);
-            db.News.Remove(news);
+            db.News.Remove(db.News.First(n => n.NewsId == id));
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("yourNews");
         }
 
         protected override void Dispose(bool disposing)
@@ -128,6 +112,13 @@ namespace GradebookV2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult yourNews()
+        {
+            string id = User.Identity.GetUserId();
+            return View("YourNews", db.News.Where(n => n.TeacherId == id).OrderByDescending(n => n.Date).ToList());
         }
     }
 }

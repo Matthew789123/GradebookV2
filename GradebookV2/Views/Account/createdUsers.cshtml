@@ -6,14 +6,24 @@
 
     <h2>Created Users</h2>
 
-    <table>
-        @foreach (GradebookV2.Models.ApplicationUser u in Model)
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(modelItem => modelItem[0].PasswordHash)
+            </th>
+        </tr>
+        @foreach (var u in Model)
         {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => u.UserName)
                 </td>
+                <td>
+                    @Html.DisplayFor(modelItem => u.PasswordHash)
+                </td>
             </tr>
-
         }
     </table>

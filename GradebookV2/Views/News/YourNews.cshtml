@@ -1,0 +1,56 @@
+﻿@model List<GradebookV2.Models.News>
+@{
+    ViewBag.Title = "YourNews";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your News</h2>
+
+@using (Html.BeginForm("Create", "News", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model[0].Title, htmlAttributes: new { @style = "float: left", @class = "control-label" })
+            <div class="col-md-10">
+                @Html.TextBox("title", "", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model[0].Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model[0].Content, htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.TextArea("content", "", 15, 100, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model[0].Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Post" class="btn btn-default" style="float: left" />
+            </div>
+        </div>
+
+    </div>
+}
+
+<hr />
+@if (Model.Count == 0)
+{
+    <h4>You haven't added any post yet.</h4>
+}
+else
+{
+    foreach (GradebookV2.Models.News news in Model)
+    {
+        <p style="float:right">@news.Date</p>
+        @Html.ActionLink("Delete", "Delete", new { id = news.NewsId }, new { @style = "float:left" })
+        <h4 style="text-align:center">@news.Title</h4>
+        <p>@news.Content</p>
+        <hr />
+    }
+}
