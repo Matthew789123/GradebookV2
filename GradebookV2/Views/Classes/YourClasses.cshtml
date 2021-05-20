@@ -1,0 +1,36 @@
+﻿@model List<Tuple<GradebookV2.Models.Class, List<GradebookV2.Models.Subject>>>
+@{
+    ViewBag.Title = "YourClasses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your Classes</h2>
+
+<table class="table">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Item1.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].Item2[0].Name)
+        </th>
+    </tr>
+
+    @foreach (var c in Model)
+    {
+        foreach (var s in c.Item2)
+        {
+            <tr>
+                <td>
+                    @c.Item1.Grade @c.Item1.Name
+                </td>
+                <td>
+                    @s.Name
+                </td>
+            </tr>
+        }
+
+    }
+</table>
+

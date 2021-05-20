@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using GradebookV2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GradebookV2.Controllers
 {
@@ -171,6 +172,7 @@ namespace GradebookV2.Controllers
             }
             base.Dispose(disposing);
         }
+
         [Authorize(Roles = "Admin")]
         public ActionResult chooseTeacher()
         {
@@ -179,6 +181,7 @@ namespace GradebookV2.Controllers
             ViewBag.Subjects = db.Subjects.ToList();
             return View("chooseTeacher");
         }
+
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -222,6 +225,35 @@ namespace GradebookV2.Controllers
         public ActionResult AddStudents(int classId, string studentId)
         {
             return View();
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult yourClasses()
+        {
+            string id = User.Identity.GetUserId();
+            List<Tuple<Class, List<Subject>>> list = new List<Tuple<Class, List<Subject>>>();
+            var result = from c in db.Classes
+                       from sct in db.SubjectClassTeacher
+                       where c.ClassId == sct.ClassId && sct.TeacherId == id
+                       select new
+                       {
+                           c,
+                           sct.Subject
+                       };
+            foreach (var r in result)
+            {
+                int i = 0;
+                foreach (Tuple<Class, List<Subject>> t in list)
+                {
+                    if (t.Item1 == r.c)
+                        break;
+                    i++;
+                }
+                if (i == list.Count)
+                    list.Add(new Tuple<Class, List<Subject>>(r.c, new List<Subject>()));
+                list[i].Item2.Add(r.Subject);
+            }
+            return View("YourClasses", list);
         }
 
     }
