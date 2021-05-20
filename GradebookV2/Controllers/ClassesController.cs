@@ -226,35 +226,5 @@ namespace GradebookV2.Controllers
         {
             return View();
         }
-
-        [Authorize(Roles = "Teacher")]
-        public ActionResult yourClasses()
-        {
-            string id = User.Identity.GetUserId();
-            List<Tuple<Class, List<Subject>>> list = new List<Tuple<Class, List<Subject>>>();
-            var result = from c in db.Classes
-                       from sct in db.SubjectClassTeacher
-                       where c.ClassId == sct.ClassId && sct.TeacherId == id
-                       select new
-                       {
-                           c,
-                           sct.Subject
-                       };
-            foreach (var r in result)
-            {
-                int i = 0;
-                foreach (Tuple<Class, List<Subject>> t in list)
-                {
-                    if (t.Item1 == r.c)
-                        break;
-                    i++;
-                }
-                if (i == list.Count)
-                    list.Add(new Tuple<Class, List<Subject>>(r.c, new List<Subject>()));
-                list[i].Item2.Add(r.Subject);
-            }
-            return View("YourClasses", list);
-        }
-
     }
 }

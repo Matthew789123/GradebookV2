@@ -172,6 +172,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
+    <Compile Include="Controllers\SubjectClassTeachersController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -290,7 +291,7 @@
     <Content Include="Views\Classes\AddStudents.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\News\YourNews.cshtml" />
-    <Content Include="Views\Classes\YourClasses.cshtml" />
+    <Content Include="Views\SubjectClassTeachers\YourClasses.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

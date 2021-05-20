@@ -1,0 +1,35 @@
+﻿@model IEnumerable<GradebookV2.Models.SubjectClassTeacher>
+@{
+    ViewBag.Title = "YourClasses";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your Classes</h2>
+
+<table class="table">
+
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Class.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject.Name)
+        </th>
+    </tr>
+
+    @foreach (GradebookV2.Models.SubjectClassTeacher sct in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => sct.Class.Grade)
+                @Html.DisplayFor(model => sct.Class.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => sct.Subject.Name)
+            </td>
+        </tr>
+    }
+
+</table>
+
+
