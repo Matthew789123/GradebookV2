@@ -12,7 +12,7 @@
     <div class="form-horizontal">
         <div>
             
-            @Html.DropDownListFor(m => m.Class, new SelectList(ViewBag.Classes,"ClassId","Grade"), "Choose class")
+            @Html.DropDownListFor(m => m.Class, new SelectList(ViewBag.Classes, "ClassId", "Grade"), "Choose class")
         </div>
         <table class="table">
             <thead>
@@ -24,14 +24,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(ApplicationUser s in ViewBag.Students)
+                @{int counter = 1;}
+                @foreach (ApplicationUser s in ViewBag.Students)
                 {
-                    int counter = 1;
-                <tr>
-                    <th scope="col">@Html.Display((counter ++ + 1).ToString())</th>
-                    <th scope="col">@Html.DisplayFor(item => s.Name)</th>
-                    <th scope="col">@Html.DisplayFor(item => s.Surname)</th>
-                </tr>
+                    <tr>
+                        <th scope="col">@Html.DisplayFor(item => counter)</th>
+                        <th scope="col">@Html.DisplayFor(item => s.Name)</th>
+                        <th scope="col">@Html.DisplayFor(item => s.Surname)</th>
+                        @{counter++;}
+                    </tr>
                 }
             </tbody>
             

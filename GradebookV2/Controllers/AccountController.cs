@@ -556,15 +556,23 @@ namespace GradebookV2.Controllers
         public ActionResult EditUser(string Id, string Name, string Surname, DateTime? BirthDate, string Sex, string Email, string PhoneNumber)
         {
             ApplicationUser user = db.Users.First(u => u.Id == Id);
+            string role = user.Roles.FirstOrDefault().RoleId;
             user.Name = Name;
             user.Surname = Surname;
             user.BirthDate = BirthDate;
             user.Sex = Sex;
             user.Email = Email;
             user.PhoneNumber = PhoneNumber;
-
             db.SaveChanges();
-            return View("Edit", user);
+            switch (role)
+            {
+                case "2":
+                    return RedirectToAction("Teachers");
+                case "3":
+                    return RedirectToAction("Students");
+                default:
+                    return RedirectToAction("Parents");
+            }
         }
 
         [Authorize(Roles = "Admin")]
