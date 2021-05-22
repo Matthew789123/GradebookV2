@@ -214,17 +214,20 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddStudents()
         {
-            ViewBag.Students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3" && s.ClassId == null).OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
+            ViewBag.Students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3").OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
             ViewBag.Classes = db.Classes.ToList();
             return View("AddStudents");
         }
-
-        [HttpPost]
+    
         [Authorize(Roles = "Admin")]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddStudents(int classId, string studentId)
+        public ActionResult AssignStudents(string classId, string studentId)
         {
-            return View();
+            /*ApplicationUser user = db.Users.First(u => u.Id == studentId);
+            Class c = db.Classes.First(u => u.ClassId == @class.ClassId);
+            user.Class = c;
+            user.ClassId = @class.ClassId;
+            db.SaveChanges();*/
+            return RedirectToAction("AddStudents");
         }
     }
 }

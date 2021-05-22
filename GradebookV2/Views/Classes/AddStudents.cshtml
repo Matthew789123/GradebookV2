@@ -1,23 +1,24 @@
 ﻿@using GradebookV2.Models
 @{
     ViewBag.Title = "AddStudents";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
+    Layout = "~/Views/Shared/_Layout.cshtml";  
 }
 @model ApplicationUser
 <h2>AddStudents</h2>
 
+
 <div>
     <label>Class: </label>
-    <select name="classId">
+    <select id="classId" onchange="change()">
+
         @foreach (GradebookV2.Models.Class c in ViewBag.Classes)
         {
             <option value="@c.ClassId">@(c.Grade + " " + c.Name)</option>
 
         }
     </select>
+    @Html.Hidden("selected", 0);
 </div>
-
 
 @using (Html.BeginForm("AddStudents", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
 {
@@ -39,9 +40,9 @@
                 @foreach (ApplicationUser s in ViewBag.Students)
                 {
                     <tr>
-                        <th scope="col">@Html.DisplayFor(item => counter)</th>
-                        <th scope="col">@Html.DisplayFor(item => s.Name)</th>
-                        <th scope="col">@Html.DisplayFor(item => s.Surname)</th>
+                        <th scope="col">@counter</th>
+                        <th scope="col">@s.Name</th>
+                        <th scope="col">@s.Surname</th>
                         <th scope="col">
                             @if (s.Class == null)
                             {
@@ -49,12 +50,13 @@
                             }
                             else
                             {
-                                @Html.DisplayFor(item => s.Class.Grade)
-                                @Html.DisplayFor(item => s.Class.Name)
+                                @s.Class.Grade
+                                @s.Class.Name
                             }
                         </th>
-                        <th scope="col">
-                            <input type="button" />
+                        <th scope="col" id="actionlink">
+
+                            @Html.ActionLink("Assign", "AssignStudents", new { classId = 0, studentId = s.Id})
                         </th>
                         @{counter++;}
                     </tr>
@@ -62,7 +64,17 @@
             </tbody>
 
         </table>
-
     </div>
 }
 
+@section scripts {
+    <script>
+        function change() {
+            var ph = $("#classId option:selected").val();
+            $("#selected").val(ph);
+            alert($("#selected").val());
+        }
+
+    </script>
+    
+    }
