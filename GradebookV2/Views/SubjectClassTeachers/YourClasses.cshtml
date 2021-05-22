@@ -19,15 +19,19 @@
 
     @foreach (GradebookV2.Models.SubjectClassTeacher sct in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(model => sct.Class.Grade)
-                @Html.DisplayFor(model => sct.Class.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(model => sct.Subject.Name)
-            </td>
-        </tr>
+<tr>
+    <td>
+        @Html.DisplayFor(model => sct.Class.Grade)
+        @Html.DisplayFor(model => sct.Class.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(model => sct.Subject.Name)
+    </td>
+    <td>
+        @Html.ActionLink("Lessons", "placeholder") |
+        @Html.ActionLink("Grades", "getGrades", new { classId = sct.ClassId, subjectId = sct.SubjectId })
+    </td>
+</tr>
     }
 
 </table>

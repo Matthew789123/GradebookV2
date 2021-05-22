@@ -1,0 +1,33 @@
+﻿@model List<Tuple<GradebookV2.Models.ApplicationUser, List<GradebookV2.Models.Grade>>>
+@{
+    ViewBag.Title = "getGrades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Grades</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.LabelFor(m => m[0].Item1.Name) @Html.LabelFor(m => m[0].Item1.Surname)
+        </th>
+        <th>
+            @Html.LabelFor(m => m[0].Item2[0].Value)
+        </th>
+    </tr>
+    @foreach (Tuple<GradebookV2.Models.ApplicationUser, List<GradebookV2.Models.Grade>> t in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(m => t.Item1.Name) @Html.DisplayFor(m => t.Item1.Surname)
+            </td>
+            <td>
+                @foreach (GradebookV2.Models.Grade g in t.Item2)
+                {
+                    @Html.DisplayFor(m => g.Value)
+                }
+            </td>
+        </tr>
+    }
+</table>
+

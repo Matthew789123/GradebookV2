@@ -48,7 +48,7 @@ else
     foreach (GradebookV2.Models.News news in Model)
     {
         <p style="float:right">@news.Date</p>
-        @Html.ActionLink("Delete", "Delete", new { id = news.NewsId }, new { @style = "float:left" })
+        @Html.ActionLink("Delete", "Delete", new { id = news.NewsId }, new { @style = "float:left", onclick = "return confirm('Are you sure you wish to delete this post?');" })
         <h4 style="text-align:center">@news.Title</h4>
         <p>@news.Content</p>
         <hr />

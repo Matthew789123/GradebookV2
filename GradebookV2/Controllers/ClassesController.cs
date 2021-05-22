@@ -214,7 +214,7 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddStudents()
         {
-            ViewBag.Students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3" && s.ClassId == null).ToList();
+            ViewBag.Students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3" && s.ClassId == null).OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
             ViewBag.Classes = db.Classes.ToList();
             return View("AddStudents");
         }
