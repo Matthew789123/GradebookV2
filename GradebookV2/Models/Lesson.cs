@@ -13,9 +13,13 @@ namespace GradebookV2.Models
         [Required]
         public string Title { get; set; }
         public string Content { get; set; }
+        public int Number { get; set; }
         [Required]
         public int SubjectId { get; set; }
+        [Required]
+        public int ClassId { get; set; }
         public virtual IList<File> Files { get; set; }
         public virtual Subject Subject { get; set; }
+        public virtual Class Class { get; set; }
     }
 }
