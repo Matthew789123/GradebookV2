@@ -6,20 +6,31 @@
 }
 @model ApplicationUser
 <h2>AddStudents</h2>
+
+<div>
+    <label>Class: </label>
+    <select name="classId">
+        @foreach (GradebookV2.Models.Class c in ViewBag.Classes)
+        {
+            <option value="@c.ClassId">@(c.Grade + " " + c.Name)</option>
+
+        }
+    </select>
+</div>
+
+
 @using (Html.BeginForm("AddStudents", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
-        <div>
-            
-            @Html.DropDownListFor(m => m.Class, new SelectList(ViewBag.Classes, "ClassId", "Grade"), "Choose class")
-        </div>
+
         <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Surname</th>
+                    <th scope="col">Class</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -31,11 +42,25 @@
                         <th scope="col">@Html.DisplayFor(item => counter)</th>
                         <th scope="col">@Html.DisplayFor(item => s.Name)</th>
                         <th scope="col">@Html.DisplayFor(item => s.Surname)</th>
+                        <th scope="col">
+                            @if (s.Class == null)
+                            {
+                                @Html.Display("Unassigned")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(item => s.Class.Grade)
+                                @Html.DisplayFor(item => s.Class.Name)
+                            }
+                        </th>
+                        <th scope="col">
+                            <input type="button" />
+                        </th>
                         @{counter++;}
                     </tr>
                 }
             </tbody>
-            
+
         </table>
 
     </div>
