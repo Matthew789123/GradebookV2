@@ -270,3 +270,4 @@ C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\bin\En\GradebookV2.reso
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\bin\Pl\GradebookV2.resources.dll
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\En\GradebookV2.resources.dll
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\Pl\GradebookV2.resources.dll
+C:\Users\Test\Desktop\GIT\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.lesson.resources
