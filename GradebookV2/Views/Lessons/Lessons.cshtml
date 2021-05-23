@@ -1,0 +1,24 @@
+﻿@model List<GradebookV2.Models.Lesson>
+@{
+    ViewBag.Title = "Lessons";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (User.IsInRole("Teacher"))
+{
+    @Html.ActionLink("Add lesson", "createLesson", new { classId = ViewBag.classId, subjectId = ViewBag.subjectId }, new { @style = "float:right;margin-top:1%;" })
+}
+<h2>Lessons - @ViewBag.subject</h2>
+<hr />
+@foreach (GradebookV2.Models.Lesson l in Model)
+{
+    <h3 style="text-align:center">@l.Title</h3>
+    @Html.Display(l.Content)
+    <ul>
+        @foreach (GradebookV2.Models.File f in l.Files)
+        {
+            <li>@f.Name</li>
+        }
+    </ul>
+}
+

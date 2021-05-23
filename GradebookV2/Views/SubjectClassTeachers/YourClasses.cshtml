@@ -28,7 +28,7 @@
         @Html.DisplayFor(model => sct.Subject.Name)
     </td>
     <td>
-        @Html.ActionLink("Lessons", "placeholder") |
+        @Html.ActionLink("Lessons", "getLessons", "Lessons", new { classId = sct.ClassId, subjectId = sct.SubjectId }, null) |
         @Html.ActionLink("Grades", "getGrades", new { classId = sct.ClassId, subjectId = sct.SubjectId })
     </td>
 </tr>
