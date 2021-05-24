@@ -49,7 +49,6 @@ namespace GradebookV2.Models
         }
 
         public DbSet<Class> Classes { get; set; }
-        public DbSet<File> Files { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Message> Messages { get; set; }

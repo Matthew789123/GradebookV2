@@ -200,6 +200,14 @@
     <Compile Include="Migrations\202105221933115_lesson.Designer.cs">
       <DependentUpon>202105221933115_lesson.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105241713465_files.cs" />
+    <Compile Include="Migrations\202105241713465_files.Designer.cs">
+      <DependentUpon>202105241713465_files.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105241715559_filesv2.cs" />
+    <Compile Include="Migrations\202105241715559_filesv2.Designer.cs">
+      <DependentUpon>202105241715559_filesv2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Class.cs" />
@@ -408,6 +416,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105221933115_lesson.resx">
       <DependentUpon>202105221933115_lesson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105241713465_files.resx">
+      <DependentUpon>202105241713465_files.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105241715559_filesv2.resx">
+      <DependentUpon>202105241715559_filesv2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />
