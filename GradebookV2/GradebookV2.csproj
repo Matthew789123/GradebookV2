@@ -392,6 +392,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\SubjectClassTeachers\getGrades.cshtml" />
     <Content Include="Views\Lessons\Lessons.cshtml" />
+    <Content Include="Views\Lessons\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">
