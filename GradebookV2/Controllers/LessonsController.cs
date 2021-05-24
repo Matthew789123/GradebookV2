@@ -49,7 +49,7 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Content,Files,SubjectId,ClassId,Files")] Lesson lesson, HttpPostedFileBase[] files)
+        public ActionResult Create([Bind(Include = "Title,Content,Files,SubjectId,ClassId")] Lesson lesson)
         {
             string id = User.Identity.GetUserId();
             if (db.SubjectClassTeacher.Where(sct => sct.ClassId == lesson.ClassId && sct.SubjectId == lesson.SubjectId && sct.TeacherId == id).ToList().Count == 0)
@@ -57,9 +57,6 @@ namespace GradebookV2.Controllers
             lesson.Number = db.Lessons.Where(l => l.SubjectId == lesson.SubjectId && l.ClassId == lesson.ClassId).ToList().Count();
             lesson.Class = db.Classes.First(c => c.ClassId == lesson.ClassId);
             lesson.Subject = db.Subjects.First(s => s.SubjectId == lesson.SubjectId);
-            foreach (HttpPostedFileBase file in files)
-            {
-            }
             if (ModelState.IsValid)
             {
                 db.Lessons.Add(lesson);

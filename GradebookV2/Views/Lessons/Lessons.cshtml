@@ -15,9 +15,9 @@
     <h3 style="text-align:center">@l.Title</h3>
     <p>@l.Content</p>
     <ul>
-        @foreach (GradebookV2.Models.File f in l.Files)
+        @foreach (HttpPostedFileBase f in l.Files)
         {
-            <li>@f.Name</li>
+            <li>@f.FileName</li>
         }
     </ul>
     <hr />
