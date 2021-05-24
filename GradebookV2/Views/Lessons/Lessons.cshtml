@@ -13,12 +13,13 @@
 @foreach (GradebookV2.Models.Lesson l in Model)
 {
     <h3 style="text-align:center">@l.Title</h3>
-    @Html.Display(l.Content)
+    <p>@l.Content</p>
     <ul>
         @foreach (GradebookV2.Models.File f in l.Files)
         {
             <li>@f.Name</li>
         }
     </ul>
+    <hr />
 }
 
