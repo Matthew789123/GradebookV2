@@ -19,7 +19,7 @@ namespace GradebookV2.Models
         public int SubjectId { get; set; }
         [Required]
         public int ClassId { get; set; }
-        public virtual IList<File> Files { get; set; }
+        public virtual HttpPostedFileBase[] Files { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual Class Class { get; set; }
     }

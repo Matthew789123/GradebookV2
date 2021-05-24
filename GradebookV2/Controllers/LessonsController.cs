@@ -59,7 +59,6 @@ namespace GradebookV2.Controllers
             lesson.Subject = db.Subjects.First(s => s.SubjectId == lesson.SubjectId);
             foreach (HttpPostedFileBase file in files)
             {
-                File f = new File();
             }
             if (ModelState.IsValid)
             {
