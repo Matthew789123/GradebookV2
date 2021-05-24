@@ -15,10 +15,6 @@
     <h3 style="text-align:center">@l.Title</h3>
     <p>@l.Content</p>
     <ul>
-        @foreach (HttpPostedFileBase f in l.Files)
-        {
-            <li>@f.FileName</li>
-        }
     </ul>
     <hr />
 }

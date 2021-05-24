@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -49,7 +50,7 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Teacher")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Content,Files,SubjectId,ClassId")] Lesson lesson)
+        public ActionResult Create([Bind(Include = "Title,Content,SubjectId,ClassId")] Lesson lesson, HttpPostedFileBase[] files)
         {
             string id = User.Identity.GetUserId();
             if (db.SubjectClassTeacher.Where(sct => sct.ClassId == lesson.ClassId && sct.SubjectId == lesson.SubjectId && sct.TeacherId == id).ToList().Count == 0)
@@ -57,9 +58,26 @@ namespace GradebookV2.Controllers
             lesson.Number = db.Lessons.Where(l => l.SubjectId == lesson.SubjectId && l.ClassId == lesson.ClassId).ToList().Count();
             lesson.Class = db.Classes.First(c => c.ClassId == lesson.ClassId);
             lesson.Subject = db.Subjects.First(s => s.SubjectId == lesson.SubjectId);
+            List<Models.File> list = new List<Models.File>();
+            foreach (HttpPostedFileBase file in files)
+            {
+                if (file == null)
+                    continue;
+                list.Add(new Models.File());
+                MemoryStream target = new MemoryStream();
+                file.InputStream.CopyTo(target);
+                list.Last().Content = target.ToArray();
+            }
             if (ModelState.IsValid)
             {
                 db.Lessons.Add(lesson);
+                db.SaveChanges();
+                foreach (Models.File file in list)
+                {
+                    file.LessonId = lesson.LessonId;
+                    file.Lesson = lesson;
+                    db.Files.Add(file);
+                }
                 db.SaveChanges();
             }
             return RedirectToAction("getLessons", new { lesson.ClassId, lesson.SubjectId });

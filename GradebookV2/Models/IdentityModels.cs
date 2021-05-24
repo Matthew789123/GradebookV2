@@ -57,5 +57,6 @@ namespace GradebookV2.Models
         public DbSet<Subject> Subjects { get; set; }
         public DbSet<SubjectClassTeacher> SubjectClassTeacher { get; set; }
         public DbSet<Test> Tests { get; set; }
+        public DbSet<File> Files { get; set; }
     }
 }

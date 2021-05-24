@@ -30,10 +30,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Files, htmlAttributes: new { @style = "float: left", @class = "control-label" })
+            @Html.Label("Files", htmlAttributes: new { @style = "float: left", @class = "control-label" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Files, "", new { @type = "file", @multiple = "multiple", @class = "control-label" })
-                @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+                @Html.TextBox("files", "", new { @type = "file", @multiple = "multiple", @class = "control-label" })
             </div>
         </div>
 

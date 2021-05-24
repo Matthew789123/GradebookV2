@@ -208,9 +208,22 @@
     <Compile Include="Migrations\202105241715559_filesv2.Designer.cs">
       <DependentUpon>202105241715559_filesv2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105241812484_fileV0.1.cs" />
+    <Compile Include="Migrations\202105241812484_fileV0.1.Designer.cs">
+      <DependentUpon>202105241812484_fileV0.1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105241814167_fileV0.2.cs" />
+    <Compile Include="Migrations\202105241814167_fileV0.2.Designer.cs">
+      <DependentUpon>202105241814167_fileV0.2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105241831064_fileV0.3.cs" />
+    <Compile Include="Migrations\202105241831064_fileV0.3.Designer.cs">
+      <DependentUpon>202105241831064_fileV0.3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\Grade.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lesson.cs" />
@@ -422,6 +435,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105241715559_filesv2.resx">
       <DependentUpon>202105241715559_filesv2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105241812484_fileV0.1.resx">
+      <DependentUpon>202105241812484_fileV0.1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105241814167_fileV0.2.resx">
+      <DependentUpon>202105241814167_fileV0.2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105241831064_fileV0.3.resx">
+      <DependentUpon>202105241831064_fileV0.3.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />
