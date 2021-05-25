@@ -211,23 +211,32 @@ namespace GradebookV2.Controllers
             return RedirectToAction("chooseTeacher");
         }
 
-        [Authorize(Roles = "Admin")]
-        public ActionResult AddStudents()
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddStudent(int classId, string studentId)
         {
-            ViewBag.Students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3").OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
-            ViewBag.Classes = db.Classes.ToList();
-            return View("AddStudents");
-        }
-    
-        [Authorize(Roles = "Admin")]
-        public ActionResult AssignStudents(string classId, string studentId)
-        {
-            /*ApplicationUser user = db.Users.First(u => u.Id == studentId);
-            Class c = db.Classes.First(u => u.ClassId == @class.ClassId);
+            Class c = db.Classes.First(u => u.ClassId == classId);
+            ApplicationUser user = db.Users.First(u => u.Id == studentId);
+            user.ClassId = c.ClassId;
             user.Class = c;
-            user.ClassId = @class.ClassId;
-            db.SaveChanges();*/
-            return RedirectToAction("AddStudents");
+            db.SaveChanges();
+            return RedirectToAction("AssignStudents");
+        }
+
+        
+        public ActionResult AssignStudents()
+        {
+            var students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3").OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
+            var classes = db.Classes.ToList();
+
+            var model = new AssignStudentsViewModel
+            {
+                Students = students,
+                Classes = classes
+            };
+            return View("AssignStudents", model);
         }
     }
 }

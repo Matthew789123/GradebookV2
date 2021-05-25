@@ -1,0 +1,77 @@
+﻿﻿
+@{ ViewBag.Title = "AssignStudents";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+                int counter = 1; }
+@model GradebookV2.Models.AssignStudentsViewModel
+<h2>Assign Students</h2>
+
+
+<div class="form-horizontal">
+    <div>
+        <select id="class" onchange="change()">
+            @foreach (GradebookV2.Models.Class c in Model.Classes)
+            {
+<option value="@c.ClassId">@c.Grade @c.Name</option>            }
+        </select>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>#</td>
+                    <td>Name</td>
+                    <td>Surname</td>
+                    <td>Class</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (GradebookV2.Models.ApplicationUser s in Model.Students)
+                {
+                    using (Html.BeginForm("AddStudent", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("classId", 0, new { @class = "classField" })
+                        @Html.Hidden("studentId", s.Id)
+                        <tr>
+                            <td>@Html.Label(counter++.ToString())</td>
+                            <td>@s.Name</td>
+                            <td>@s.Surname</td>
+                            <td>
+                                @if (s.ClassId == null)
+                                {
+                                    <label>Unassigned</label> }
+                                else
+                                {
+                                    <label>@s.Class.Grade @s.Class.Name </label>
+                                }
+                            </td>
+                            <td>
+                                <input type="submit" value="assign" />
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+
+        </table>
+
+
+    </div>
+
+</div>
+
+@section scripts {
+    <script>$(document).ready(function () {
+            var ph = $("#class option:selected").val();
+            $(".classField").val(ph);
+        });
+
+
+        function change() {
+            var ph = $("#class option:selected").val();
+            $(".classField").val(ph);
+        }</script>
+
+}
