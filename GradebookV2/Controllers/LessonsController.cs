@@ -35,14 +35,7 @@ namespace GradebookV2.Controllers
             ViewBag.subject = db.Subjects.First(s => s.SubjectId == subjectId).Name;
             ViewBag.subjectId = subjectId;
             ViewBag.classId = classId;
-            List<Tuple<Lesson, List<Models.File>>> list = new List<Tuple<Lesson, List<Models.File>>>();
-            foreach (Lesson l in db.Lessons.Where(l => l.ClassId == classId && l.SubjectId == subjectId).OrderBy(l => l.Number).ToList())
-            {
-                list.Add(new Tuple<Lesson, List<Models.File>>(l, new List<Models.File>()));
-                foreach (Models.File f in db.Files.Where(file => file.LessonId == l.LessonId))
-                    list.Last().Item2.Add(f);
-            }
-            return View("Lessons", list);
+            return View("Lessons", db.Lessons.Where(l => l.ClassId == classId && l.SubjectId == subjectId).OrderByDescending(l => l.Number).ToList());
         }
 
         [Authorize(Roles = "Teacher")]
@@ -74,7 +67,6 @@ namespace GradebookV2.Controllers
                 MemoryStream target = new MemoryStream();
                 file.InputStream.CopyTo(target);
                 list.Last().Content = target.ToArray();
-                list.Last().FileName = file.FileName;
             }
             if (ModelState.IsValid)
             {
@@ -89,12 +81,6 @@ namespace GradebookV2.Controllers
                 db.SaveChanges();
             }
             return RedirectToAction("getLessons", new { lesson.ClassId, lesson.SubjectId });
-        }
-
-        public FileResult downloadFile(int fileId)
-        {
-            Models.File file = db.Files.First(f => f.FileId == fileId);
-            return File(file.Content, System.Net.Mime.MediaTypeNames.Application.Octet, file.FileName);
         }
     }
 }
