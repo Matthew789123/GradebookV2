@@ -279,3 +279,6 @@ C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.M
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.fileV01.resources
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.fileV02.resources
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.fileV03.resources
+C:\Users\Test\Desktop\GIT\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.fileV01.resources
+C:\Users\Test\Desktop\GIT\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.fileV02.resources
+C:\Users\Test\Desktop\GIT\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.fileV03.resources
