@@ -222,7 +222,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AssignStudentsViewModel.cs" />
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Grade.cs" />
@@ -397,6 +396,7 @@
     <Content Include="Views\Subjects\Edit.cshtml" />
     <Content Include="Views\Subjects\Index.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Classes\AddStudents.cshtml" />
     <Content Include="Views\Account\Details.cshtml" />
     <Content Include="Views\News\YourNews.cshtml" />
     <Content Include="Views\SubjectClassTeachers\YourClasses.cshtml" />
@@ -413,7 +413,6 @@
     <Content Include="Views\SubjectClassTeachers\getGrades.cshtml" />
     <Content Include="Views\Lessons\Lessons.cshtml" />
     <Content Include="Views\Lessons\Create.cshtml" />
-    <Content Include="Views\Classes\AssignStudents.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

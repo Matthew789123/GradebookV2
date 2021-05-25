@@ -212,37 +212,22 @@ namespace GradebookV2.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult AssignStudents()
+        public ActionResult AddStudents()
         {
-            var students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3").OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
-            var classes = db.Classes.ToList();
-
-            var model = new AssignStudentsViewModel
-            {
-                Students = students,
-                Classes = classes
-            };
-            return View("AssignStudents",model);
+            ViewBag.Students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3").OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
+            ViewBag.Classes = db.Classes.ToList();
+            return View("AddStudents");
         }
-
-        public ActionResult AddStudent(int classId, string studentId)
+    
+        [Authorize(Roles = "Admin")]
+        public ActionResult AssignStudents(string classId, string studentId)
         {
-            Class c = db.Classes.First(u => u.ClassId == classId);
-            ApplicationUser user = db.Users.First(u => u.Id == studentId);
-            user.ClassId = c.ClassId;
+            /*ApplicationUser user = db.Users.First(u => u.Id == studentId);
+            Class c = db.Classes.First(u => u.ClassId == @class.ClassId);
             user.Class = c;
-            db.SaveChanges();
-            return RedirectToAction("AssignStudents");
+            user.ClassId = @class.ClassId;
+            db.SaveChanges();*/
+            return RedirectToAction("AddStudents");
         }
-
-        /*public ActionResult AddStudents(int classId, string studentId)
-        {
-            ApplicationUser user = db.Users.First(u => u.Id == studentId);
-            Class c = db.Classes.First(u => u.ClassId == classId);
-            user.Class = c;
-            user.ClassId = classId;
-            db.SaveChanges();
-            return RedirectToAction("AssignStudents");
-        }*/
     }
 }
