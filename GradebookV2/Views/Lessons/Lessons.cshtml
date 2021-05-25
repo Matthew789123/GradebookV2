@@ -1,4 +1,4 @@
-﻿@model List<GradebookV2.Models.Lesson>
+﻿@model List<Tuple<GradebookV2.Models.Lesson, List<GradebookV2.Models.File>>>
 @{
     ViewBag.Title = "Lessons";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,11 +10,15 @@
 }
 <h2>Lessons - @ViewBag.subject</h2>
 <hr />
-@foreach (GradebookV2.Models.Lesson l in Model)
+@foreach (Tuple<GradebookV2.Models.Lesson, List<GradebookV2.Models.File>> t in Model)
 {
-    <h3 style="text-align:center">@l.Title</h3>
-    <p>@l.Content</p>
+    <h3 style="text-align:center">@t.Item1.Title</h3>
+    <p>@t.Item1.Content</p>
     <ul>
+        @foreach (GradebookV2.Models.File f in t.Item2)
+        {
+        <li>@Html.ActionLink(f.FileName, "downloadFile", new { fileId = f.FileId })</li>
+        }
     </ul>
     <hr />
 }

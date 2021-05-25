@@ -10,6 +10,7 @@ namespace GradebookV2.Models
     {
         [Required]
         public int FileId { get; set; }
+        public string FileName { get; set; }
         [Required]
         public byte[] Content { get; set; }
         [Required]
