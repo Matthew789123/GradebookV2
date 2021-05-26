@@ -25,6 +25,10 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Teacher")]
         public ActionResult getGrades(int classId, int subjectId)
         {
+            string id = User.Identity.GetUserId();
+            if (db.SubjectClassTeacher.Where(sct => sct.ClassId == classId && sct.SubjectId == subjectId && sct.TeacherId == id).ToList().Count == 0)
+                return RedirectToAction("Index", "News", null);
+
             List<Tuple<ApplicationUser, List<Grade>>> list = new List<Tuple<ApplicationUser, List<Grade>>>();
             foreach (ApplicationUser student in db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3" && s.ClassId == classId).OrderBy(s => s.Surname).ThenBy(s => s.Name))
             {
@@ -32,7 +36,26 @@ namespace GradebookV2.Controllers
                 foreach (Grade grade in db.Grades.Where(g => g.StudentId == student.Id && g.SubjectId == subjectId))
                     list.Last().Item2.Add(grade);
             }
+            ViewBag.subjectId = subjectId;
             return View("getGrades", list);
+        }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult addGrade(string studentId, int subjectId, decimal value, string type, string comment)
+        {
+            Grade grade = new Grade();
+            grade.Value = value;
+            grade.Type = type;
+            grade.Comment = comment;
+            grade.SubjectId = subjectId;
+            grade.Subject = db.Subjects.First(s => s.SubjectId == subjectId);
+            grade.StudentId = studentId;
+            ApplicationUser student = db.Users.First(s => s.Id == studentId);
+            grade.Student = student;
+            grade.Date = DateTime.Now;
+            db.Grades.Add(grade);
+            db.SaveChanges();
+            return RedirectToAction("getGrades", new { db.Classes.First(c => c.ClassId == student.ClassId).ClassId, subjectId});
         }
     }
 }

@@ -224,6 +224,10 @@
     <Compile Include="Migrations\202105251600256_filesmigration.Designer.cs">
       <DependentUpon>202105251600256_filesmigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202105261758003_gradeDecimal.cs" />
+    <Compile Include="Migrations\202105261758003_gradeDecimal.Designer.cs">
+      <DependentUpon>202105261758003_gradeDecimal.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AssignStudentsViewModel.cs" />
@@ -452,6 +456,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105251600256_filesmigration.resx">
       <DependentUpon>202105251600256_filesmigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105261758003_gradeDecimal.resx">
+      <DependentUpon>202105261758003_gradeDecimal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />
