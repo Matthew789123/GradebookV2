@@ -27,7 +27,7 @@
                         {
                             if (g.SubjectId == s.SubjectId)
                             {
-                                <div class="grade" value="@g">@g.Value</div>
+                                <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value">@g.Value</div>
                             }
                         }
                     </th>
@@ -35,16 +35,49 @@
             }
         </tbody>
     </table>
+</div>
 
-    <div class="grade">asdasdas</div>
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <p><b>Value:</b></p>
+                    <p id="value"></p>
+                    <hr />
+                    <p><b>Date:</b></p>
+                    <p id="date"></p>
+                    <hr />
+                    <p><b>Type:</b></p>
+                    <p id="type"></p>
+                    <hr />
+                    <p><b>Comment:</b></p>
+                    <p id="comment"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @section scripts{ 
-<script>
+    <script>
     $(document).ready(function () {
-        $(".grade").click(function () {
+        $(".grade").click(function (event) {
+            var val = $(event.target).attr("value");
+            var data = val.split(',');
+            $("#comment").text(data[2]);
+            $("#type").text(data[1]);
+            $("#date").text(data[0]);
+            $("#value").text(data[3]);
+            $('#modal').modal('show');
+            console.log(data);
+           
         });
-
+        
 
         $(".grade").mouseenter(function () {
             $(this).css('font-weight', 'bold');
@@ -55,5 +88,5 @@
         });
 
     })
-</script>
+    </script>
 }
