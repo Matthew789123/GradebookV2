@@ -4,7 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+/// <summary>
+/// STUDENT ACCOUNT
+/// student
+/// 17mkF3
+/// </summary>
 namespace GradebookV2.Controllers
 {
     public class MyController : Controller

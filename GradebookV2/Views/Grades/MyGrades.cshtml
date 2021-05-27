@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = "MyGrades";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using GradebookV2.Models
+@using Newtonsoft.Json;
+@model GradebookV2.Models.MyGradesViewModel
+<h2>My Grades</h2>
+
+
+<div>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Subject</th>
+                <th>Grades</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Subject s in Model.Subjects)
+            {
+                <tr>
+                    <th>@s.Name</th>
+                    <th>
+                        @foreach (Grade g in Model.Grades)
+                        {
+                            if (g.SubjectId == s.SubjectId)
+                            {
+                                <div class="grade" value="@g">@g.Value</div>
+                            }
+                        }
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="grade">asdasdas</div>
+</div>
+
+@section scripts{ 
+<script>
+    $(document).ready(function () {
+        $(".grade").click(function () {
+        });
+
+
+        $(".grade").mouseenter(function () {
+            $(this).css('font-weight', 'bold');
+        });
+
+        $(".grade").mouseout(function () {
+            $(this).css('font-weight', 'normal');
+        });
+
+    })
+</script>
+}

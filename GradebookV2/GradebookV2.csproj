@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
+    <Compile Include="Controllers\GradesController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MyController.cs" />
@@ -234,6 +235,7 @@
     <Compile Include="Models\Class.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\Grade.cs" />
+    <Compile Include="Models\GradesViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Lesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -422,6 +424,7 @@
     <Content Include="Views\Lessons\Lessons.cshtml" />
     <Content Include="Views\Lessons\Create.cshtml" />
     <Content Include="Views\Classes\AssignStudents.cshtml" />
+    <Content Include="Views\Grades\MyGrades.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">
