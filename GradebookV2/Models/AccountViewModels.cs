@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace GradebookV2.Models
@@ -108,4 +109,15 @@ namespace GradebookV2.Models
         [Display(Name = "Adres e-mail")]
         public string Email { get; set; }
     }
+
+
+    public class ProfileViewModel
+    {
+        public Class Class { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Email { get; set; }
+        public DateTime? BirthDay { get; set; }
+    }
+
 }

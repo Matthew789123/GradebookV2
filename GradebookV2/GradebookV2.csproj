@@ -425,6 +425,7 @@
     <Content Include="Views\Lessons\Create.cshtml" />
     <Content Include="Views\Classes\AssignStudents.cshtml" />
     <Content Include="Views\Grades\MyGrades.cshtml" />
+    <Content Include="Views\Account\MyProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

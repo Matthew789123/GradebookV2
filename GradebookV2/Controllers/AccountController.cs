@@ -550,6 +550,25 @@ namespace GradebookV2.Controllers
             return View("Edit", db.Users.First(u => u.Id == id));
         }
 
+        [Authorize(Roles = "Student,Teacher,Parent")]
+        public ActionResult MyProfile()
+        {
+
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.First(u => u.Id == userId);
+            var model = new ProfileViewModel
+            {
+                Name = user.Name,
+                Surname = user.Surname,
+                BirthDay = user.BirthDate,
+                Class = user.Class,
+                Email = user.Email
+            };
+            return View("MyProfile", model);
+        }
+
+
+
         [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         [HttpPost]
