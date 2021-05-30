@@ -178,6 +178,7 @@
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\SubjectClassTeachersController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
+    <Compile Include="Controllers\TestsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -228,6 +229,14 @@
     <Compile Include="Migrations\202105261758003_gradeDecimal.cs" />
     <Compile Include="Migrations\202105261758003_gradeDecimal.Designer.cs">
       <DependentUpon>202105261758003_gradeDecimal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105301245026_testTime.cs" />
+    <Compile Include="Migrations\202105301245026_testTime.Designer.cs">
+      <DependentUpon>202105301245026_testTime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202105301328409_questionPoints.cs" />
+    <Compile Include="Migrations\202105301328409_questionPoints.Designer.cs">
+      <DependentUpon>202105301328409_questionPoints.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -428,6 +437,7 @@
     <Content Include="Views\Account\MyProfile.cshtml" />
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_GradePartial.cshtml" />
+    <Content Include="Views\Tests\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">
@@ -465,6 +475,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105261758003_gradeDecimal.resx">
       <DependentUpon>202105261758003_gradeDecimal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105301245026_testTime.resx">
+      <DependentUpon>202105301245026_testTime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202105301328409_questionPoints.resx">
+      <DependentUpon>202105301328409_questionPoints.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />

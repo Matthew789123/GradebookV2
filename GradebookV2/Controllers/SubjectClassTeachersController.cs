@@ -41,6 +41,8 @@ namespace GradebookV2.Controllers
         }
 
         [Authorize(Roles = "Teacher")]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
         public ActionResult addGrade(string studentId, int subjectId, decimal value, string type, string comment)
         {
             Grade grade = new Grade();

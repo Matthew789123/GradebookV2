@@ -286,3 +286,5 @@ C:\Users\Test\Desktop\GIT\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migratio
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.filesmigration.resources
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.gradeDecimal.resources
 C:\Users\Test\Desktop\GIT\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.gradeDecimal.resources
+C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.testTime.resources
+C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.questionPoints.resources

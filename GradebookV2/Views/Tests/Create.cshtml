@@ -1,0 +1,102 @@
+﻿@model GradebookV2.Models.Test
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create test</h2>
+<hr />
+
+@using (Html.BeginForm("Create", "Tests", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        @Html.HiddenFor(model => model.SubjectClassTeacherId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Start, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Start, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Duration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Duration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Duration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <hr />
+
+        <div>
+            <input id="Content" type="text" style="border:none;margin-bottom:1%;box-shadow:none" value="Question" class="form-control" />
+            <input id="AnswerA" type="text" style="border:none;margin-bottom:1%;box-shadow:none" value="Answer A" class="form-control" />
+            <input id="AnswerB" type="text" style="border:none;margin-bottom:1%;box-shadow:none" value="Answer B" class="form-control" />
+            <input id="AnswerC" type="text" style="border:none;margin-bottom:1%;box-shadow:none" value="Answer C" class="form-control" />
+            <input id="AnswerD" type="text" style="border:none;margin-bottom:1%;box-shadow:none" value="Answer D" class="form-control" />
+            @Html.LabelFor(model => model.Questions.ToList()[0].CorrectAnswer, htmlAttributes: new { @class = "control-label" })
+            <select id="CorrectAnswer" style="margin-bottom:1%">
+                <option value="0" selected="selected">A</option>
+                <option value="1">B</option>
+                <option value="2">C</option>
+                <option value="3">D</option>
+            </select>
+            <br />
+            @Html.LabelFor(model => model.Questions.ToList()[0].Points, htmlAttributes: new { @class = "control-label" })
+            <input id="Points" type="number" style="border:none;margin-bottom:1%;box-shadow:none" value="2" />
+        </div>
+        <br />
+        <button type="button" id="newQuestion">Add question</button>
+
+        <input type="hidden" id="questions" name="questions" />
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+
+        </div>
+        </div>
+        }
+
+
+
+        @section scripts {
+            <script type="text/javascript">
+                let questions = [];
+                $(document).ready(function () {
+                    $("#newQuestion").click(function () {
+                        questions.push({
+                            Content: $("#Content").val(),
+                            AnswerA: $("#AnswerA").val(),
+                            AnswerB: $("#AnswerB").val(),
+                            AnswerC: $("#AnswerC").val(),
+                            AnswerD: $("#AnswerD").val(),
+                            CorrectAnswer: $("#CorrectAnswer").val(),
+                            Points: $("#Points").val()
+                        });
+                        $("#Content").val("Question");
+                        $("#AnswerA").val("Answer A");
+                        $("#AnswerB").val("Answer B");
+                        $("#AnswerC").val("Answer C");
+                        $("#AnswerD").val("Answer D");
+                        $("#CorrectAnswer").val("0").change();
+                        $("#Points").val(2);
+                        $("#questions").val(JSON.stringify({ 'questions': questions }))
+                    });
+                });
+            </script>
+        }

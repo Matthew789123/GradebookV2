@@ -21,7 +21,9 @@ namespace GradebookV2.Models
         [Required]
         public string AnswerD { get; set; }
         [Required]
-        public string CorrectAnswet { get; set; }
+        public string CorrectAnswer { get; set; }
+        [Required]
+        public int Points { get; set; } 
         [Required]
         public int TestId { get; set; }
         public virtual Test Test { get; set; }
