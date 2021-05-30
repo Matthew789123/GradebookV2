@@ -215,6 +215,7 @@ namespace GradebookV2.Controllers
 
         //
         // GET: /Manage/ChangePassword
+        [Authorize(Roles = "Student,Teacher,Parent")]
         public ActionResult ChangePassword()
         {
             return View();
@@ -223,6 +224,7 @@ namespace GradebookV2.Controllers
         //
         // POST: /Manage/ChangePassword
         [HttpPost]
+        [Authorize(Roles = "Student,Teacher,Parent")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
@@ -238,7 +240,7 @@ namespace GradebookV2.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("MyProfile","Account", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
             return View(model);

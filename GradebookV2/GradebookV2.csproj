@@ -426,6 +426,7 @@
     <Content Include="Views\Classes\AssignStudents.cshtml" />
     <Content Include="Views\Grades\MyGrades.cshtml" />
     <Content Include="Views\Account\MyProfile.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

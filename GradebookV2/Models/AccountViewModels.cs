@@ -110,13 +110,25 @@ namespace GradebookV2.Models
         public string Email { get; set; }
     }
 
-
     public class ProfileViewModel
     {
         public Class Class { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        public DateTime? BirthDay { get; set; }
+    }
+
+    public class EditProfileViewModel
+    {
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Surname { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+        [Required]
         public DateTime? BirthDay { get; set; }
     }
 

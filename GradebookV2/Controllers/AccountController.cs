@@ -556,15 +556,24 @@ namespace GradebookV2.Controllers
 
             var userId = User.Identity.GetUserId();
             var user = db.Users.First(u => u.Id == userId);
+            var @class = db.Classes.First(u => u.ClassId == user.ClassId);
             var model = new ProfileViewModel
             {
                 Name = user.Name,
                 Surname = user.Surname,
                 BirthDay = user.BirthDate,
-                Class = user.Class,
+                Class = @class,
                 Email = user.Email
             };
             return View("MyProfile", model);
+        }
+
+
+
+        [HttpPost]
+        public ActionResult EditProfile()
+        {
+            return View();
         }
 
 
