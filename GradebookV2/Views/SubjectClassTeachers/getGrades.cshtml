@@ -24,7 +24,7 @@
             <td>
                 @foreach (GradebookV2.Models.Grade g in t.Item2)
                 {
-                    @Html.DisplayFor(m => g.Value)
+                    <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" style="cursor:pointer">@g.Value</div>
                 }
             </td>
             <td>
@@ -102,6 +102,8 @@
     </div>
 </div>
 
+@Html.Partial("_GradePartial")
+
 @section scripts {
     <script type="text/javascript">
 
@@ -109,6 +111,25 @@
             $(".btnShowModal").click(function () {
                 $("#modalGrade").modal('show');
                 $("#studentIdHidden").val(this.dataset.content);
+            });
+
+            $(".grade").click(function (event) {
+                var val = $(event.target).attr("value");
+                var data = val.split(',');
+                $("#comment").text(data[2]);
+                $("#type").text(data[1]);
+                $("#date").text(data[0]);
+                $("#value").text(data[3]);
+                $('#modal').modal('show');
+                console.log(data);
+            });
+
+            $(".grade").mouseenter(function () {
+                $(this).css('font-weight', 'bold');
+            });
+
+            $(".grade").mouseout(function () {
+                $(this).css('font-weight', 'normal');
             });
         });
     </script>
