@@ -11,14 +11,16 @@
     <h4>ProfileViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Class)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Class.Grade)
-            @Html.DisplayFor(model => model.Class.Name)
-        </dd>
-
+        @if (User.IsInRole("Student"))
+        {
+            <dt>
+                @Html.DisplayNameFor(model => model.Class)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Grade)
+                @Html.DisplayFor(model => model.Class)
+            </dd>
+        }
         <dt>
             @Html.DisplayNameFor(model => model.Name)
         </dt>

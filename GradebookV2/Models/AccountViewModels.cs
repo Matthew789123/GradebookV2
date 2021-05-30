@@ -112,7 +112,8 @@ namespace GradebookV2.Models
 
     public class ProfileViewModel
     {
-        public Class Class { get; set; }
+        public int Grade { get; set; }
+        public string Class { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
