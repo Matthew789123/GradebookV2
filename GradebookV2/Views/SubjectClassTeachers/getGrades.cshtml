@@ -116,8 +116,8 @@
             $(".grade").click(function (event) {
                 var val = $(event.target).attr("value");
                 var data = val.split(',');
-                $("#comment").text(data[2]);
-                $("#type").text(data[1]);
+                $("#gradeComment").text(data[2]);
+                $("#gradeType").text(data[1]);
                 $("#date").text(data[0]);
                 $("#value").text(data[3]);
                 $('#modal').modal('show');
