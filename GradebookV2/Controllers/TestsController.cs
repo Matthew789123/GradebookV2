@@ -30,6 +30,11 @@ namespace GradebookV2.Controllers
         [HttpPost]
         public ActionResult Create([Bind(Include = "SubjectClassTeacherId,Title,Start,Duration")] Test test, string questions)
         {
+            if (questions == "")
+            {
+                ViewBag.errorMessage = "You need to add atleast one question";
+                return View();
+            }
             test.SubjectClassTeacher = db.SubjectClassTeacher.First(sct => sct.SubjectClassTeacherId == test.SubjectClassTeacherId);
             db.Tests.Add(test);
             string[] split = questions.Split('"');
@@ -50,7 +55,7 @@ namespace GradebookV2.Controllers
                 question.CorrectAnswer = split[index];
                 index += 4;
                 question.Points = Convert.ToInt32(split[index]);
-                index += 4;
+                index += 6;
                 question.TestId = test.TestId;
                 question.Test = test;
                 db.Questions.Add(question);

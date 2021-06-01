@@ -6,6 +6,7 @@
 
 <h2>Create test</h2>
 <hr />
+<p class="text-danger">@ViewBag.errorMessage</p>
 
 @using (Html.BeginForm("Create", "Tests", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
 {
@@ -62,6 +63,12 @@
         <button type="button" id="newQuestion">Add question</button>
 
         <input type="hidden" id="questions" name="questions" />
+        
+        <hr />
+
+        <div id="container">
+
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -72,11 +79,75 @@
         </div>
         }
 
+<div id="modalQuestion" class="modal fade" data-keyboard="false" data-backdrop="static" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">x</button>
+            </div>
+            <div class="modal-body" style="display:inline">
+                <div>
+                    <p id="modalContent" style="word-wrap:break-word;margin-left:10px"></p>
+                    <hr />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Questions.ToList()[0].AnswerA, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <p id="modalA" style="word-wrap:break-word"></p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Questions.ToList()[0].AnswerB, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <p id="modalB" style="word-wrap:break-word"></p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Questions.ToList()[0].AnswerC, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <p id="modalC" style="word-wrap:break-word"></p>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Questions.ToList()[0].AnswerD, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <p id="modalD" style="word-wrap:break-word"></p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Questions.ToList()[0].CorrectAnswer, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <p id="modalCorrect" style="word-wrap:break-word"></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Questions.ToList()[0].Points, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <p id="modalPoints" style="word-wrap:break-word"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button id="modalDelete">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
         @section scripts {
             <script type="text/javascript">
                 let questions = [];
+                let counter = 1;
                 $(document).ready(function () {
                     $("#newQuestion").click(function () {
                         questions.push({
@@ -86,7 +157,8 @@
                             AnswerC: $("#AnswerC").val(),
                             AnswerD: $("#AnswerD").val(),
                             CorrectAnswer: $("#CorrectAnswer").val(),
-                            Points: $("#Points").val()
+                            Points: $("#Points").val(),
+                            Id: counter
                         });
                         $("#Content").val("Question");
                         $("#AnswerA").val("Answer A");
@@ -95,7 +167,62 @@
                         $("#AnswerD").val("Answer D");
                         $("#CorrectAnswer").val("0").change();
                         $("#Points").val(2);
-                        $("#questions").val(JSON.stringify({ 'questions': questions }))
+                        $("#questions").val(JSON.stringify({ 'questions': questions }));
+                        $("#container").append($("<div/>")
+                            .attr("value", counter)
+                            .addClass("questionDiv")
+                            .attr("style", "cursor:pointer;font-size:large;display:inline-block;margin-right:1%")
+                            .html(counter)
+                            .on("click", function (event) {
+                                let q = questions.find(qu => qu.Id == $(event.target).attr("value"));
+                                $("#modalContent").text(q.Content);
+                                $("#modalA").text(q.AnswerA);
+                                $("#modalB").text(q.AnswerB);
+                                $("#modalC").text(q.AnswerC);
+                                $("#modalD").text(q.AnswerD);
+                                let correct;
+                                switch (q.CorrectAnswer) {
+                                    case "0":
+                                        correct = "A";
+                                        break;
+                                    case "1":
+                                        correct = "B";
+                                        break;
+                                    case "2":
+                                        correct = "C";
+                                        break;
+                                    default:
+                                        correct = "D";
+                                        break;
+                                }
+                                $("#modalCorrect").text(correct);
+                                $("#modalPoints").text(q.Points);
+                                $("#modalDelete").val(q.Id);
+                                $("#modalQuestion").modal('show');
+                            })
+                            .on("mouseenter", function () {
+                                $(this).css('font-weight', 'bold');
+                            })
+                            .on("mouseout", function () {
+                                $(this).css('font-weight', 'normal');
+                            }));
+                        counter++;
+                    });
+                    $("#modalDelete").click(function (event) {
+                        const IdCurrent = $(event.target).attr("value");
+                        const index = questions.indexOf(questions.find(qu => qu.Id == IdCurrent));
+                        questions.splice(index, 1);
+                        questions.forEach(q => { if (q.Id > index) q.Id--; });
+                        counter--;
+                        $(".questionDiv").each((i, div) => {
+                            const Id = div.getAttribute("value");
+                            if (Id == IdCurrent) div.remove();
+                            else if (Id > IdCurrent) {
+                                div.setAttribute("value", Id - 1);
+                                div.innerText = Id - 1;
+                            }
+                        });
+                        $("#modalQuestion").modal('hide');
                     });
                 });
             </script>
