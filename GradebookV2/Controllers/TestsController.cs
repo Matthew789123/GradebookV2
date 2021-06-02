@@ -19,23 +19,24 @@ namespace GradebookV2.Controllers
         public ActionResult createTest(int classId, int subjectId)
         {
             string teacherId = User.Identity.GetUserId();
-            SubjectClassTeacher sct = db.SubjectClassTeacher.First(s => s.ClassId == classId && s.SubjectId == subjectId && s.TeacherId == teacherId);
             Test test = new Test();
-            test.SubjectClassTeacherId = sct.SubjectClassTeacherId;
+            test.SubjectId = subjectId;
+            test.ClassId = classId;
             return View("Create", test);
         }
 
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Create([Bind(Include = "SubjectClassTeacherId,Title,Start,Duration")] Test test, string questions)
+        public ActionResult Create([Bind(Include = "SubjectId,ClassId,Title,Start,Duration")] Test test, string questions)
         {
             if (questions == "")
             {
                 ViewBag.errorMessage = "You need to add atleast one question";
                 return View();
             }
-            test.SubjectClassTeacher = db.SubjectClassTeacher.First(sct => sct.SubjectClassTeacherId == test.SubjectClassTeacherId);
+            test.Subject = db.Subjects.First(s => s.SubjectId == test.SubjectId);
+            test.Class = db.Classes.First(c => c.ClassId == test.ClassId); 
             db.Tests.Add(test);
             string[] split = questions.Split('"');
             int index = 5;
@@ -61,7 +62,7 @@ namespace GradebookV2.Controllers
                 db.Questions.Add(question);
             }
             db.SaveChanges();
-            return RedirectToAction("getLessons", "Lessons", new { test.SubjectClassTeacher.ClassId, test.SubjectClassTeacher.SubjectId });
+            return RedirectToAction("getLessons", "Lessons", new { test.ClassId, test.SubjectId });
         }
     }
 }

@@ -19,8 +19,11 @@ namespace GradebookV2.Models
         [Required]
         public int Duration { get; set; }
         [Required]
-        public int SubjectClassTeacherId { get; set; }
-        public virtual SubjectClassTeacher SubjectClassTeacher { get; set; }
+        public int SubjectId{ get; set; }
+        [Required]
+        public int ClassId { get; set; }
+        public virtual Subject Subject { get; set; }
+        public virtual Class Class { get; set;}
         public virtual ICollection<Question> Questions { get; set; }
     }
 }

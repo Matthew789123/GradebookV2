@@ -238,6 +238,10 @@
     <Compile Include="Migrations\202105301328409_questionPoints.Designer.cs">
       <DependentUpon>202105301328409_questionPoints.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106021942548_testId.cs" />
+    <Compile Include="Migrations\202106021942548_testId.Designer.cs">
+      <DependentUpon>202106021942548_testId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AssignStudentsViewModel.cs" />
@@ -481,6 +485,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202105301328409_questionPoints.resx">
       <DependentUpon>202105301328409_questionPoints.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106021942548_testId.resx">
+      <DependentUpon>202106021942548_testId.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />

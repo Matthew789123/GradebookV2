@@ -42,6 +42,7 @@ namespace GradebookV2.Controllers
                 foreach (Models.File f in db.Files.Where(file => file.LessonId == l.LessonId))
                     list.Last().Item2.Add(f);
             }
+            ViewBag.testsList = db.Tests.Where(test => test.ClassId == classId && test.SubjectId == subjectId).OrderByDescending(test => test.Start).ToList();
             return View("Lessons", list);
         }
 

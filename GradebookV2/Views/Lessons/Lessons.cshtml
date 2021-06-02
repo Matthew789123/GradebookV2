@@ -11,6 +11,16 @@
 }
 <h2>Lessons - @ViewBag.subject</h2>
 <hr />
+
+<h3 style="text-align:center">Tests</h3>
+<ul>
+    @foreach (GradebookV2.Models.Test test in ViewBag.testsList)
+    {
+        <li>@Html.ActionLink(test.Title, "placeholder", new { testId = test.TestId })</li>
+    }
+</ul>
+<hr />
+
 @foreach (Tuple<GradebookV2.Models.Lesson, List<GradebookV2.Models.File>> t in Model)
 {
     <h3 style="text-align:center">@t.Item1.Title</h3>
