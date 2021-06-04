@@ -13,10 +13,15 @@
 <hr />
 
 <h3 style="text-align:center">Tests</h3>
+<p class="alert-danger">@ViewBag.testError</p>
 <ul>
     @foreach (GradebookV2.Models.Test test in ViewBag.testsList)
     {
-        <li>@Html.ActionLink(test.Title, "placeholder", new { testId = test.TestId })</li>
+    <li>
+        <div class="test" value="@test.Start,@test.TestId" style="cursor:pointer">@test.Title</div>
+        <p>(@test.Start.ToString().Remove(test.Start.ToString().Length - 3))</p>
+        <div class="testError text-danger" value="@test.TestId"></div>
+    </li>
     }
 </ul>
 <hr />
@@ -34,3 +39,30 @@
     <hr />
 }
 
+@section scripts {
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $(".test").click(function (event) {
+                var val = $(event.target).attr("value");
+                var data = val.split(',');
+                let start = new Date(data[0]);
+                let id = data[1];
+                let diff = new Date() - start;
+                let minutes = Math.round(((diff % 86400000) % 3600000) / 60000);
+                if (minutes > 10 || new Date() < start) $(".testError").each((i, div) => {
+                    if (div.getAttribute("value") == id) div.innerText = " This test is unavailable now";
+                });
+                else location.href = '<%= Url.Action("solveTest", "Tests") %>';
+            });
+
+            $(".test").mouseenter(function () {
+                $(this).css('font-weight', 'bold');
+            });
+
+            $(".test").mouseout(function () {
+                $(this).css('font-weight', 'normal');
+            });
+        });
+    </script>
+}

@@ -98,5 +98,14 @@ namespace GradebookV2.Controllers
             Models.File file = db.Files.First(f => f.FileId == fileId);
             return File(file.Content, System.Net.Mime.MediaTypeNames.Application.Octet, file.FileName);
         }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult checkTestDate(int testId)
+        {
+            Test test = db.Tests.First(t => t.TestId == testId);
+            if ((DateTime.Now - test.Start).Value.TotalMinutes > 10 || DateTime.Now < test.Start)
+                ViewBag.testError = "The test is now unavailable";
+            return RedirectToAction("solveTest", "Tests", testId);
+        }
     }
 }
