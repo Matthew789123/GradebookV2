@@ -442,6 +442,7 @@
     <Content Include="Views\Account\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_GradePartial.cshtml" />
     <Content Include="Views\Tests\Create.cshtml" />
+    <Content Include="Views\Subjects\GetSubjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

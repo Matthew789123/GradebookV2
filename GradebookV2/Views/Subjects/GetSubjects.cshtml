@@ -1,0 +1,15 @@
+﻿@model List<GradebookV2.Models.SubjectClassTeacher>
+@{
+    ViewBag.Title = "GetSubjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Your subjects</h2>
+
+<ul>
+    @foreach (GradebookV2.Models.SubjectClassTeacher sct in Model)
+    {
+    <li>@Html.ActionLink(sct.Subject.Name, "getLessons", "Lessons",  new { classId = sct.ClassId, subjectId = sct.SubjectId }, null)</li>
+    }
+</ul>
+

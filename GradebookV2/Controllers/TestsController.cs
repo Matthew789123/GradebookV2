@@ -59,6 +59,9 @@ namespace GradebookV2.Controllers
                 index += 6;
                 question.TestId = test.TestId;
                 question.Test = test;
+                if (test.Questions == null)
+                    test.Questions = new List<Question>();
+                test.Questions.Add(question);
                 db.Questions.Add(question);
             }
             db.SaveChanges();

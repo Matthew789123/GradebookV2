@@ -22,7 +22,8 @@ namespace GradebookV2.Controllers
             if (User.IsInRole("Student"))
             {
                 Class c = db.Classes.First(cl => cl.ClassId == classId);
-                if (!c.Students.ToList().Contains(db.Users.First(s => s.Id == User.Identity.GetUserId())))
+                string id = User.Identity.GetUserId();
+                if (!c.Students.ToList().Contains(db.Users.First(s => s.Id == id)))
                     return RedirectToAction("Index", "News", null);
             }
             else

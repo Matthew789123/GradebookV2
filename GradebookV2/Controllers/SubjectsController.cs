@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using GradebookV2.Models;
+using Microsoft.AspNet.Identity;
 
 namespace GradebookV2.Controllers
 {
@@ -130,6 +131,14 @@ namespace GradebookV2.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        [Authorize(Roles = "Student")]
+        public ActionResult getSubjects()
+        {
+            string userId = User.Identity.GetUserId();
+            int? classId = db.Users.First(u => u.Id == userId).ClassId;
+            return View("GetSubjects", db.SubjectClassTeacher.Where(sct => sct.ClassId == classId).ToList());
         }
     }
 }

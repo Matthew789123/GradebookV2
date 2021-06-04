@@ -221,6 +221,9 @@ namespace GradebookV2.Controllers
             ApplicationUser user = db.Users.First(u => u.Id == studentId);
             user.ClassId = c.ClassId;
             user.Class = c;
+            if (c.Students == null)
+                c.Students = new List<ApplicationUser>();
+            c.Students.Add(user);
             db.SaveChanges();
             return RedirectToAction("AssignStudents");
         }
