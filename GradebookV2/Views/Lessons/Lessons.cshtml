@@ -18,8 +18,8 @@
     @foreach (GradebookV2.Models.Test test in ViewBag.testsList)
     {
     <li>
-        <div class="test" value="@test.Start,@test.TestId" style="cursor:pointer">@test.Title</div>
-        <p>(@test.Start.ToString().Remove(test.Start.ToString().Length - 3))</p>
+        <div class="test" value="@test.Start,@test.TestId" style="cursor:pointer;display:inline-block">@test.Title</div>
+        <p style="display:inline-block">(@test.Start.ToString().Remove(test.Start.ToString().Length - 3))</p>
         <div class="testError text-danger" value="@test.TestId"></div>
     </li>
     }
@@ -53,7 +53,10 @@
                 if (minutes > 10 || new Date() < start) $(".testError").each((i, div) => {
                     if (div.getAttribute("value") == id) div.innerText = " This test is unavailable now";
                 });
-                else location.href = '<%= Url.Action("solveTest", "Tests") %>';
+                else {
+                    var url = '@Url.Action("solveTest", "Tests", new { testId = "__id__" })';
+                    window.location.href = url.replace('__id__', id);
+                }
             });
 
             $(".test").mouseenter(function () {

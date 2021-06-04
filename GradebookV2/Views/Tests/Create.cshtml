@@ -28,11 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Start, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-        .Name("datetimepicker")
-        .Value(DateTime.Now)
-        .HtmlAttributes(new { style = "width: 100%", title = "datetimepicker" })
-        .DateInput()
-)
+                @Html.TextBoxFor(model => model.Start, new { type = "datetime-local" })
                 @Html.ValidationMessageFor(model => model.Start, "", new { @class = "text-danger" })
             </div>
         </div>
