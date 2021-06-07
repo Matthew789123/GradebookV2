@@ -6,6 +6,7 @@
 
 <h2>@Model.Title</h2>
 <hr />
+<div id="timer" style="float:right"></div>
 @using (Html.BeginForm("testDone", "Tests", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "myForm" }))
 {
     @Html.AntiForgeryToken()
@@ -65,7 +66,22 @@
         let index = 0;
         let q = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Questions) as String);
         let id = @Html.Raw(Json.Encode(Model.TestId));
+        let duration = @Html.Raw(Json.Encode(Model.Duration));
+        let seconds = duration * 60;
+        console.log(q);
         $(document).ready(function () {
+            setTimeout(() => {
+                $("#answers").val(answers);
+                $("#myForm").submit();
+            }, duration * 60000);
+
+            setInterval(() => {
+                let minutes = seconds / 60;
+                let s = seconds % 60;
+                $("#timer").text(Math.floor(minutes) + ':' + s);
+                seconds--;
+            }, 1000);
+
             $("#Next").click(function () {
                 let answer = $('input[name=radio]:checked', '#myForm').val();
                 if (answer == undefined) $(".testError").text("Select answer");

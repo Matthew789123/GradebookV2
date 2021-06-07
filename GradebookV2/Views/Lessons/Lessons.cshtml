@@ -50,7 +50,7 @@
                 let id = data[1];
                 let diff = new Date() - start;
                 let minutes = Math.round(((diff % 86400000) % 3600000) / 60000);
-                if (minutes > 10 || new Date() < start) $(".testError").each((i, div) => {
+                if (new Date() < start) $(".testError").each((i, div) => {
                     if (div.getAttribute("value") == id) div.innerText = " This test is unavailable now";
                 });
                 else {
