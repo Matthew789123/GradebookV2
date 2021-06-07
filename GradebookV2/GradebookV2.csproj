@@ -443,6 +443,7 @@
     <Content Include="Views\Shared\_GradePartial.cshtml" />
     <Content Include="Views\Tests\Create.cshtml" />
     <Content Include="Views\Subjects\GetSubjects.cshtml" />
+    <Content Include="Views\Tests\SolveTest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

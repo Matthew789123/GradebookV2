@@ -71,7 +71,21 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Student")]
         public ActionResult solveTest(int testId)
         {
+            Test test = db.Tests.First(t => t.TestId == testId);
+            string id = User.Identity.GetUserId();
+            ApplicationUser student = db.Users.First(u => u.Id == id);
+            if (!test.Class.Students.Contains(student))
+                return RedirectToAction("Index", "News", null);
 
+            ViewBag.index = 0;
+            return View("SolveTest", test);
+        }
+
+        [Authorize(Roles = "Student")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult testDone(int testId, string answers)
+        {
             return null;
         }
     }
