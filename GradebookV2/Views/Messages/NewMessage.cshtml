@@ -1,0 +1,40 @@
+﻿@model GradebookV2.Models.News
+
+@{
+    ViewBag.Title = "NewMessage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>NewMessage</h2>
+
+@using (Html.BeginForm("NewMessage", "Messages", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    <div class="form-horizontal">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @style = "float: left", @class = "control-label" })
+            <div class="col-md-10">
+                @Html.TextBox("title", "", new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label" })
+            <div>
+                @Html.TextArea("message", "", 15, 100, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div>
+                <input type="submit" value="Post" class="btn btn-default" style="float: left" />
+            </div>
+        </div>
+
+    </div>
+}

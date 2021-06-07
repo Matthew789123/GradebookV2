@@ -455,6 +455,7 @@
     <Content Include="Views\Tests\Create.cshtml" />
     <Content Include="Views\Subjects\GetSubjects.cshtml" />
     <Content Include="Views\Messages\MessageBox.cshtml" />
+    <Content Include="Views\Messages\NewMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">

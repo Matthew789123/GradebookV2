@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "MyGrades";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int i = 0;
 }
 @using GradebookV2.Models
 @using Newtonsoft.Json;
@@ -42,8 +43,7 @@
 
 @section scripts{ 
     <script>
-    $(document).ready(function () {
-        $(".grade").click(function (event) {
+        $(document).ready(function () {
             var val = $(event.target).attr("value");
             var data = val.split(',');
             $("#gradeComment").text(data[2]);
@@ -51,10 +51,8 @@
             $("#date").text(data[0]);
             $("#value").text(data[3]);
             $('#modal').modal('show');
-            console.log(data);
-           
         });
-        
+
 
         $(".grade").mouseenter(function () {
             $(this).css('font-weight', 'bold');
