@@ -28,12 +28,10 @@ namespace GradebookV2.Models
         public string Sex { get; set; }
         public string ParentId { get; set; }
         public int? ClassId { get; set; }
-        public ICollection<News> News { get; set; }
-        public ICollection<Message> Messages { get; set; }
-        public Class Class { get; set; }
-        public ApplicationUser Parent { get; set; }
-
-  
+        public virtual ICollection<News> News { get; set; }
+        public virtual ICollection<UserMessage> UserMessages { get; set; }
+        public virtual Class Class { get; set; }
+        public virtual ApplicationUser Parent { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -58,5 +56,6 @@ namespace GradebookV2.Models
         public DbSet<SubjectClassTeacher> SubjectClassTeacher { get; set; }
         public DbSet<Test> Tests { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<UserMessage> UserMessages { get; set; }
     }
 }
