@@ -15,18 +15,15 @@
         <th></th>
     </tr>
     <h2>Received</h2>
-    @if (Model.ReceivedMessages.Count != 0)
+    @if (Model.ReceivedMessages != null)
     {
         foreach (var item in Model.ReceivedMessages)
         {
             <tr>
                 <td>
-                    @item.Title
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @item.Content
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>
         }
@@ -38,18 +35,15 @@
 
 
     <h2>Sended</h2>
-    @if (Model.SendedMessages.Count !=  0)
+    @if (Model.SendedMessages != null)
     {
         foreach (var item in Model.SendedMessages)
         {
             <tr>
                 <td>
-                    @item.Title
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @item.Content
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
                 </td>
             </tr>
         }
