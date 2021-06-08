@@ -175,7 +175,6 @@
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MessagesController.cs" />
-    <Compile Include="Controllers\MyController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Controllers\SubjectClassTeachersController.cs" />
     <Compile Include="Controllers\SubjectsController.cs" />
@@ -519,9 +518,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\My\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>

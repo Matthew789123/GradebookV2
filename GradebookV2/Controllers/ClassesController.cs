@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace GradebookV2.Controllers
 {
-    public class ClassesController : MyController
+    public class ClassesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
