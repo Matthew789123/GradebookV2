@@ -9,7 +9,7 @@ using System.Web.Script.Serialization;
 
 namespace GradebookV2.Controllers
 {
-    public class GradesController : MyController
+    public class GradesController : Controller
     {
 
         private ApplicationDbContext db = new ApplicationDbContext();

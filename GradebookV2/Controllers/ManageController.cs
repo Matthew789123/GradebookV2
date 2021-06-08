@@ -11,7 +11,7 @@ using GradebookV2.Models;
 namespace GradebookV2.Controllers
 {
     [Authorize]
-    public class ManageController : MyController
+    public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

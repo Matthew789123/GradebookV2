@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace GradebookV2.Controllers
 {
-    public class SubjectsController : MyController
+    public class SubjectsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 

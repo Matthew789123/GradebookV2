@@ -10,54 +10,107 @@
 <p>
     @Html.ActionLink("Send message", "NewMessage")
 </p>
-<table class="table">
-    <tr>
-        <th></th>
-    </tr>
-    <h2>Received</h2>
-    @if (Model.ReceivedMessages.Count != 0)
-    {
-        foreach (var item in Model.ReceivedMessages)
-        {
-            <tr>
-                <td>
-                    @item.Title
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @item.Content
-                </td>
-            </tr>
+
+<div class="tab">
+    <button class="tablinks" onclick="setTab(event, 'received')">Received</button>
+    <button class="tablinks" onclick="setTab(event, 'sended')">Sended</button>
+</div>
+
+<div id="sended" class="content table-responsive">
+    <table class="table">
+        <h2>Sended</h2>
+        <tbody>
+            @if (Model.SendedMessages.Count != 0)
+            {
+                foreach (var item in Model.SendedMessages)
+                {
+                    <tr>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td class="message">
+                            @item.Content
+                        </td>
+                        <td>
+                            @item.Date
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <p>There is no sended messages</p>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div id="received" class="content table-responsive">
+    <table class="table">
+        <h2>Received</h2>
+        <tbody>
+            @if (Model.ReceivedMessages.Count != 0)
+            {
+                foreach (var item in Model.ReceivedMessages)
+                {
+                    <tr>
+                        <td>
+                            @item.Title
+                        </td>
+                        <td class="message">
+                            @item.Content
+                        </td>
+                        <td>
+                            @item.Date
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <p>There is no received messages</p>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+@section scripts{
+    <script>
+
+        $(document).ready(function () {
+            $(".message").each(function () {
+                if ($(this).text().length > 100) {
+                    var message = $(this).text().substr(0, 100);
+                    $(this).text(message + " ...");
+                }
+               
+            })
+        })
+
+
+
+        function setTab(evt, tabName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
         }
-    }
-    else
-    {
-        <p>There is no received messages</p>
-    }
-
-
-    <h2>Sended</h2>
-    @if (Model.SendedMessages.Count != 0)
-    {
-        foreach (var item in Model.SendedMessages)
-        {
-            <tr>
-                <td>
-                    @item.Title
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @item.Content
-                </td>
-            </tr>
-        }
-    }
-    else
-    {
-        <p>There is no sended messages</p>
-    }
-
-
-</table>
+        
+    </script>    
+}
