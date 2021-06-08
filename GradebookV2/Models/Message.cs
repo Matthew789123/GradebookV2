@@ -16,7 +16,11 @@ namespace GradebookV2.Models
         public DateTime Date { get; set; }
         [Required]
         public string Content { get; set; }
-       
-        public virtual ICollection<UserMessage> UserMessages { get; set; }
+        [Required]
+        public string ParentId { get; set; }
+        [Required]
+        public string TeacherId { get; set; }
+        public virtual ApplicationUser Parent { get; set; }
+        public virtual ApplicationUser Teacher { get; set; }
     }
 }

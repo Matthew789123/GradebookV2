@@ -1,0 +1,106 @@
+﻿@model GradebookV2.Models.Test
+@{
+    ViewBag.Title = "SolveTest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Title</h2>
+<hr />
+<div id="timer" style="float:right"></div>
+@using (Html.BeginForm("testDone", "Tests", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @id = "myForm" }))
+{
+    @Html.AntiForgeryToken()
+    <p id="Content" style="word-wrap:break-word;margin-left:10px">@Model.Questions.ToList()[0].Content</p>
+    <div class="testError text-danger" style="margin-left:10px"></div>
+    <br />
+    <div class="form-group" style="margin-left:10px">
+        <div style="display:inline-block">
+            @Html.RadioButton("radio", 0)
+            @Html.LabelFor(model => model.Questions.ToList()[0].AnswerA, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div style="display:inline-block;margin-left:1%">
+            <p id="A" style="word-wrap:break-word">@Model.Questions.ToList()[0].AnswerA</p>
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:10px">
+        <div style="display:inline-block">
+            @Html.RadioButton("radio", 1)
+            @Html.LabelFor(model => model.Questions.ToList()[0].AnswerB, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div style="display:inline-block;margin-left:1%">
+            <p id="B" style="word-wrap:break-word">@Model.Questions.ToList()[0].AnswerB</p>
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:10px">
+        <div style="display:inline-block">
+            @Html.RadioButton("radio", 2)
+            @Html.LabelFor(model => model.Questions.ToList()[0].AnswerC, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div style="display:inline-block;margin-left:1%">
+            <p id="C" style="word-wrap:break-word">@Model.Questions.ToList()[0].AnswerC</p>
+        </div>
+    </div>
+    <div class="form-group" style="margin-left:10px">
+        <div style="display:inline-block">
+            @Html.RadioButton("radio", 3)
+            @Html.LabelFor(model => model.Questions.ToList()[0].AnswerD, htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div style="display:inline-block;margin-left:1%">
+            <p id="D" style="word-wrap:break-word">@Model.Questions.ToList()[0].AnswerD</p>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="Next" type="button">Next</button>
+        </div>
+    </div>
+
+    @Html.Hidden("testId", Model.TestId);
+    @Html.Hidden("answers", null, new { @id = "answers" });
+}
+
+@section scripts {
+
+    <script type="text/javascript">
+        let answers = [];
+        let index = 0;
+        let q = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Questions) as String);
+        let id = @Html.Raw(Json.Encode(Model.TestId));
+        let duration = @Html.Raw(Json.Encode(Model.Duration));
+        let seconds = duration * 60;
+        console.log(q);
+        $(document).ready(function () {
+            setTimeout(() => {
+                $("#answers").val(answers);
+                $("#myForm").submit();
+            }, duration * 60000);
+
+            setInterval(() => {
+                let minutes = seconds / 60;
+                let s = seconds % 60;
+                $("#timer").text(Math.floor(minutes) + ':' + s);
+                seconds--;
+            }, 1000);
+
+            $("#Next").click(function () {
+                let answer = $('input[name=radio]:checked', '#myForm').val();
+                if (answer == undefined) $(".testError").text("Select answer");
+                else {
+                    answers.push(answer);
+                    index++;
+                    if (index == q.length) {
+                        $("#answers").val(answers);
+                        $("#myForm").submit();
+                    }
+                    $(".testError").text("");
+                    $('input[name=radio]:checked', '#myForm').prop('checked', false);
+                    $("#Content").text(q[index].Content);
+                    $("#A").text(q[index].AnswerA);
+                    $("#B").text(q[index].AnswerB);
+                    $("#C").text(q[index].AnswerC);
+                    $("#D").text(q[index].AnswerD);
+                }
+            });
+        });
+    </script>
+}
