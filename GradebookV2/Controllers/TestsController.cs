@@ -56,7 +56,9 @@ namespace GradebookV2.Controllers
                 question.CorrectAnswer = split[index];
                 index += 4;
                 question.Points = Convert.ToInt32(split[index]);
-                index += 6;
+                index += 3;
+                question.Number = Convert.ToInt32(new String (split[index].Where(Char.IsDigit).ToArray()));
+                index += 3;
                 question.TestId = test.TestId;
                 question.Test = test;
                 if (test.Questions == null)
@@ -77,7 +79,7 @@ namespace GradebookV2.Controllers
             if (!test.Class.Students.Contains(student))
                 return RedirectToAction("Index", "News", null);
 
-            ViewBag.index = 0;
+            test.Questions.OrderBy(q => q.Number);
             return View("SolveTest", test);
         }
 
@@ -86,7 +88,61 @@ namespace GradebookV2.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult testDone(int testId, string answers)
         {
-            return null;
+            Test test = db.Tests.First(t => t.TestId == testId);
+            List<Question> questions = test.Questions.OrderBy(q => q.Number).ToList();
+            int total = 0, points = 0;
+            foreach (Question q in questions)
+                total += q.Points;
+            string[] a = answers.Split(',');
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] == questions[i].CorrectAnswer)
+                    points += questions[i].Points;
+            }
+
+            Grade grade = new Grade();
+            decimal result = Decimal.Round((points / total) * 100, 2);
+            if (result > 90)
+                grade.Value = 6;
+            else if (result == 90)
+                grade.Value = 5.75M;
+            else if (result > 89)
+                grade.Value = 5.5M;
+            else if (result > 80)
+                grade.Value = 5;
+            else if (result == 80)
+                grade.Value = 4.75M;
+            else if (result > 79)
+                grade.Value = 4.5M;
+            else if (result > 70)
+                grade.Value = 4;
+            else if (result == 70)
+                grade.Value = 3.75M;
+            else if (result > 69)
+                grade.Value = 3.5M;
+            else if (result > 60)
+                grade.Value = 3;
+            else if (result == 50)
+                grade.Value = 2.75M;
+            else if (result > 49)
+                grade.Value = 2.5M;
+            else if (result > 40)
+                grade.Value = 2;
+            else
+                grade.Value = 1;
+            grade.Date = DateTime.Now;
+            grade.Type = "Test";
+            grade.Comment = test.Title;
+            grade.SubjectId = test.SubjectId;
+            grade.Subject = test.Subject;
+            grade.StudentId = User.Identity.GetUserId();
+            grade.Student = db.Users.First(u => u.Id == grade.StudentId);
+            db.Grades.Add(grade);
+            db.SaveChanges();
+
+            ViewBag.Total = total;
+            ViewBag.Points = points;
+            return View("TestDone");
         }
     }
 }
