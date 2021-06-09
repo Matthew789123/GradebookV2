@@ -250,6 +250,10 @@
     <Compile Include="Migrations\202106090636319_testsNumber.Designer.cs">
       <DependentUpon>202106090636319_testsNumber.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106090749537_testStudents.cs" />
+    <Compile Include="Migrations\202106090749537_testStudents.Designer.cs">
+      <DependentUpon>202106090749537_testStudents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AssignStudentsViewModel.cs" />
@@ -509,6 +513,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106090636319_testsNumber.resx">
       <DependentUpon>202106090636319_testsNumber.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106090749537_testStudents.resx">
+      <DependentUpon>202106090749537_testStudents.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />

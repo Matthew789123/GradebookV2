@@ -76,7 +76,7 @@ namespace GradebookV2.Controllers
             Test test = db.Tests.First(t => t.TestId == testId);
             string id = User.Identity.GetUserId();
             ApplicationUser student = db.Users.First(u => u.Id == id);
-            if (!test.Class.Students.Contains(student))
+            if (!test.Class.Students.Contains(student) || test.Students.Contains(student))
                 return RedirectToAction("Index", "News", null);
 
             test.Questions.OrderBy(q => q.Number);
@@ -138,6 +138,9 @@ namespace GradebookV2.Controllers
             grade.StudentId = User.Identity.GetUserId();
             grade.Student = db.Users.First(u => u.Id == grade.StudentId);
             db.Grades.Add(grade);
+            if (test.Students == null)
+                test.Students = new List<ApplicationUser>();
+            test.Students.Add(grade.Student);
             db.SaveChanges();
 
             ViewBag.Total = total;

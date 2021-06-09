@@ -23,5 +23,6 @@ namespace GradebookV2.Models
         public virtual Subject Subject { get; set; }
         public virtual Class Class { get; set;}
         public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<ApplicationUser> Students { get; set; }
     }
 }
