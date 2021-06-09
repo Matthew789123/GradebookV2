@@ -30,6 +30,8 @@ namespace GradebookV2.Models
         [Required]
         public int Points { get; set; } 
         [Required]
+        public int Number { get; set; }
+        [Required]
         public int TestId { get; set; }
         [JsonIgnore]
         public virtual Test Test { get; set; }

@@ -246,6 +246,10 @@
     <Compile Include="Migrations\202106081316219_messageChanges.Designer.cs">
       <DependentUpon>202106081316219_messageChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106090636319_testsNumber.cs" />
+    <Compile Include="Migrations\202106090636319_testsNumber.Designer.cs">
+      <DependentUpon>202106090636319_testsNumber.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AssignStudentsViewModel.cs" />
@@ -452,6 +456,7 @@
     <Content Include="Views\Tests\SolveTest.cshtml" />
     <Content Include="Views\Messages\MessageBox.cshtml" />
     <Content Include="Views\Messages\NewMessage.cshtml" />
+    <Content Include="Views\Tests\TestDone.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">
@@ -501,6 +506,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106081316219_messageChanges.resx">
       <DependentUpon>202106081316219_messageChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106090636319_testsNumber.resx">
+      <DependentUpon>202106090636319_testsNumber.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />

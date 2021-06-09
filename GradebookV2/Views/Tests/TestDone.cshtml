@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "TestDone";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Test Results</h2>
+<hr />
+
+<div class="form-group">
+    @Html.Label("Points:", htmlAttributes: new { @class = "control-label col-md-1" })
+    <div class="col-md-11">@ViewBag.Points/@ViewBag.Total</div>
+</div>
+
