@@ -7,7 +7,21 @@
 @using Newtonsoft.Json;
 @model GradebookV2.Models.MyGradesViewModel
 <h2>My Grades</h2>
-
+<hr />
+<div class="form-group">
+    @Html.Label("Begining:", new { @class = "control-label col-md-1" })
+    <div class="col-md-3">
+        <input id="from" type="date" />
+    </div>
+    @Html.Label("End:", new { @class = "control-label col-md-1" })
+    <div class="col-md-3">
+        <input id="to" type="date" />
+    </div>
+    <button type="button" class="col-md-1" id="filter">Filter</button>
+    <button type="button" class="col-md-1 col-md-offset-1" id="clear">Clear</button>
+</div>
+<br />
+<br />
 
 <div>
     <table class="table table-bordered table-striped">
@@ -22,12 +36,12 @@
             {
                 <tr>
                     <th>@s.Name</th>
-                    <th>
+                    <th class="subjectRow" value="@s.SubjectId">
                         @foreach (Grade g in Model.Grades)
                         {
                             if (g.SubjectId == s.SubjectId)
                             {
-                                <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" style="cursor:pointer">@g.Value</div>
+                                <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" style="cursor:pointer;display:inline-block">@g.Value</div>
                             }
                         }
                     </th>
@@ -42,28 +56,73 @@
 
 @section scripts{ 
     <script>
-    $(document).ready(function () {
-        $(".grade").click(function (event) {
-            var val = $(event.target).attr("value");
-            var data = val.split(',');
-            $("#gradeComment").text(data[2]);
-            $("#gradeType").text(data[1]);
-            $("#date").text(data[0]);
-            $("#value").text(data[3]);
-            $('#modal').modal('show');
-            console.log(data);
-           
-        });
-        
+        let grades = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Grades) as String);
+        $(document).ready(function () {
+            $(".grade").click(gradeClick);
 
-        $(".grade").mouseenter(function () {
-            $(this).css('font-weight', 'bold');
-        });
+            function gradeClick(event) {
+                var val = $(event.target).attr("value");
+                var data = val.split(',');
+                $("#gradeComment").text(data[2]);
+                $("#gradeType").text(data[1]);
+                $("#date").text(data[0]);
+                $("#value").text(data[3]);
+                $('#modal').modal('show');
+            }
 
-        $(".grade").mouseout(function () {
-            $(this).css('font-weight', 'normal');
-        });
 
-    })
+            $(".grade").mouseenter(function () {
+                $(this).css('font-weight', 'bold');
+            });
+
+            $(".grade").mouseout(function () {
+                $(this).css('font-weight', 'normal');
+            });
+
+            $("#filter").click(function () {
+                $(".grade").remove();
+                let from = new Date($("#from").val());
+                let to = new Date($("#to").val());
+                if (isNaN(from.getTime()) || isNaN(to.getTime())) {
+                    grades.forEach(g => {
+                        appendGrade(g);
+                    });
+                }
+                else {
+                    grades.forEach(g => {
+                        if (new Date(g.Date) > from && new Date(g.Date) < to) appendGrade(g);
+                    });
+                }
+            });
+
+            function appendGrade(g) {
+                $(".subjectRow").each(function (index, row) {
+                    if (row.getAttribute("value") == g.SubjectId) {
+                        $(this).append($("<div/>")
+                            .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                            .addClass("grade")
+                            .attr("style", "cursor:pointer;display:inline-block")
+                            .html(g.Value.toFixed(2) + '&nbsp')
+                            .on("mouseenter", function () {
+                                $(this).css('font-weight', 'bold');
+                            })
+                            .on("mouseout", function () {
+                                $(this).css('font-weight', 'normal');
+                            })
+                            .on("click", gradeClick)
+                        );
+                    }
+                });
+            }
+
+            $("#clear").click(function () {
+                $(".grade").remove();
+                grades.forEach(g => {
+                    appendGrade(g);
+                });
+                $("#from").val("");
+                $("#to").val("");
+            });
+        });
     </script>
 }
