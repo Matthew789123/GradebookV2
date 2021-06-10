@@ -1,11 +1,13 @@
 ﻿@model  GradebookV2.Models.ApplicationUser[]
-    @{
-        ViewBag.Title = "createdUsers";
-        Layout = "~/Views/Shared/_Layout.cshtml";
-    }
+@{
+    ViewBag.Title = "createdUsers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-    <h2>Created Users</h2>
+<h2>Created Users</h2>
 
+@if (Model[0].Roles.First().RoleId == "2")
+{
     <table class="table">
         <tr>
             <th>
@@ -27,3 +29,49 @@
             </tr>
         }
     </table>
+}
+else
+{
+<table class="table">
+    <colgroup span="2"></colgroup>
+    <colgroup span="2"></colgroup>
+    <tr>
+        <td rowspan="2"></td>
+        <th colspan="2" scope="colgroup">Parents</th>
+        <th colspan="2" scope="colgroup">Students</th>
+    </tr>
+    <tr>
+        <th scope="col">
+            @Html.DisplayNameFor(modelItem => modelItem[0].UserName)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(modelItem => modelItem[0].PasswordHash)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(modelItem => modelItem[0].UserName)
+        </th>
+        <th scope="col">
+            @Html.DisplayNameFor(modelItem => modelItem[0].PasswordHash)
+        </th>
+    </tr>
+    @for (int i = 0; i < Model.Count(); i += 2)
+    {
+        <tr>
+            <th scope="row"></th>
+            <td>
+                @Html.DisplayFor(model => model[i].UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model[i].PasswordHash)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model[i + 1].UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model[i + 1].PasswordHash)
+            </td>
+        </tr>
+    }
+</table>
+}
+
