@@ -503,11 +503,21 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult createUsers(int quantity, string role)
         {
-            ApplicationUser[] users = new ApplicationUser[quantity];
+            ApplicationUser[] users;
+            Boolean generateParents = false;
+            int q = quantity;
+            if (role == "Student")
+            {
+                users = new ApplicationUser[2 * quantity];
+                q *= 2;
+                generateParents = true;
+            }
+            else
+                users = new ApplicationUser[quantity];
             Random rnd = new Random();
             int countID = db.Users.Count();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-            for (int i = 0; i < quantity; i++)
+            for (int i = 0; i < q; i++)
             {
                 string login = countID.ToString(), password = "";
 
@@ -519,7 +529,17 @@ namespace GradebookV2.Controllers
                 users[i] = new ApplicationUser();
                 users[i].UserName = login;
                 UserManager.Create(users[i], password);
-                UserManager.AddToRole(users[i].Id, role);
+                if (i % 2 == 0 || generateParents)
+                    UserManager.AddToRole(users[i].Id, "Parent");
+                else
+                {
+                    if (role == "Student")
+                    {
+                        users[i].ParentId = users[i - 1].Id;
+                        users[i].Parent = users[i - 1];
+                    }
+                    UserManager.AddToRole(users[i].Id, role);
+                }
                 countID++;
                 users[i].PasswordHash = password;
             }
