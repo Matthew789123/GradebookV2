@@ -5,8 +5,24 @@
 }
 
 <h2>Grades</h2>
+<hr />
 
-<table class="table">
+<div class="form-group">
+    @Html.Label("Begining:", new { @class = "control-label col-md-1" })
+    <div class="col-md-3">
+        <input id="from" type="date" />
+    </div>
+    @Html.Label("End:", new { @class = "control-label col-md-1" })
+    <div class="col-md-3">
+        <input id="to" type="date" />
+    </div>
+    <button type="button" class="col-md-1" id="filter">Filter</button>
+    <button type="button" class="col-md-1 col-md-offset-1" id="clear">Clear</button>
+</div>
+<br />
+<br />
+
+<table class="table table-bordered table-striped">
     <tr>
         <th>
             @Html.LabelFor(m => m[0].Item1.Name)
@@ -21,14 +37,12 @@
             <td>
                 @Html.DisplayFor(m => t.Item1.Name) @Html.DisplayFor(m => t.Item1.Surname)
             </td>
-            <td>
+            <td class="studentRow" value="@t.Item1.Id">
                 @foreach (GradebookV2.Models.Grade g in t.Item2)
                 {
-                    <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" style="cursor:pointer">@g.Value</div>
+                    <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" style="cursor:pointer;display:inline-block">@g.Value</div>
                 }
-            </td>
-            <td>
-                <button class="btnShowModal" type="button" data-content="@t.Item1.Id">Add</button>
+                <button class="btnShowModal" type="button" data-content="@t.Item1.Id" style="float:right">Add</button>
             </td>
         </tr>
     }
@@ -43,57 +57,57 @@
             </div>
             @using (Html.BeginForm("addGrade", "SubjectClassTeachers", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
             {
-        <div class="modal-body">
-            @Html.AntiForgeryToken()
-            @Html.Hidden("studentId", null, new { id = "studentIdHidden" })
-            @Html.Hidden("subjectId", new { ViewBag.subjectId })
-            <div class="form-group">
-                @Html.LabelFor(model => model[0].Item2[0].Value, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    <select class="form-control" name="value">
-                        <option value="1">1</option>
-                        <option value="1.75">2-</option>
-                        <option value="2">2</option>
-                        <option value="2.5">2+</option>
-                        <option value="2.75">3-</option>
-                        <option value="3">3</option>
-                        <option value="3.5">3+</option>
-                        <option value="3.75">4-</option>
-                        <option selected="selected" value="4">4</option>
-                        <option value="4.5">4+</option>
-                        <option value="4.75">5-</option>
-                        <option value="5">5</option>
-                        <option value="5.5">5+</option>
-                        <option value="5.75">6-</option>
-                        <option value="6">6</option>
-                    </select>
+                <div class="modal-body">
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("studentId", null, new { id = "studentIdHidden" })
+                    @Html.Hidden("subjectId", new { ViewBag.subjectId })
+                    <div class="form-group">
+                        @Html.LabelFor(model => model[0].Item2[0].Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            <select class="form-control" name="value">
+                                <option value="1">1</option>
+                                <option value="1.75">2-</option>
+                                <option value="2">2</option>
+                                <option value="2.5">2+</option>
+                                <option value="2.75">3-</option>
+                                <option value="3">3</option>
+                                <option value="3.5">3+</option>
+                                <option value="3.75">4-</option>
+                                <option selected="selected" value="4">4</option>
+                                <option value="4.5">4+</option>
+                                <option value="4.75">5-</option>
+                                <option value="5">5</option>
+                                <option value="5.5">5+</option>
+                                <option value="5.75">6-</option>
+                                <option value="6">6</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model[0].Item2[0].Type, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.Editor("type", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model[0].Item2[0].Type, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="form-group">
+                        @Html.LabelFor(model => model[0].Item2[0].Comment, htmlAttributes: new { @class = "control-label col-md-2" })
+                        <div class="col-md-10">
+                            @Html.Editor("comment", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model[0].Item2[0].Comment, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <br />
+                    <br />
                 </div>
-            </div>
-            <br />
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model[0].Item2[0].Type, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.Editor("type", new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model[0].Item2[0].Type, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <br />
-            <div class="form-group">
-                @Html.LabelFor(model => model[0].Item2[0].Comment, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.Editor("comment", new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model[0].Item2[0].Comment, "", new { @class = "text-danger" })
-                </div>
-            </div>
-            <br />
-            <br />
-        </div>
                 <div class="modal-footer">
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" class="btn btn-default" value="Add"/>
+                            <input type="submit" class="btn btn-default" value="Add" />
                         </div>
                     </div>
                 </div>
@@ -106,6 +120,7 @@
 
 @section scripts {
     <script type="text/javascript">
+        let list = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model) as String);
 
         $(document).ready(function () {
             $(".btnShowModal").click(function () {
@@ -113,7 +128,9 @@
                 $("#studentIdHidden").val(this.dataset.content);
             });
 
-            $(".grade").click(function (event) {
+            $(".grade").click(gradeClick);
+
+            function gradeClick(event) {
                 var val = $(event.target).attr("value");
                 var data = val.split(',');
                 $("#gradeComment").text(data[2]);
@@ -121,7 +138,7 @@
                 $("#date").text(data[0]);
                 $("#value").text(data[3]);
                 $('#modal').modal('show');
-            });
+            }
 
             $(".grade").mouseenter(function () {
                 $(this).css('font-weight', 'bold');
@@ -129,6 +146,87 @@
 
             $(".grade").mouseout(function () {
                 $(this).css('font-weight', 'normal');
+            });
+
+            $("#filter").click(function () {
+                $(".grade").remove();
+                let from = new Date($("#from").val());
+                let to = new Date($("#to").val());
+                if (isNaN(from.getTime()) || isNaN(to.getTime())) {
+                    list.forEach(tuple => {
+                        $(".studentRow").each(function (index, row) {
+                            if (row.getAttribute("value") == tuple.Item1.Id) {
+                                tuple.Item2.forEach(g => {
+                                    $(this).append($("<div/>")
+                                        .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                                        .addClass("grade")
+                                        .attr("style", "cursor:pointer;display:inline-block")
+                                        .html(g.Value.toFixed(2) + '&nbsp')
+                                        .on("mouseenter", function () {
+                                            $(this).css('font-weight', 'bold');
+                                        })
+                                        .on("mouseout", function () {
+                                            $(this).css('font-weight', 'normal');
+                                        })
+                                        .on("click", gradeClick)
+                                    );
+                                });
+                            }
+                        });
+                    });
+                }
+                else {
+                    list.forEach(tuple => {
+                        $(".studentRow").each(function (index, row) {
+                            if (row.getAttribute("value") == tuple.Item1.Id) {
+                                tuple.Item2.forEach(g => {
+                                    if (new Date(g.Date) > from && new Date(g.Date) < to) {
+                                        $(this).append($("<div/>")
+                                            .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                                            .addClass("grade")
+                                            .attr("style", "cursor:pointer;display:inline-block")
+                                            .html(g.Value.toFixed(2) + '&nbsp')
+                                            .on("mouseenter", function () {
+                                                $(this).css('font-weight', 'bold');
+                                            })
+                                            .on("mouseout", function () {
+                                                $(this).css('font-weight', 'normal');
+                                            })
+                                            .on("click", gradeClick)
+                                        );
+                                    }
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+
+            $("#clear").click(function () {
+                $(".grade").remove();
+                list.forEach(tuple => {
+                    $(".studentRow").each(function (index, row) {
+                        if (row.getAttribute("value") == tuple.Item1.Id) {
+                            tuple.Item2.forEach(g => {
+                                $(this).append($("<div/>")
+                                    .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                                    .addClass("grade")
+                                    .attr("style", "cursor:pointer;display:inline-block")
+                                    .html(g.Value.toFixed(2) + '&nbsp')
+                                    .on("mouseenter", function () {
+                                        $(this).css('font-weight', 'bold');
+                                    })
+                                    .on("mouseout", function () {
+                                        $(this).css('font-weight', 'normal');
+                                    })
+                                    .on("click", gradeClick)
+                                );
+                            });
+                        }
+                    });
+                });
+                $("#from").val("");
+                $("#to").val("");
             });
         });
     </script>

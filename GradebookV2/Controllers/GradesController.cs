@@ -14,6 +14,7 @@ namespace GradebookV2.Controllers
 
         private ApplicationDbContext db = new ApplicationDbContext();
         // GET: Grades
+        [Authorize(Roles = "Student")]
         public ActionResult MyGrades()
         {
             string userId = User.Identity.GetUserId();

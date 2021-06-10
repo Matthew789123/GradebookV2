@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 
 namespace GradebookV2.Models
 {
@@ -28,9 +29,13 @@ namespace GradebookV2.Models
         public string Sex { get; set; }
         public string ParentId { get; set; }
         public int? ClassId { get; set; }
+        [JsonIgnore]
         public virtual ICollection<News> News { get; set; }
+        [JsonIgnore]
         public virtual ICollection<UserMessage> UserMessages { get; set; }
+        [JsonIgnore]
         public virtual Class Class { get; set; }
+        [JsonIgnore]
         public virtual ApplicationUser Parent { get; set; }
     }
 
