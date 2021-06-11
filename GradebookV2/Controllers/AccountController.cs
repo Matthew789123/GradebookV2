@@ -501,19 +501,24 @@ namespace GradebookV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult createUsers(int quantity, string role)
+        public ActionResult createUsers(int? quantity, string role)
         {
+            if (quantity <= 0 || quantity == null)
+            {
+                ViewBag.quantityError = "Enter correct amount";
+                return View("create");
+            }
             ApplicationUser[] users;
             Boolean generateParents = false;
-            int q = quantity;
+            int q = Convert.ToInt32(quantity);
             if (role == "Student")
             {
-                users = new ApplicationUser[2 * quantity];
+                users = new ApplicationUser[2 * q];
                 q *= 2;
                 generateParents = true;
             }
             else
-                users = new ApplicationUser[quantity];
+                users = new ApplicationUser[q];
             Random rnd = new Random();
             int countID = db.Users.Count();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
@@ -529,7 +534,7 @@ namespace GradebookV2.Controllers
                 users[i] = new ApplicationUser();
                 users[i].UserName = login;
                 UserManager.Create(users[i], password);
-                if (i % 2 == 0 || generateParents)
+                if (i % 2 == 0 && generateParents)
                     UserManager.AddToRole(users[i].Id, "Parent");
                 else
                 {

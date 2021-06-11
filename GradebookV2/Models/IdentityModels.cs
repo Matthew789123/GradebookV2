@@ -25,6 +25,7 @@ namespace GradebookV2.Models
         public string Surname { get; set; }
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Birth date")]
         public DateTime? BirthDate { get; set; }
         public string Sex { get; set; }
         public string ParentId { get; set; }

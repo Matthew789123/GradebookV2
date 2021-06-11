@@ -430,7 +430,6 @@
     <Content Include="Views\Classes\chooseTeacher.cshtml" />
     <Content Include="Views\Subjects\Create.cshtml" />
     <Content Include="Views\Subjects\Delete.cshtml" />
-    <Content Include="Views\Subjects\Details.cshtml" />
     <Content Include="Views\Subjects\Edit.cshtml" />
     <Content Include="Views\Subjects\Index.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />

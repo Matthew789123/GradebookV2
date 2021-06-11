@@ -26,6 +26,7 @@ namespace GradebookV2.Models
         [Display(Name = "D")]
         public string AnswerD { get; set; }
         [Required]
+        [Display(Name = "Correct Answer")]
         public string CorrectAnswer { get; set; }
         [Required]
         public int Points { get; set; } 
