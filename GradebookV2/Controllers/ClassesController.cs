@@ -56,16 +56,21 @@ namespace GradebookV2.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create(int grade, string name, string teacher)
+        public ActionResult Create([Bind(Include = "Grade,Name")] Class @class, string teacher)
         {
-            Class c = new Class();
-            c.Grade = grade;
-            c.Name = name;
-            c.TeacherId = teacher;
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Teachers = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2" && u.ClassId == null).ToList();
+                ViewBag.Classes = db.Classes.ToList();
+                ViewBag.TeachersAll = db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "2").ToList();
+                return View(@class);
+            }
+
+            @class.TeacherId = teacher;
             var t = db.Users.First(u => u.Id == teacher);
-            c.HomeroomTeacher = t;
-            t.Class = c;
-            db.Classes.Add(c);
+            @class.HomeroomTeacher = t;
+            t.Class = @class;
+            db.Classes.Add(@class);
 
             db.SaveChanges();
 

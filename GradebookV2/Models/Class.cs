@@ -11,8 +11,10 @@ namespace GradebookV2.Models
         [Required]
         public int ClassId { get; set; }
         [Required]
+        [Range(1, 8)]
         public int Grade { get; set; }
         [Required]
+        [StringLength(1)]
         public string Name { get; set; }
         public string TeacherId { get; set; }
 
