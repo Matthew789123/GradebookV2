@@ -23,5 +23,15 @@ namespace GradebookV2.Controllers
             var model = new MyGradesViewModel { Grades = grades, Subjects = subjects };
             return View("MyGrades",model);
         }
+
+        [Authorize(Roles = "Teacher")]
+        public ActionResult deleteGrade(int gradeId)
+        {
+            Grade grade = db.Grades.First(g => g.GradeId == gradeId);
+            int? classId = grade.Student.ClassId;
+            db.Grades.Remove(grade);
+            db.SaveChanges();
+            return RedirectToAction("getGrades", "SubjectClassTeachers", new { subjectId = grade.SubjectId, classId = classId });
+        }
     }
 }
