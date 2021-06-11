@@ -17,6 +17,10 @@
                 </div>
             </div>
             <div class="modal-footer">
+                @if (User.IsInRole("Teacher"))
+                {
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="deleteGrade">Delete</button>
+                }
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>

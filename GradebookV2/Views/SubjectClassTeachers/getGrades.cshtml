@@ -40,7 +40,7 @@
             <td class="studentRow" value="@t.Item1.Id">
                 @foreach (GradebookV2.Models.Grade g in t.Item2)
                 {
-                    <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" style="cursor:pointer;display:inline-block">@g.Value</div>
+                    <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" data-grade="@g.GradeId" style="cursor:pointer;display:inline-block">@g.Value</div>
                 }
                 <button class="btnShowModal" type="button" data-content="@t.Item1.Id" style="float:right">Add</button>
             </td>
@@ -60,7 +60,7 @@
                 <div class="modal-body">
                     @Html.AntiForgeryToken()
                     @Html.Hidden("studentId", null, new { id = "studentIdHidden" })
-                    @Html.Hidden("subjectId", new { ViewBag.subjectId })
+                    @Html.Hidden("subjectId", new { ViewBag.subjectId }, new { id = "subjectIdHidden" })
                     <div class="form-group">
                         @Html.LabelFor(model => model[0].Item2[0].Value, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
@@ -137,6 +137,7 @@
                 $("#gradeType").text(data[1]);
                 $("#date").text(data[0]);
                 $("#value").text(data[3]);
+                $("#deleteGrade").attr("data-grade", this.dataset.grade);
                 $('#modal').modal('show');
             }
 
@@ -227,6 +228,11 @@
                 });
                 $("#from").val("");
                 $("#to").val("");
+            });
+
+            $("#deleteGrade").click(function () {
+                var url = '@Url.Action("deleteGrade", "Grades", new { gradeId = "__id__"})';
+                window.location.href = url.replace('__id__', this.dataset.grade);
             });
         });
     </script>
