@@ -118,8 +118,12 @@ namespace GradebookV2.Models
         public string Name { get; set; }
         public string Surname { get; set; }
         public string Email { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Birth date")]
         public DateTime? BirthDay { get; set; }
     }
+
 
     public class EditProfileViewModel
     {
@@ -131,6 +135,9 @@ namespace GradebookV2.Models
         [EmailAddress]
         public string Email { get; set; }
         [Required]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Birth date")]
         public DateTime? BirthDay { get; set; }
         
         public string Id { get; set; }

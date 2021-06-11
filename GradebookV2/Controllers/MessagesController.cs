@@ -30,7 +30,7 @@ namespace GradebookV2.Controllers
             }
             return View(model);
         }
-
+        [Authorize(Roles = "Teacher")]
         public ActionResult NewMessage()
         {
             return View();
@@ -38,12 +38,12 @@ namespace GradebookV2.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Teacher")]
-        public ActionResult NewMessage(string title, string message)
+        public ActionResult NewMessage([Bind(Include = "Title,Content")] MessageViewModel message)
         {
-   
-            string teacherId = User.Identity.GetUserId();
-            var teacher = db.Users.First(u => u.Id == teacherId);
-            var @class = db.Classes.First(u => u.TeacherId == teacherId);
+            string userId = User.Identity.GetUserId();
+
+            var teacher = db.Users.First(u => u.Id == userId);
+            var @class = db.Classes.First(u => u.TeacherId == userId);
             List<ApplicationUser> Receivers = new List<ApplicationUser>();
             foreach (ApplicationUser s in @class.Students)
             {
@@ -54,31 +54,91 @@ namespace GradebookV2.Controllers
                 }
             }
 
+            if(Receivers.Count == 0)
+            {
+                Message Message = new Message();
+                Message.Content = message.Content;
+                Message.Title = message.Title;
+                Message.Date = DateTime.Now;
+                db.Messages.Add(Message);
+                foreach (ApplicationUser r in Receivers)
+                {
+                    UserMessage UserMessage = new UserMessage();
+                    UserMessage.SenderId = userId;
+                    UserMessage.Sender = teacher;
+                    UserMessage.Message = Message;
+                    UserMessage.ReceiverId = r.Id;
+                    UserMessage.Receiver = r;
+                    db.UserMessages.Add(UserMessage);
+                    if (teacher.UserMessages == null)
+                    {
+                        teacher.UserMessages = new List<UserMessage>();
+                    }
+                    teacher.UserMessages.Add(UserMessage);
+                }
+                db.SaveChanges();
+            }
+            return RedirectToAction("MessageBox");
+        }
+
+        [Authorize(Roles = "Parent")]
+        public ActionResult MessageToTeacher()
+        {
+            string parentId = User.Identity.GetUserId();
+            var child = db.Users.First(u => u.ParentId == parentId);
+            var classTeachers = db.SubjectClassTeacher.Where(u => u.ClassId == child.ClassId).ToList();
+            var @class = db.Classes.First(u => u.ClassId == child.ClassId);
+            List<Tuple<ApplicationUser, string>> teachers = new List<Tuple<ApplicationUser, string>>();
+            if(classTeachers.Count != 0)
+            {
+                foreach (SubjectClassTeacher c in classTeachers)
+                {
+                    teachers.Add(new Tuple<ApplicationUser, string>(c.Teacher, c.Subject.Name));
+                }
+                teachers.Add(new Tuple<ApplicationUser, string>(@class.HomeroomTeacher, "Wychowawca"));
+                ViewBag.Teachers = teachers;
+                return View();
+            }
+            return RedirectToAction("MessageBox");
+            
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Parent")]
+        public ActionResult MessageToTeacher([Bind(Include = "Title,Content")] MessageViewModel message, string teacherId)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(message);
+            }
+
+            string userId = User.Identity.GetUserId();
+            var user = db.Users.First(u => u.Id == userId);
+            var teacher = db.Users.First(u => u.Id == teacherId);
             Message Message = new Message();
-            Message.Content = message;
-            Message.Title = title;
+            Message.Content = message.Content;
+            Message.Title = message.Title;
             Message.Date = DateTime.Now;
             db.Messages.Add(Message);
 
 
-            foreach (ApplicationUser r in Receivers)
+            UserMessage UserMessage = new UserMessage();
+            UserMessage.SenderId = userId;
+            UserMessage.Sender = user;
+            UserMessage.Message = Message;
+            UserMessage.ReceiverId = teacherId;
+            UserMessage.Receiver = teacher;
+
+            db.UserMessages.Add(UserMessage);
+            if (teacher.UserMessages == null)
             {
-                UserMessage UserMessage = new UserMessage();
-                UserMessage.SenderId = teacherId;
-                UserMessage.Sender = teacher;
-                UserMessage.Message = Message;
-                UserMessage.ReceiverId = r.Id;
-                UserMessage.Receiver = r;
-                db.UserMessages.Add(UserMessage);
-                if (teacher.UserMessages == null)
-                {
-                    teacher.UserMessages = new List<UserMessage>();
-                }
-                teacher.UserMessages.Add(UserMessage);
+                teacher.UserMessages = new List<UserMessage>();
             }
+            teacher.UserMessages.Add(UserMessage);
 
             db.SaveChanges();
             return RedirectToAction("MessageBox");
         }
+
     }
 }

@@ -462,9 +462,10 @@
     <Content Include="Views\Subjects\GetSubjects.cshtml" />
     <Content Include="Views\Tests\SolveTest.cshtml" />
     <Content Include="Views\Messages\MessageBox.cshtml" />
-    <Content Include="Views\Messages\NewMessage.cshtml" />
     <Content Include="Views\Tests\TestDone.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\Messages\NewMessage.cshtml" />
+    <Content Include="Views\Messages\MessageToTeacher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">
