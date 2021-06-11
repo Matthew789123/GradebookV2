@@ -578,7 +578,6 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Student,Teacher,Parent")]
         public ActionResult MyProfile()
         {
-
             var userId = User.Identity.GetUserId();
             var user = db.Users.First(u => u.Id == userId);
             Class @class = new Class();
@@ -586,9 +585,10 @@ namespace GradebookV2.Controllers
             {
                 @class = db.Classes.First(u => u.ClassId == user.ClassId);
             }
-  
+
             var model = new ProfileViewModel
             {
+                UserId = userId,
                 Grade = @class.Grade,
                 Class = @class.Name,
                 Name = user.Name,
@@ -601,10 +601,35 @@ namespace GradebookV2.Controllers
 
 
 
-        [HttpPost]
-        public ActionResult EditProfile()
+        public ActionResult EditProfile(string id)
         {
-            return View();
+            var user = db.Users.First(u => u.Id == id);
+            var model = new EditProfileViewModel
+            {
+                Id = id,
+                Name = user.Name,
+                Surname = user.Surname,
+                BirthDay = user.BirthDate,
+                Email = user.Email
+            };
+            return View("EditProfile", model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Student,Teacher,Parent")]
+        public ActionResult EditProfile([Bind(Include = "Name,Surname,Birthday,Email,Id")] EditProfileViewModel user)
+        {
+            if (ModelState.IsValid)
+            {
+                var modify = db.Users.First(u => u.Id == user.Id);
+                modify.Name = user.Name;
+                modify.Surname = user.Surname;
+                modify.Email = user.Email;
+                modify.BirthDate = user.BirthDay;
+                db.SaveChanges();
+                return RedirectToAction("MyProfile");
+            }
+            return View(user);
         }
 
 
@@ -659,4 +684,3 @@ namespace GradebookV2.Controllers
         }
     }
 }
-//	3jJv2a

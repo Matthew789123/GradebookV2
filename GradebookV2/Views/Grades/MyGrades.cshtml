@@ -6,7 +6,14 @@
 @using GradebookV2.Models
 @using Newtonsoft.Json;
 @model GradebookV2.Models.MyGradesViewModel
-<h2>My Grades</h2>
+@if (User.IsInRole("Student"))
+{
+    <h2>My Grades</h2>
+}
+else
+{
+    <h2>Child's Grades</h2>
+}
 <hr />
 <div class="form-group">
     @Html.Label("Begining:", new { @class = "control-label col-md-1" })
@@ -54,7 +61,7 @@
 
 @Html.Partial("_GradePartial")
 
-@section scripts{ 
+@section scripts{
     <script>
         let grades = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Grades) as String);
         $(document).ready(function () {

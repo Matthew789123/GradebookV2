@@ -112,6 +112,7 @@ namespace GradebookV2.Models
 
     public class ProfileViewModel
     {
+        public string UserId { get; set; }
         public int Grade { get; set; }
         public string Class { get; set; }
         public string Name { get; set; }
@@ -131,6 +132,8 @@ namespace GradebookV2.Models
         public string Email { get; set; }
         [Required]
         public DateTime? BirthDay { get; set; }
+        
+        public string Id { get; set; }
     }
 
 }

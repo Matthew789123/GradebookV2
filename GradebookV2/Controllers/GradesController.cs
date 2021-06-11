@@ -24,6 +24,18 @@ namespace GradebookV2.Controllers
             return View("MyGrades",model);
         }
 
+        [Authorize(Roles = "Parent")]
+        public ActionResult ChildGrades()
+        {
+            string parent = User.Identity.GetUserId();
+            string studentId = db.Users.First(u => u.ParentId == parent).Id;
+            var subjects = db.Subjects.ToList();
+            var grades = db.Grades.Where(g => g.StudentId == studentId).ToList();
+            var model = new MyGradesViewModel { Grades = grades, Subjects = subjects };
+            return View("MyGrades", model);
+        }
+
+
         [Authorize(Roles = "Teacher")]
         public ActionResult deleteGrade(int gradeId)
         {
