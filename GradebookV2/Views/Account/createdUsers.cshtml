@@ -11,10 +11,10 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(modelItem => modelItem[0].UserName)
+                @Html.DisplayName("User Name")
             </th>
             <th>
-                @Html.DisplayNameFor(modelItem => modelItem[0].PasswordHash)
+                @Html.DisplayName("Password")
             </th>
         </tr>
         @foreach (var u in Model)
@@ -42,16 +42,16 @@ else
     </tr>
     <tr>
         <th scope="col">
-            @Html.DisplayNameFor(modelItem => modelItem[0].UserName)
+            @Html.DisplayName("User Name")
         </th>
         <th scope="col">
-            @Html.DisplayNameFor(modelItem => modelItem[0].PasswordHash)
+            @Html.DisplayName("Password")
         </th>
         <th scope="col">
-            @Html.DisplayNameFor(modelItem => modelItem[0].UserName)
+            @Html.DisplayName("User Name")
         </th>
         <th scope="col">
-            @Html.DisplayNameFor(modelItem => modelItem[0].PasswordHash)
+            @Html.DisplayName("Password")
         </th>
     </tr>
     @for (int i = 0; i < Model.Count(); i += 2)

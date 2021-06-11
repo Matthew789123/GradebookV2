@@ -15,8 +15,10 @@
         <hr />
         <div>
             <label>Enter number of accounts to create:</label>
-            <input type="number" name="quantity" />
+            <input type="number" name="quantity"/>
+            <div class="text-danger">@ViewBag.quantityError</div>
         </div>
+        <br />
         <div>
             <label>Select type of accounts:</label>
             <select name="role">
@@ -25,6 +27,7 @@
             </select>
 
         </div>
+        <br />
 
 
         <div class="form-group">

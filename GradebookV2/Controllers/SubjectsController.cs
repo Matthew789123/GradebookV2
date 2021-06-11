@@ -22,22 +22,6 @@ namespace GradebookV2.Controllers
             return View(db.Subjects.ToList());
         }
 
-        // GET: Subjects/Details/5
-        [Authorize(Roles = "Admin")]
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Subject subject = db.Subjects.Find(id);
-            if (subject == null)
-            {
-                return HttpNotFound();
-            }
-            return View(subject);
-        }
-
         // GET: Subjects/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
