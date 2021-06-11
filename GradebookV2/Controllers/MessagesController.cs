@@ -37,8 +37,10 @@ namespace GradebookV2.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Teacher")]
         public ActionResult NewMessage(string title, string message)
         {
+   
             string teacherId = User.Identity.GetUserId();
             var teacher = db.Users.First(u => u.Id == teacherId);
             var @class = db.Classes.First(u => u.TeacherId == teacherId);
