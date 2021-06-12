@@ -6,10 +6,19 @@
 }
 
 <h2>MessageBox</h2>
+@if (User.IsInRole("Teacher"))
+{
+    <p>
+        @Html.ActionLink("Send message", "NewMessage")
+    </p>
+}
+else
+{
+    <p>
+        @Html.ActionLink("Send message", "MessageToTeacher")
+    </p>
+}
 
-<p>
-    @Html.ActionLink("Send message", "NewMessage")
-</p>
 
 <div class="tab">
     <button class="tablinks" onclick="setTab(event, 'received')">Received</button>
@@ -85,7 +94,7 @@
                     var message = $(this).text().substr(0, 100);
                     $(this).text(message + " ...");
                 }
-               
+
             })
         })
 
@@ -111,6 +120,6 @@
             document.getElementById(tabName).style.display = "block";
             evt.currentTarget.className += " active";
         }
-        
-    </script>    
+
+    </script>
 }
