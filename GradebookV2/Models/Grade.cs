@@ -12,8 +12,10 @@ namespace GradebookV2.Models
         [Required]
         public int GradeId { get; set; }
         [Required]
-        [Display(Name = "Grade")]
         public decimal Value { get; set; }
+        [Required]
+        [Display(Name = "Grade")]
+        public string Name { get; set; }
         [Required]
         public DateTime Date { get; set; }
         public string Type { get; set; }

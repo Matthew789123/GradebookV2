@@ -264,6 +264,10 @@
     <Compile Include="Migrations\202106111631086_validationClass.Designer.cs">
       <DependentUpon>202106111631086_validationClass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106121429245_gradeName.cs" />
+    <Compile Include="Migrations\202106121429245_gradeName.Designer.cs">
+      <DependentUpon>202106121429245_gradeName.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AssignStudentsViewModel.cs" />
@@ -529,6 +533,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106111631086_validationClass.resx">
       <DependentUpon>202106111631086_validationClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106121429245_gradeName.resx">
+      <DependentUpon>202106121429245_gradeName.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Resource.En.resx" />
     <EmbeddedResource Include="Resources\Resource.Pl.resx" />
