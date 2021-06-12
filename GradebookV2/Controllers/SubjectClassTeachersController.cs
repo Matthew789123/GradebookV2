@@ -47,6 +47,52 @@ namespace GradebookV2.Controllers
         {
             Grade grade = new Grade();
             grade.Value = value;
+            switch(grade.Value)
+            {
+                case 6M:
+                    grade.Name = "6";
+                    break;
+                case 5.75M:
+                    grade.Name = "6-";
+                    break;
+                case 5.5M:
+                    grade.Name = "5+";
+                    break;
+                case 5M:
+                    grade.Name = "5";
+                    break;
+                case 4.75M:
+                    grade.Name = "5-";
+                    break;
+                case 4.5M:
+                    grade.Name = "4+";
+                    break;
+                case 4M:
+                    grade.Name = "4";
+                    break;
+                case 3.75M:
+                    grade.Name = "4-";
+                    break;
+                case 3.5M:
+                    grade.Name = "3+";
+                    break;
+                case 3M:
+                    grade.Name = "3";
+                    break;
+                case 2.75M:
+                    grade.Name = "2+";
+                    break;
+                case 2.5M:
+                    grade.Name = "2";
+                    break;
+                case 1.75M:
+                    grade.Name = "2-";
+                    break;
+                case 1M:
+                    grade.Name = "1";
+                    break;
+
+            }
             grade.Type = type;
             grade.Comment = comment;
             grade.SubjectId = subjectId;

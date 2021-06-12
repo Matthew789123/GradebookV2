@@ -28,7 +28,7 @@
             @Html.LabelFor(m => m[0].Item1.Name)
         </th>
         <th>
-            @Html.LabelFor(m => m[0].Item2[0].Value)
+            @Html.LabelFor(m => m[0].Item2[0].Name)
         </th>
     </tr>
     @foreach (Tuple<GradebookV2.Models.ApplicationUser, List<GradebookV2.Models.Grade>> t in Model)
@@ -40,7 +40,7 @@
             <td class="studentRow" value="@t.Item1.Id">
                 @foreach (GradebookV2.Models.Grade g in t.Item2)
                 {
-                    <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Value" data-grade="@g.GradeId" style="cursor:pointer;display:inline-block">@g.Value</div>
+                    <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Name" data-grade="@g.GradeId" style="cursor:pointer;display:inline-block">@g.Name</div>
                 }
                 <button class="btnShowModal" type="button" data-content="@t.Item1.Id" style="float:right">Add</button>
             </td>
@@ -62,7 +62,7 @@
                     @Html.Hidden("studentId", null, new { id = "studentIdHidden" })
                     @Html.Hidden("subjectId", new { ViewBag.subjectId }, new { id = "subjectIdHidden" })
                     <div class="form-group">
-                        @Html.LabelFor(model => model[0].Item2[0].Value, htmlAttributes: new { @class = "control-label col-md-2" })
+                        @Html.LabelFor(model => model[0].Item2[0].Name, htmlAttributes: new { @class = "control-label col-md-2" })
                         <div class="col-md-10">
                             <select class="form-control" name="value">
                                 <option value="1">1</option>
