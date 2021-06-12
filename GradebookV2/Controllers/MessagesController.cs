@@ -3,6 +3,8 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -41,7 +43,6 @@ namespace GradebookV2.Controllers
         public ActionResult NewMessage([Bind(Include = "Title,Content")] MessageViewModel message)
         {
             string userId = User.Identity.GetUserId();
-
             var teacher = db.Users.First(u => u.Id == userId);
             var @class = db.Classes.First(u => u.TeacherId == userId);
             List<ApplicationUser> Receivers = new List<ApplicationUser>();
@@ -54,8 +55,9 @@ namespace GradebookV2.Controllers
                 }
             }
 
-            if(Receivers.Count == 0)
+            if(Receivers.Count != 0)
             {
+                string sender = teacher.Name + " " + teacher.Surname;
                 Message Message = new Message();
                 Message.Content = message.Content;
                 Message.Title = message.Title;
@@ -75,6 +77,33 @@ namespace GradebookV2.Controllers
                         teacher.UserMessages = new List<UserMessage>();
                     }
                     teacher.UserMessages.Add(UserMessage);
+
+                    ///MAIL
+                    if(r.Email != null)
+                    {
+                        var senderEmail = new MailAddress("gradebookMVC@gmail.com", sender);
+                        var receiverEmail = new MailAddress(r.Email, "Receiver");
+                        var password = "gradebookMVC1!";
+                        var sub = message.Title;
+                        var body = message.Content;
+                        var smtp = new SmtpClient
+                        {
+                            Host = "smtp.gmail.com",
+                            Port = 587,
+                            EnableSsl = true,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            UseDefaultCredentials = false,
+                            Credentials = new NetworkCredential(senderEmail.Address, password)
+                        };
+                        using (var mess = new MailMessage(senderEmail, receiverEmail)
+                        {
+                            Subject = sub,
+                            Body = body
+                        })
+                        {
+                            smtp.Send(mess);
+                        }
+                    }
                 }
                 db.SaveChanges();
             }
