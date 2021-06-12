@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -43,10 +44,10 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Teacher")]
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult addGrade(string studentId, int subjectId, decimal value, string type, string comment)
+        public ActionResult addGrade(string studentId, int subjectId, string value, string type, string comment)
         {
             Grade grade = new Grade();
-            grade.Value = value;
+            grade.Value = decimal.Parse(value, CultureInfo.InvariantCulture);
             switch(grade.Value)
             {
                 case 6M:
@@ -80,9 +81,12 @@ namespace GradebookV2.Controllers
                     grade.Name = "3";
                     break;
                 case 2.75M:
-                    grade.Name = "2+";
+                    grade.Name = "3-";
                     break;
                 case 2.5M:
+                    grade.Name = "2+";
+                    break;
+                case 2M:
                     grade.Name = "2";
                     break;
                 case 1.75M:
