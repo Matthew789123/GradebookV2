@@ -15,6 +15,7 @@ namespace GradebookV2.Models
         [Required]
         public DateTime? Start { get; set; }
         [Required]
+        [Range(1, Int32.MaxValue, ErrorMessage = "Duration must be atleast 1 minute.")]
         public int Duration { get; set; }
         [Required]
         public int SubjectId{ get; set; }

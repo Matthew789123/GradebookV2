@@ -65,6 +65,10 @@ namespace GradebookV2.Controllers
             if (db.SubjectClassTeacher.Where(sct => sct.ClassId == lesson.ClassId && sct.SubjectId == lesson.SubjectId && sct.TeacherId == id).ToList().Count == 0)
                 return RedirectToAction("Index", "News", null);
             lesson.Number = db.Lessons.Where(l => l.SubjectId == lesson.SubjectId && l.ClassId == lesson.ClassId).ToList().Count();
+            if (!ModelState.IsValid)
+            {
+                return View("Create", lesson);
+            }
             lesson.Class = db.Classes.First(c => c.ClassId == lesson.ClassId);
             lesson.Subject = db.Subjects.First(s => s.SubjectId == lesson.SubjectId);
             List<Models.File> list = new List<Models.File>();
@@ -78,18 +82,15 @@ namespace GradebookV2.Controllers
                 list.Last().Content = target.ToArray();
                 list.Last().FileName = file.FileName;
             }
-            if (ModelState.IsValid)
+            db.Lessons.Add(lesson);
+            db.SaveChanges();
+            foreach (Models.File file in list)
             {
-                db.Lessons.Add(lesson);
-                db.SaveChanges();
-                foreach (Models.File file in list)
-                {
-                    file.LessonId = lesson.LessonId;
-                    file.Lesson = lesson;
-                    db.Files.Add(file);
-                }
-                db.SaveChanges();
+                file.LessonId = lesson.LessonId;
+                file.Lesson = lesson;
+                db.Files.Add(file);
             }
+            db.SaveChanges();
             return RedirectToAction("getLessons", new { lesson.ClassId, lesson.SubjectId });
         }
 

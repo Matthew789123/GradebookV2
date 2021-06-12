@@ -31,10 +31,9 @@ namespace GradebookV2.Controllers
         public ActionResult Create([Bind(Include = "SubjectId,ClassId,Title,Start,Duration")] Test test, string questions)
         {
             if (questions == "")
-            {
                 ViewBag.errorMessage = "You need to add atleast one question";
-                return View();
-            }
+            if (!ModelState.IsValid || questions == "")
+                return View("Create", test);
             test.Subject = db.Subjects.First(s => s.SubjectId == test.SubjectId);
             test.Class = db.Classes.First(c => c.ClassId == test.ClassId); 
             db.Tests.Add(test);
