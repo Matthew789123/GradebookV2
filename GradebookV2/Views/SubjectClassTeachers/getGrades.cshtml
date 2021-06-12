@@ -123,6 +123,7 @@
         let list = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model) as String);
 
         $(document).ready(function () {
+            $(".grade").css('font-weight', 'normal');
             $(".btnShowModal").click(function () {
                 $("#modalGrade").modal('show');
                 $("#studentIdHidden").val(this.dataset.content);
@@ -133,7 +134,9 @@
             function gradeClick(event) {
                 var val = $(event.target).attr("value");
                 var data = val.split(',');
+                console.log(data);
                 $("#gradeComment").text(data[2]);
+
                 $("#gradeType").text(data[1]);
                 $("#date").text(data[0]);
                 $("#value").text(data[3]);
@@ -150,6 +153,7 @@
             });
 
             $("#filter").click(function () {
+                $(".grade").css('font-weight', 'normal');
                 $(".grade").remove();
                 let from = new Date($("#from").val());
                 let to = new Date($("#to").val());
@@ -159,10 +163,11 @@
                             if (row.getAttribute("value") == tuple.Item1.Id) {
                                 tuple.Item2.forEach(g => {
                                     $(this).append($("<div/>")
-                                        .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                                        .attr("value", [g.Date, g.Type, g.Comment, g.Name])
+                                        .attr("data-grade",g.GradeId)
                                         .addClass("grade")
                                         .attr("style", "cursor:pointer;display:inline-block")
-                                        .html(g.Value.toFixed(2) + '&nbsp')
+                                        .html(g.Name + '&nbsp')
                                         .on("mouseenter", function () {
                                             $(this).css('font-weight', 'bold');
                                         })
@@ -183,10 +188,11 @@
                                 tuple.Item2.forEach(g => {
                                     if (new Date(g.Date) > from && new Date(g.Date) < to) {
                                         $(this).append($("<div/>")
-                                            .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                                            .attr("value", [g.Date, g.Type, g.Comment, g.Name])
+                                            .attr("data-grade", g.GradeId)
                                             .addClass("grade")
                                             .attr("style", "cursor:pointer;display:inline-block")
-                                            .html(g.Value.toFixed(2) + '&nbsp')
+                                            .html(g.Name + '&nbsp')
                                             .on("mouseenter", function () {
                                                 $(this).css('font-weight', 'bold');
                                             })
@@ -204,16 +210,18 @@
             });
 
             $("#clear").click(function () {
+                $(".grade").css('font-weight', 'normal');
                 $(".grade").remove();
                 list.forEach(tuple => {
                     $(".studentRow").each(function (index, row) {
                         if (row.getAttribute("value") == tuple.Item1.Id) {
                             tuple.Item2.forEach(g => {
                                 $(this).append($("<div/>")
-                                    .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                                    .attr("value", [g.Date, g.Type, g.Comment, g.Name])
+                                    .attr("data-grade", g.GradeId)
                                     .addClass("grade")
                                     .attr("style", "cursor:pointer;display:inline-block")
-                                    .html(g.Value.toFixed(2) + '&nbsp')
+                                    .html(g.Name + '&nbsp')
                                     .on("mouseenter", function () {
                                         $(this).css('font-weight', 'bold');
                                     })

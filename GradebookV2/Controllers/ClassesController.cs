@@ -86,7 +86,7 @@ namespace GradebookV2.Controllers
         {
             Class c = db.Classes.First(cl => cl.ClassId == classId);
             ApplicationUser t = db.Users.First(u => u.Id == teacherId);
-            if (c.TeacherId != null)
+            if (c.TeacherId != null && c.TeacherId != teacherId)
             {
                 ApplicationUser t2 = db.Users.First(u => u.Id == c.TeacherId);
                 t2.ClassId = null;

@@ -332,4 +332,4 @@ C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\bin\pt-BR\Hangfire.Core
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\bin\pt-PT\Hangfire.Core.resources.dll
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\bin\zh\Hangfire.Core.resources.dll
 C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\bin\zh-TW\Hangfire.Core.resources.dll
-C:\Users\Mati_David\source\repos\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.gradeName.resources
+C:\Users\Test\Desktop\GIT\GradebookV2\GradebookV2\obj\Debug\GradebookV2.Migrations.gradeName.resources

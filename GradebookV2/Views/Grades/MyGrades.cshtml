@@ -66,7 +66,7 @@ else
         let grades = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Grades) as String);
         $(document).ready(function () {
             $(".grade").click(gradeClick);
-
+            $(".grade").css('font-weight', 'normal');
             function gradeClick(event) {
                 var val = $(event.target).attr("value");
                 var data = val.split(',');
@@ -87,6 +87,7 @@ else
             });
 
             $("#filter").click(function () {
+                $(".grade").css('font-weight', 'normal');
                 $(".grade").remove();
                 let from = new Date($("#from").val());
                 let to = new Date($("#to").val());
@@ -103,13 +104,15 @@ else
             });
 
             function appendGrade(g) {
+                $(".grade").css('font-weight', 'normal');
                 $(".subjectRow").each(function (index, row) {
                     if (row.getAttribute("value") == g.SubjectId) {
                         $(this).append($("<div/>")
-                            .attr("value", g.Date, g.Type, g.Comment, g.Value)
+                            .attr("value", [g.Date, g.Type, g.Comment, g.Name])
+                            .attr("data-grade", g.GradeId)
                             .addClass("grade")
                             .attr("style", "cursor:pointer;display:inline-block")
-                            .html(g.Value.toFixed(2) + '&nbsp')
+                            .html(g.Name + '&nbsp')
                             .on("mouseenter", function () {
                                 $(this).css('font-weight', 'bold');
                             })
@@ -123,6 +126,7 @@ else
             }
 
             $("#clear").click(function () {
+                $(".grade").css('font-weight', 'normal');
                 $(".grade").remove();
                 grades.forEach(g => {
                     appendGrade(g);
