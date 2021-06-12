@@ -44,6 +44,9 @@ namespace GradebookV2.Controllers
         {
             string userId = User.Identity.GetUserId();
             var teacher = db.Users.First(u => u.Id == userId);
+            if (teacher.Class == null) {
+                return RedirectToAction("MessageBox");
+            }
             var @class = db.Classes.First(u => u.TeacherId == userId);
             List<ApplicationUser> Receivers = new List<ApplicationUser>();
             foreach (ApplicationUser s in @class.Students)
@@ -116,6 +119,11 @@ namespace GradebookV2.Controllers
             string parentId = User.Identity.GetUserId();
             var child = db.Users.First(u => u.ParentId == parentId);
             var classTeachers = db.SubjectClassTeacher.Where(u => u.ClassId == child.ClassId).ToList();
+            
+            if(child.Class == null)
+            {
+                return RedirectToAction("MessageBox");
+            }
             var @class = db.Classes.First(u => u.ClassId == child.ClassId);
             List<Tuple<ApplicationUser, string>> teachers = new List<Tuple<ApplicationUser, string>>();
             if(classTeachers.Count != 0)

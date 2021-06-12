@@ -533,45 +533,40 @@ namespace GradebookV2.Controllers
                 ViewBag.quantityError = "Enter correct amount";
                 return View("create");
             }
-            ApplicationUser[] users;
             Boolean generateParents = false;
             int q = Convert.ToInt32(quantity);
             if (role == "Student")
             {
-                users = new ApplicationUser[2 * q];
                 q *= 2;
                 generateParents = true;
             }
-            else
-                users = new ApplicationUser[q];
             Random rnd = new Random();
             int countID = db.Users.Count();
             const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+            List<Tuple<ApplicationUser, string>> users = new List<Tuple<ApplicationUser, string>>();
             for (int i = 0; i < q; i++)
             {
                 string login = countID.ToString(), password = "";
-
                 for (int j = 0; j < 6; j++)
                 {
                     login += chars[rnd.Next(chars.Length - 1)];
                     password += chars[rnd.Next(chars.Length - 1)];
                 }
-                users[i] = new ApplicationUser();
-                users[i].UserName = login;
-                UserManager.Create(users[i], password);
+                users.Add(new Tuple<ApplicationUser, string>(new ApplicationUser(), password));
+                users[i].Item1.UserName = login;
+                UserManager.Create(users[i].Item1, password);
                 if (i % 2 == 0 && generateParents)
-                    UserManager.AddToRole(users[i].Id, "Parent");
+                    UserManager.AddToRole(users[i].Item1.Id, "Parent");
                 else
                 {
                     if (role == "Student")
                     {
-                        users[i].ParentId = users[i - 1].Id;
-                        users[i].Parent = users[i - 1];
+                        users[i].Item1.ParentId = users[i - 1].Item1.Id;
+                        users[i].Item1.Parent = users[i - 1].Item1;
                     }
-                    UserManager.AddToRole(users[i].Id, role);
+                    UserManager.AddToRole(users[i].Item1.Id, role);
                 }
                 countID++;
-                users[i].PasswordHash = password;
             }
             return View("CreatedUsers", users);
         }
@@ -606,7 +601,7 @@ namespace GradebookV2.Controllers
             var userId = User.Identity.GetUserId();
             var user = db.Users.First(u => u.Id == userId);
             Class @class = new Class();
-            if (User.IsInRole("Student"))
+            if (User.IsInRole("Student") && user.Class != null)
             {
                 @class = db.Classes.First(u => u.ClassId == user.ClassId);
             }
@@ -695,7 +690,20 @@ namespace GradebookV2.Controllers
         {
             ApplicationUser user = db.Users.First(u => u.Id == id);
             string role = user.Roles.FirstOrDefault().RoleId;
-            db.Users.Remove(user);
+            if(role == "3")
+            {
+                var parent = db.Users.First(u => u.Id == user.ParentId);
+                db.Users.Remove(parent);
+                db.Users.Remove(user);
+            }
+            else if(role == "4")
+            {
+                var child = db.Users.First(u => u.ParentId == user.Id);
+                db.Users.Remove(child);
+                db.Users.Remove(user);
+            }
+            else
+                db.Users.Remove(user);
             db.SaveChanges();
             switch (role)
             {

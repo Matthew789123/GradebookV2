@@ -1,4 +1,4 @@
-﻿@model  GradebookV2.Models.ApplicationUser[]
+﻿@model  List<Tuple<GradebookV2.Models.ApplicationUser, string>>
 @{
     ViewBag.Title = "createdUsers";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,7 +6,7 @@
 
 <h2>Created Users</h2>
 
-@if (Model[0].Roles.First().RoleId == "2")
+@if (Model[0].Item1.Roles.First().RoleId == "2")
 {
     <table class="table">
         <tr>
@@ -17,14 +17,14 @@
                 @Html.DisplayName("Password")
             </th>
         </tr>
-        @foreach (var u in Model)
+        @foreach (Tuple<GradebookV2.Models.ApplicationUser, string> t in Model)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => u.UserName)
+                    @Html.DisplayFor(modelItem => t.Item1.UserName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => u.PasswordHash)
+                    @Html.DisplayFor(modelItem => t.Item2)
                 </td>
             </tr>
         }
@@ -32,46 +32,45 @@
 }
 else
 {
-<table class="table">
-    <colgroup span="2"></colgroup>
-    <colgroup span="2"></colgroup>
-    <tr>
-        <td rowspan="2"></td>
-        <th colspan="2" scope="colgroup">Parents</th>
-        <th colspan="2" scope="colgroup">Students</th>
-    </tr>
-    <tr>
-        <th scope="col">
-            @Html.DisplayName("User Name")
-        </th>
-        <th scope="col">
-            @Html.DisplayName("Password")
-        </th>
-        <th scope="col">
-            @Html.DisplayName("User Name")
-        </th>
-        <th scope="col">
-            @Html.DisplayName("Password")
-        </th>
-    </tr>
-    @for (int i = 0; i < Model.Count(); i += 2)
-    {
+    <table class="table">
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
         <tr>
-            <th scope="row"></th>
-            <td>
-                @Html.DisplayFor(model => model[i].UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model[i].PasswordHash)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model[i + 1].UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(model => model[i + 1].PasswordHash)
-            </td>
+            <td rowspan="2"></td>
+            <th colspan="2" scope="colgroup">Parents</th>
+            <th colspan="2" scope="colgroup">Students</th>
         </tr>
-    }
-</table>
+        <tr>
+            <th scope="col">
+                @Html.DisplayName("User Name")
+            </th>
+            <th scope="col">
+                @Html.DisplayName("Password")
+            </th>
+            <th scope="col">
+                @Html.DisplayName("User Name")
+            </th>
+            <th scope="col">
+                @Html.DisplayName("Password")
+            </th>
+        </tr>
+        @for (int i = 0; i < Model.Count(); i += 2)
+        {
+            <tr>
+                <th scope="row"></th>
+                <td>
+                    @Html.DisplayFor(model => model[i].Item1.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[i].Item2)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[i + 1].Item1.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model[i + 1].Item2)
+                </td>
+            </tr>
+        }
+    </table>
 }
-
