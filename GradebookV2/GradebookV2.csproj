@@ -282,6 +282,7 @@
     <Compile Include="Models\SubjectClassTeacher.cs" />
     <Compile Include="Models\Test.cs" />
     <Compile Include="Models\UserMessage.cs" />
+    <Compile Include="Other classes\LanguageMang.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -423,7 +424,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\News\Create.cshtml" />
     <Content Include="Views\News\Delete.cshtml" />
     <Content Include="Views\News\Details.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
@@ -530,6 +530,8 @@
     <EmbeddedResource Include="Migrations\202106111631086_validationClass.resx">
       <DependentUpon>202106111631086_validationClass.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Resource.En.resx" />
+    <EmbeddedResource Include="Resources\Resource.Pl.resx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

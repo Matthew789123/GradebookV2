@@ -6,48 +6,56 @@
 }
 <h2>Assign Teacher</h2>
 <p>@ViewBag.ErrorMessage</p>
-@using (Html.BeginForm("assignTeacher", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+@if (ViewBag.Classes.Count != 0 && ViewBag.Teachers.Count != 0 && ViewBag.Subjects.Count != 0)
 {
-    @Html.AntiForgeryToken()
+    using (Html.BeginForm("assignTeacher", "Classes", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    
-    <div>
-        <label>Class: </label>
-        <select name="classId">
-            @foreach (GradebookV2.Models.Class c in ViewBag.Classes)
-            {
-                <option value="@c.ClassId">@(c.Grade + " " + c.Name)</option>
+        <div class="form-horizontal">
+            <hr />
 
-            }
-        </select>
-    </div>
-    <div>
-        <label>Teacher:</label>
-        <select name="teacherId">
-            @foreach (GradebookV2.Models.ApplicationUser u in ViewBag.Teachers)
-            {
-                <option value="@u.Id">@(u.Name +" " + u.Surname)</option>
-            }
-        </select>
-    </div>
-    <div>
-        <label>Subject:</label>
-        <select name="subjectId">
+            <div>
+                <label>Class: </label>
+                <select name="classId">
+                    @foreach (GradebookV2.Models.Class c in ViewBag.Classes)
+                    {
+                        <option value="@c.ClassId">@(c.Grade + " " + c.Name)</option>
 
-            @foreach (GradebookV2.Models.Subject s in ViewBag.Subjects)
-            {
-                <option value="@s.SubjectId">@(s.Name)</option>
-            }
-        </select>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Assign" class="btn btn-default" />
+                    }
+                </select>
+            </div>
+            <div>
+                <label>Teacher:</label>
+                <select name="teacherId">
+                    @foreach (GradebookV2.Models.ApplicationUser u in ViewBag.Teachers)
+                    {
+                        <option value="@u.Id">@(u.Name +" " + u.Surname)</option>
+                    }
+                </select>
+            </div>
+            <div>
+                <label>Subject:</label>
+                <select name="subjectId">
+
+                    @foreach (GradebookV2.Models.Subject s in ViewBag.Subjects)
+                    {
+                        <option value="@s.SubjectId">@(s.Name)</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Assign" class="btn btn-default" />
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
+    }
 }
+else
+{
+    <p>There are no classes, teachers or subjects to assign.</p>
+}
+
 <script>@id = document.getElementById("classId").nodeValue </script>

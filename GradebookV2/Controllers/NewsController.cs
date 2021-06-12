@@ -51,6 +51,15 @@ namespace GradebookV2.Controllers
         [Authorize(Roles = "Admin,Teacher")]
         public ActionResult Create(string title, string content)
         {
+            if (title == "")
+                ViewBag.titleError = "The Title field is required.";
+            if (content == "")
+                ViewBag.contentError = "The Content field is required.";
+            if (title == "" || content == "")
+            {
+                string userId = User.Identity.GetUserId();
+                return View("YourNews", db.News.Where(n => n.TeacherId == userId).OrderByDescending(n => n.Date).ToList());
+            }
             News news = new News();
             news.Title = title;
             news.Content = content;
