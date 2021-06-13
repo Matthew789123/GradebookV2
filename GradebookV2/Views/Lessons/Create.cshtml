@@ -15,7 +15,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @style = "float: left", @class = "control-label" })
-            <div class="col-md-10">
+            <div class="col-xs-4">
                 @Html.EditorFor(mdoel => mdoel.Title, "", new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
@@ -23,7 +23,7 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label" })
-            <div>
+            <div col-xs-4>
                 @Html.TextAreaFor(model => model.Content, 15, 100, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>

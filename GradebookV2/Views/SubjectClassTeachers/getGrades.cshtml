@@ -23,21 +23,21 @@
 <br />
 
 <table class="table table-bordered table-striped">
-    <tr>
-        <th>
+    <tr class="row">
+        <th class="col-md-4">
             @Html.LabelFor(m => m[0].Item1.Name)
         </th>
-        <th>
+        <th class="col-md-8">
             @Html.LabelFor(m => m[0].Item2[0].Name)
         </th>
     </tr>
     @foreach (Tuple<GradebookV2.Models.ApplicationUser, List<GradebookV2.Models.Grade>> t in Model)
     {
-        <tr>
-            <td>
+        <tr class="row">
+            <td class="col-md-4">
                 @Html.DisplayFor(m => t.Item1.Name) @Html.DisplayFor(m => t.Item1.Surname)
             </td>
-            <td class="studentRow" value="@t.Item1.Id">
+            <td class="studentRow col-md-8" value="@t.Item1.Id">
                 @foreach (GradebookV2.Models.Grade g in t.Item2)
                 {
                     <div class="grade" value="@g.Date,@g.Type,@g.Comment,@g.Name" data-grade="@g.GradeId" style="cursor:pointer;display:inline-block">@g.Name</div>

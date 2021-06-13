@@ -58,12 +58,26 @@ else
 <div id="received" class="content table-responsive">
     <table class="table">
         <h2>Received</h2>
+        <thead>
+            <tr>
+                <td> Sender </td>
+           
+                <td> Title </td>
+           
+                <td> Message </td>
+
+                <td> Date </td>
+            </tr>
+        </thead>
         <tbody>
             @if (Model.ReceivedMessages.Count != 0)
             {
                 foreach (var item in Model.ReceivedMessages)
                 {
                     <tr>
+                        <td>
+                            
+                        </td>
                         <td>
                             @item.Title
                         </td>
