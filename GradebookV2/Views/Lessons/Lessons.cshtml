@@ -27,11 +27,15 @@
 
                 @foreach (GradebookV2.Models.Test test in ViewBag.testsList)
                 {
-                    <li>
-                        <div class="test newsContent" value="@test.Start,@test.TestId" style="cursor:pointer;display:inline-block">@test.Title</div>
-                        <p style="display:inline-block">(@test.Start.ToString().Remove(test.Start.ToString().Length - 3))</p>
-                        <div class="testError text-danger" value="@test.TestId"></div>
-                    </li>
+                <li>
+                    @if (User.IsInRole("Teacher"))
+                    {
+                        @Html.ActionLink("Delete", "deleteTest", "Tests", new { testId = test.TestId }, new { @style = "float:right;margin:10px" })
+                    }
+                    <div class="test newsContent" value="@test.Start,@test.TestId" style="cursor:pointer;display:inline-block">@test.Title</div>
+                    <p style="display:inline-block">(@test.Start.ToString().Remove(test.Start.ToString().Length - 3))</p>
+                    <div class="testError text-danger" value="@test.TestId"></div>
+                </li>
                 }
 
             </ul>
@@ -46,6 +50,10 @@
         <div id="newsTitle" class="row newsDataContainer">
             <h4 style="text-align:center">@t.Item1.Title</h4>
         </div>
+        if (User.IsInRole("Teacher"))
+        {
+            @Html.ActionLink("Delete", "deleteLesson", "Lessons", new { lessonId = t.Item1.LessonId }, new { @style = "float:right;margin:10px" })
+        }
         <div class="row newsDataContainer ">
             <p class="newsContent">@t.Item1.Content</p>
             <ul>

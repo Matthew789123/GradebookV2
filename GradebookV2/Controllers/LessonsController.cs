@@ -95,6 +95,15 @@ namespace GradebookV2.Controllers
             return RedirectToAction("getLessons", new { lesson.ClassId, lesson.SubjectId });
         }
 
+        [Authorize(Roles = "Teacher")]
+        public ActionResult deleteLesson(int lessonId)
+        {
+            Lesson lesson = db.Lessons.First(l => l.LessonId == lessonId);
+            db.Lessons.Remove(lesson);
+            db.SaveChanges();
+            return RedirectToAction("getLessons", new { lesson.ClassId, lesson.SubjectId });
+        }
+
         public FileResult downloadFile(int fileId)
         {
             Models.File file = db.Files.First(f => f.FileId == fileId);

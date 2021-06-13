@@ -69,6 +69,15 @@ namespace GradebookV2.Controllers
             return RedirectToAction("getLessons", "Lessons", new { test.ClassId, test.SubjectId });
         }
 
+        [Authorize(Roles = "Teacher")]
+        public ActionResult deleteTest(int testId)
+        {
+            Test test = db.Tests.First(t => t.TestId == testId);
+            db.Tests.Remove(test);
+            db.SaveChanges();
+            return RedirectToAction("getLessons", "Lessons", new { test.ClassId, test.SubjectId });
+        }
+
         [Authorize(Roles = "Student")]
         public ActionResult solveTest(int testId)
         {
