@@ -664,7 +664,6 @@ namespace GradebookV2.Controllers
             user.Name = Name;
             user.Surname = Surname;
             user.BirthDate = BirthDate;
-            user.Sex = Sex;
             user.Email = Email;
             user.PhoneNumber = PhoneNumber;
             db.SaveChanges();

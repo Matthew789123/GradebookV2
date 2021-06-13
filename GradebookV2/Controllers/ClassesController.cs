@@ -217,7 +217,7 @@ namespace GradebookV2.Controllers
         }
 
 
-
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddStudent(int classId, string studentId)
@@ -233,7 +233,7 @@ namespace GradebookV2.Controllers
             return RedirectToAction("AssignStudents");
         }
 
-        
+        [Authorize(Roles = "Admin")]
         public ActionResult AssignStudents()
         {
             var students = db.Users.Where(s => s.Roles.FirstOrDefault().RoleId == "3").OrderBy(s => s.Surname).ThenBy(s => s.Name).ToList();
