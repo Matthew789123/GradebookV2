@@ -5,52 +5,103 @@
 }
 
 <h2>Your News</h2>
+<div class="tab">
+    <button class="tablinks" onclick="setTab(event, 'create')">Add News</button>
+    <button class="tablinks" id="news" onclick="setTab(event, 'myNews')">My News</button>
+</div>
 
-@using (Html.BeginForm("Create", "News", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <hr />
-    <div class="form-horizontal">
-
-        <div class="form-group">
-            @Html.LabelFor(model => model[0].Title, htmlAttributes: new { @style = "float: left", @class = "control-label" })
-            <div class="col-md-10">
-                @Html.TextBox("title", "", new { htmlAttributes = new { @class = "form-control" } })
-                <div class="text-danger">@ViewBag.titleError</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model[0].Content, htmlAttributes: new { @class = "control-label" })
-            <div>
-                @Html.TextArea("content", "", 15, 100, new { htmlAttributes = new { @class = "form-control" } })
-                <div class="text-danger">@ViewBag.contentError</div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div>
-                <input type="submit" value="Post" class="btn btn-default" style="float: left" />
-            </div>
-        </div>
-
-    </div>
-}
-
-<hr />
-@if (Model.Count == 0)
-{
-    <h4>You haven't added any post yet.</h4>
-}
-else
-{
-    foreach (GradebookV2.Models.News news in Model)
+<div id="create" class="content">
+    @using (Html.BeginForm("Create", "News", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
     {
-        <p style="float:right">@news.Date</p>
-        @Html.ActionLink("Delete", "Delete", new { id = news.NewsId }, new { @style = "float:left", onclick = "return confirm('Are you sure you wish to delete this post?');" })
-        <h4 style="text-align:center">@news.Title</h4>
-        <p>@news.Content</p>
-        <hr />
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal container">
+            <div class="form-group">
+                @Html.LabelFor(model => model[0].Title, htmlAttributes: new { @style = "float: left", @class = "control-label" })
+                <div class="col-md-10">
+                    @Html.TextBox("title", "", new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="text-danger">@ViewBag.titleError</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model[0].Content, htmlAttributes: new { @class = "control-label" })
+                <div>
+                    @Html.TextArea("content", "", 15, 100, new { htmlAttributes = new { @class = "form-control" } })
+                    <div class="text-danger">@ViewBag.contentError</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div>
+                    <input type="submit" value="Post" class="btn btn-default" style="float: left" />
+                </div>
+            </div>
+
+        </div>
     }
+</div>
+
+
+<div id="myNews" class="content table-responsive">
+    @if (Model.Count == 0)
+    {
+        <h4>You haven't added any post yet.</h4>
+    }
+    else
+    {
+        foreach (GradebookV2.Models.News news in Model)
+        {
+            <div class="container-fluid w-75 p-3">
+                <div id="newsTitle" class="row newsDataContainer">
+                    <h4 style="text-align:center">@news.Title</h4>
+                </div>
+                <div class="row newsDataContainer ">
+                    <p class="newsContent">@news.Content</p>
+                </div>
+                <div class="row newsDataContainer" id="newsFooter">
+                    <p class="newsContent" style="float:left">@news.Date</p>
+                    <p class="newsContent" style="float:right">Author: @news.Author.Name @news.Author.Surname</p>
+                </div>
+                <div class="row newsDataContainer text-center" id="newsFooter">
+                    <p class="newsContent">@Html.ActionLink("Delete", "Delete", new { id = news.NewsId }, new { @style = "float:left", onclick = "return confirm('Are you sure you wish to delete this post?');" }) </p>
+                    
+                </div>
+            </div>
+            <br />
+        }
+    }
+</div>
+
+
+@section scripts{
+
+
+    <script>
+        $(document).ready(function () {
+            $("#news").click();
+            $("#news").css("background-color", "#ccc");
+        })
+
+        function setTab(evt, tabName) {
+            // Declare all variables
+            var i, tabcontent, tablinks;
+
+            // Get all elements with class="tabcontent" and hide them
+            tabcontent = document.getElementsByClassName("content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            // Get all elements with class="tablinks" and remove the class "active"
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            // Show the current tab, and add an "active" class to the button that opened the tab
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+    </script>
 }
