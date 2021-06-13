@@ -20,15 +20,36 @@ namespace GradebookV2.Controllers
             var receivedMessages = db.UserMessages.Where(u => u.ReceiverId == userId).ToList();
             var sendedMessages = db.UserMessages.Where(u => u.SenderId == userId).ToList();
             var model = new MessageBoxViewModel();
-            model.ReceivedMessages = new List<Message>();
-            model.SendedMessages = new List<Message>();
+            model.ReceivedMessages = new List<MessageModel>();
+            model.SendedMessages = new List<MessageModel>();
             foreach (UserMessage m in receivedMessages)
             {
-                model.ReceivedMessages.Add(m.Message);
+                model.ReceivedMessages.Add(new MessageModel()
+                {
+                    Title = m.Message.Title,
+                    Content = m.Message.Content,
+                    Sender = m.Sender,
+                    Date = m.Date,
+                    MessageId = m.MessageId,
+                    Receivers = null
+                }); ;
             }
             foreach (UserMessage m in sendedMessages)
             {
-                model.SendedMessages.Add(m.Message);
+                List<ApplicationUser> temp = new List<ApplicationUser>();
+                foreach (UserMessage um in m.Message.UserMessages)
+                {
+                    temp.Add(um.Receiver);
+                }
+                model.SendedMessages.Add(new MessageModel()
+                {
+                    Title = m.Message.Title,
+                    Content = m.Message.Content,
+                    Sender = m.Sender,
+                    Date = m.Date,
+                    MessageId = m.MessageId,
+                    Receivers = temp
+                }); ;
             }
             return View(model);
         }
@@ -64,7 +85,6 @@ namespace GradebookV2.Controllers
                 Message Message = new Message();
                 Message.Content = message.Content;
                 Message.Title = message.Title;
-                Message.Date = DateTime.Now;
                 db.Messages.Add(Message);
                 foreach (ApplicationUser r in Receivers)
                 {
@@ -74,6 +94,7 @@ namespace GradebookV2.Controllers
                     UserMessage.Message = Message;
                     UserMessage.ReceiverId = r.Id;
                     UserMessage.Receiver = r;
+                    UserMessage.Date = DateTime.Now;
                     db.UserMessages.Add(UserMessage);
                     if (teacher.UserMessages == null)
                     {
@@ -155,9 +176,8 @@ namespace GradebookV2.Controllers
             Message Message = new Message();
             Message.Content = message.Content;
             Message.Title = message.Title;
-            Message.Date = DateTime.Now;
+            
             db.Messages.Add(Message);
-
 
             UserMessage UserMessage = new UserMessage();
             UserMessage.SenderId = userId;
@@ -165,7 +185,7 @@ namespace GradebookV2.Controllers
             UserMessage.Message = Message;
             UserMessage.ReceiverId = teacherId;
             UserMessage.Receiver = teacher;
-
+            UserMessage.Date = DateTime.Now;
             db.UserMessages.Add(UserMessage);
             if (teacher.UserMessages == null)
             {
@@ -176,6 +196,59 @@ namespace GradebookV2.Controllers
             db.SaveChanges();
             return RedirectToAction("MessageBox");
         }
+
+        [Authorize(Roles = "Parent,Teacher")]
+        public ActionResult Reply(int messageId, string senderId)
+        {
+            var model = new ReplyViewModel();
+            string userId = User.Identity.GetUserId();
+            
+            var um = db.UserMessages.First(u => u.MessageId == messageId && u.SenderId == senderId && u.ReceiverId == userId);
+            ViewBag.Message = um.Message;
+            ViewBag.Receiver = um.Sender;
+            ViewBag.Date = um.Date;
+       
+            model.ReceiverId = um.SenderId;
+            return View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Parent,Teacher")]
+        public ActionResult Reply([Bind(Include = "ReceiverId,Title,Content")] ReplyViewModel model)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            
+            var receiver = db.Users.First(u => u.Id == model.ReceiverId);
+            string userId = User.Identity.GetUserId();
+            var user = db.Users.First(u => u.Id == userId);
+            Message Message = new Message();
+            Message.Content = model.Content;
+            Message.Title = model.Title;
+
+            db.Messages.Add(Message);
+
+            UserMessage UserMessage = new UserMessage();
+            UserMessage.SenderId = userId;
+            UserMessage.Sender = user;
+            UserMessage.Message = Message;
+            UserMessage.ReceiverId = receiver.Id;
+            UserMessage.Receiver = receiver;
+            UserMessage.Date = DateTime.Now;
+            db.UserMessages.Add(UserMessage);
+            if (receiver.UserMessages == null)
+            {
+                receiver.UserMessages = new List<UserMessage>();
+            }
+            receiver.UserMessages.Add(UserMessage);
+
+            db.SaveChanges();
+
+            return RedirectToAction("MessageBox");
+        }
+
 
     }
 }

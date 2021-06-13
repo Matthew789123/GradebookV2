@@ -11,6 +11,7 @@ namespace GradebookV2.Models
         public string SenderId { get; set; }
         public string ReceiverId { get; set; }
         public int MessageId { get; set; }
+        public DateTime Date { get; set; }
 
         public virtual ApplicationUser Sender { get; set; }
         public virtual ApplicationUser Receiver { get; set; }

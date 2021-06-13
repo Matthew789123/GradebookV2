@@ -1,0 +1,57 @@
+﻿@model GradebookV2.Models.ReplyViewModel
+
+@{
+    ViewBag.Title = "Reply";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Reply</h2>
+<hr />
+<div class="container">
+    <div id="newsTitle" class="row newsDataContainer">
+        <h4 style="text-align:center">@ViewBag.Message.Title</h4>
+    </div>
+    <div class="row newsDataContainer ">
+        <p class="newsContent">@ViewBag.Message.Content</p>
+    </div>
+    <div class="row newsDataContainer" id="newsFooter">
+        <p class="newsContent" style="float:left">@ViewBag.Date</p>
+        <p class="newsContent" style="float:right">From: @ViewBag.Receiver.Name @ViewBag.Receiver.Surname</p>
+    </div>
+
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    @Html.HiddenFor(model => model.ReceiverId)
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Send" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back", "MessageBox")
+</div>
