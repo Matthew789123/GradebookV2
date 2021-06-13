@@ -630,14 +630,15 @@ namespace GradebookV2.Controllers
                 Name = user.Name,
                 Surname = user.Surname,
                 BirthDay = user.BirthDate,
-                Email = user.Email
+                Email = user.Email,
+                UserName = user.UserName
             };
             return View("EditProfile", model);
         }
 
         [HttpPost]
         [Authorize(Roles = "Student,Teacher,Parent")]
-        public ActionResult EditProfile([Bind(Include = "Name,Surname,Birthday,Email,Id")] EditProfileViewModel user)
+        public ActionResult EditProfile([Bind(Include = "UserName,Name,Surname,Birthday,Email,Id")] EditProfileViewModel user)
         {
             if (ModelState.IsValid)
             {
@@ -646,6 +647,7 @@ namespace GradebookV2.Controllers
                 modify.Surname = user.Surname;
                 modify.Email = user.Email;
                 modify.BirthDate = user.BirthDay;
+                modify.UserName = user.UserName;
                 db.SaveChanges();
                 return RedirectToAction("MyProfile");
             }
