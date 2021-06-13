@@ -16,6 +16,21 @@
     white-space: normal;
 }
 
+.newsDataContainer {
+    border: 1px solid #ccc;
+}
+
+.newsContent{
+    margin:10px;
+    margin:10px;
+}
+#newsTitle {
+    background-color: #f1f1f1;
+}
+
+#newsFooter {
+    background-color: #f1f1f1;
+}
 
 
 /* Style the tab */

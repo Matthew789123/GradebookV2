@@ -8,10 +8,18 @@
 <h2>News</h2>
 @foreach (GradebookV2.Models.News news in Model)
  {
-    <p style="float:right">@news.Date</p>
-    <h4 style="text-align:center">@news.Title</h4>
-    <p>@news.Content</p>
-    <p style="float:right">Author: @news.Author.Name @news.Author.Surname</p>
-    <br />
-    <hr />
+    <div class="container">
+        <div id="newsTitle" class="row newsDataContainer">
+            <h4 style="text-align:center">@news.Title</h4>
+        </div>
+        <div class="row newsDataContainer ">
+            <p class="newsContent">@news.Content</p>
+        </div>
+        <div class="row newsDataContainer" id="newsFooter">
+            <p class="newsContent" style="float:left">@news.Date</p>
+            <p class="newsContent" style="float:right">Author: @news.Author.Name @news.Author.Surname</p>
+        </div>
+
+    </div>
+    <br/>
  }
