@@ -1,10 +1,9 @@
-﻿﻿
+﻿@model GradebookV2.Models.AssignStudentsViewModel﻿
 @{ ViewBag.Title = "AssignStudents";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    int counter = 1; }
-@model GradebookV2.Models.AssignStudentsViewModel
+    int counter = 1; 
+}
 <h2>Assign Students</h2>
-
 @if (Model.Classes.Count != 0)
 {
     <div class="form-horizontal">
@@ -13,7 +12,7 @@
                 @foreach (GradebookV2.Models.Class c in Model.Classes)
                 {
                     <option value="@c.ClassId">@c.Grade @c.Name</option>
-}
+                }
             </select>
         </div>
         <div>
@@ -49,7 +48,7 @@
                                     }
                                 </td>
                                 <td>
-                                    <input type="submit" value="assign" />
+                                    <input type="submit" class="btn btn-outline-dark" value="Assign" />
                                 </td>
                             </tr>
                         }
@@ -72,7 +71,7 @@ else
 
 @section scripts {
     <script>
-    $(document).ready(function () {
+        $(document).ready(function () {
             var ph = $("#class option:selected").val();
             $(".classField").val(ph);
         });
