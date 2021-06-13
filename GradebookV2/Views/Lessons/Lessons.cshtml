@@ -9,35 +9,59 @@
     @Html.ActionLink("Add lesson", "createLesson", new { classId = ViewBag.classId, subjectId = ViewBag.subjectId }, new { @style = "float:right;margin-top:1%;" })
     @Html.ActionLink("Add test", "createTest", "Tests", new { classId = ViewBag.classId, subjectId = ViewBag.subjectId }, new { @style = "float:right;margin-top:1%;margin-right:1%" })
 }
-<h2>Lessons - @ViewBag.subject</h2>
+<h2>Lesson - @ViewBag.subject</h2>
 <hr />
-
-<h3 style="text-align:center">Tests</h3>
-<p class="alert-danger">@ViewBag.testError</p>
-<ul>
-    @foreach (GradebookV2.Models.Test test in ViewBag.testsList)
-    {
-    <li>
-        <div class="test" value="@test.Start,@test.TestId" style="cursor:pointer;display:inline-block">@test.Title</div>
-        <p style="display:inline-block">(@test.Start.ToString().Remove(test.Start.ToString().Length - 3))</p>
-        <div class="testError text-danger" value="@test.TestId"></div>
-    </li>
-    }
-</ul>
-<hr />
-
-@foreach (Tuple<GradebookV2.Models.Lesson, List<GradebookV2.Models.File>> t in Model)
-{
-    <h3 style="text-align:center">@t.Item1.Title</h3>
-    <p>@t.Item1.Content</p>
-    <ul>
-        @foreach (GradebookV2.Models.File f in t.Item2)
+<h3>Tests</h3>
+<div class="container">
+    <div id="newsTitle" class="row newsDataContainer">
+        <h4 style="text-align:center">Tests</h4>
+    </div>
+    <div class="row newsDataContainer ">
+        @if (ViewBag.count == 0)
         {
-            <li>@Html.ActionLink(f.FileName, "downloadFile", new { fileId = f.FileId })</li>
+            <p class="newsContent">There are no tests created by You</p>
         }
-    </ul>
-    <hr />
-}
+        else
+        {
+            <ul>
+
+                @foreach (GradebookV2.Models.Test test in ViewBag.testsList)
+                {
+                    <li>
+                        <div class="test newsContent" value="@test.Start,@test.TestId" style="cursor:pointer;display:inline-block">@test.Title</div>
+                        <p style="display:inline-block">(@test.Start.ToString().Remove(test.Start.ToString().Length - 3))</p>
+                        <div class="testError text-danger" value="@test.TestId"></div>
+                    </li>
+                }
+
+            </ul>
+        }
+    </div>
+</div>
+<hr />
+<h3>Subjects</h3>
+<div class="container">
+    @foreach (Tuple<GradebookV2.Models.Lesson, List<GradebookV2.Models.File>> t in Model)
+    {
+        <div id="newsTitle" class="row newsDataContainer">
+            <h4 style="text-align:center">@t.Item1.Title</h4>
+        </div>
+        <div class="row newsDataContainer ">
+            <p class="newsContent">@t.Item1.Content</p>
+            <ul>
+                @foreach (GradebookV2.Models.File f in t.Item2)
+                {
+                    <li>@Html.ActionLink(f.FileName, "downloadFile", new { fileId = f.FileId })</li>
+                }
+            </ul>
+        </div>
+        <hr />
+    }
+</div>
+
+
+
+
 
 @section scripts {
     <script type="text/javascript">

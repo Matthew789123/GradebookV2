@@ -44,6 +44,7 @@ namespace GradebookV2.Controllers
                     list.Last().Item2.Add(f);
             }
             ViewBag.testsList = db.Tests.Where(test => test.ClassId == classId && test.SubjectId == subjectId).OrderByDescending(test => test.Start).ToList();
+            ViewBag.count = ViewBag.testsList.Count;
             return View("Lessons", list);
         }
 
