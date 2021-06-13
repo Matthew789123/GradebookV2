@@ -45,26 +45,34 @@
 <hr />
 <h3>Subjects</h3>
 <div class="container">
-    @foreach (Tuple<GradebookV2.Models.Lesson, List<GradebookV2.Models.File>> t in Model)
+    @if (Model.Count == 0)
     {
-        <div id="newsTitle" class="row newsDataContainer">
-            <h4 style="text-align:center">@t.Item1.Title</h4>
-        </div>
-        if (User.IsInRole("Teacher"))
-        {
-            @Html.ActionLink("Delete", "deleteLesson", "Lessons", new { lessonId = t.Item1.LessonId }, new { @style = "float:right;margin:10px" })
-        }
-        <div class="row newsDataContainer ">
-            <p class="newsContent">@t.Item1.Content</p>
-            <ul>
-                @foreach (GradebookV2.Models.File f in t.Item2)
-                {
-                    <li>@Html.ActionLink(f.FileName, "downloadFile", new { fileId = f.FileId })</li>
-                }
-            </ul>
-        </div>
-        <hr />
+        <p>There are no subjects</p>
     }
+    else
+    {
+        foreach (Tuple<GradebookV2.Models.Lesson, List<GradebookV2.Models.File>> t in Model)
+        {
+            <div id="newsTitle" class="row newsDataContainer">
+                <h4 style="text-align:center">@t.Item1.Title</h4>
+            </div>
+            if (User.IsInRole("Teacher"))
+            {
+                @Html.ActionLink("Delete", "deleteLesson", "Lessons", new { lessonId = t.Item1.LessonId }, new { @style = "float:right;margin:10px" })
+            }
+            <div class="row newsDataContainer ">
+                <p class="newsContent">@t.Item1.Content</p>
+                <ul>
+                    @foreach (GradebookV2.Models.File f in t.Item2)
+                    {
+                        <li>@Html.ActionLink(f.FileName, "downloadFile", new { fileId = f.FileId })</li>
+                    }
+                </ul>
+            </div>
+            <hr />
+        }
+    }
+
 </div>
 
 @section scripts {

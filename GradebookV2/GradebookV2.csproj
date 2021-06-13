@@ -272,6 +272,10 @@
     <Compile Include="Migrations\202106131057001_fixes.Designer.cs">
       <DependentUpon>202106131057001_fixes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106131524130_messagefix.cs" />
+    <Compile Include="Migrations\202106131524130_messagefix.Designer.cs">
+      <DependentUpon>202106131524130_messagefix.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AssignStudentsViewModel.cs" />
@@ -478,6 +482,7 @@
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Messages\NewMessage.cshtml" />
     <Content Include="Views\Messages\MessageToTeacher.cshtml" />
+    <Content Include="Views\Messages\Reply.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202104201437067_init.resx">
@@ -542,6 +547,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106131057001_fixes.resx">
       <DependentUpon>202106131057001_fixes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106131524130_messagefix.resx">
+      <DependentUpon>202106131524130_messagefix.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -34,16 +34,16 @@ else
     <table class="table table-bordered table-striped">
         <thead>
             <tr>
-                <th>Subject</th>
-                <th>Grades</th>
+                <th class="col-md-4">Subject</th>
+                <th class="col-md-8">Grades</th>
             </tr>
         </thead>
         <tbody>
             @foreach (Subject s in Model.Subjects)
             {
                 <tr>
-                    <th>@s.Name</th>
-                    <th class="subjectRow" value="@s.SubjectId">
+                    <th class="col-md-4">@s.Name</th>
+                    <th class="subjectRow col-md-4vvv" value="@s.SubjectId">
                         @foreach (Grade g in Model.Grades)
                         {
                             if (g.SubjectId == s.SubjectId)

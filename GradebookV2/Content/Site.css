@@ -3,6 +3,9 @@
     padding-bottom: 20px;
 }
 
+.font{
+    font-weight: bold;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -23,6 +26,11 @@
 .newsContent{
     margin:10px;
     margin:10px;
+}
+
+#newsContent {
+    margin: 10px;
+    margin: 10px;
 }
 #newsTitle {
     background-color: #f1f1f1;

@@ -12,8 +12,7 @@ namespace GradebookV2.Models
         public int MessageId { get; set; }
         [Required]
         public string Title { get; set; }
-        [Required]
-        public DateTime Date { get; set; }
+    
         [Required]
         public string Content { get; set; }
 

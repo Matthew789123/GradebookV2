@@ -28,19 +28,45 @@ else
 <div id="sended" class="content table-responsive">
     <table class="table">
         <h2>Sended</h2>
+        @if (Model.ReceivedMessages.Count != 0)
+        {
+            <thead>
+                <tr>
+                    <td class="col-md-2"> From </td>
+
+                    <td class="col-md-2"> Title </td>
+
+                    <td class="col-md-6"> Message </td>
+
+                    <td class="col-md-2"> Date </td>
+                </tr>
+            </thead>
+        }
         <tbody>
             @if (Model.SendedMessages.Count != 0)
             {
                 foreach (var item in Model.SendedMessages)
                 {
                     <tr>
-                        <td>
+                        @if (item.Receivers.Count > 1)
+                        {
+                            <td class="col-md-2">
+                                Parents
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="col-md-2">
+                                @item.Receivers[0].Name @item.Receivers[0].Surname
+                            </td>
+                        }
+                        <td class="col-md-2">
                             @item.Title
                         </td>
-                        <td class="message">
+                        <td class="message col-md-6">
                             @item.Content
                         </td>
-                        <td>
+                        <td class="col-md-2">
                             @item.Date
                         </td>
                     </tr>
@@ -58,34 +84,40 @@ else
 <div id="received" class="content table-responsive">
     <table class="table">
         <h2>Received</h2>
-        <thead>
+        @if (Model.ReceivedMessages.Count != 0)
+        { 
+            <thead>
             <tr>
-                <td> Sender </td>
+                <td class="col-md-2"> From </td>
            
-                <td> Title </td>
+                <td class="col-md-2"> Title </td>
            
-                <td> Message </td>
+                <td class="col-md-6"> Message </td>
 
-                <td> Date </td>
+                <td class="col-md-2"> Date </td>
             </tr>
         </thead>
+        }
+
+        
         <tbody>
             @if (Model.ReceivedMessages.Count != 0)
             {
                 foreach (var item in Model.ReceivedMessages)
                 {
                     <tr>
-                        <td>
-                            
+                        <td class="col-md-2">
+                            @item.Sender.Name @item.Sender.Surname
                         </td>
-                        <td>
+                        <td class="col-md-2">
                             @item.Title
                         </td>
-                        <td class="message">
+                        <td class="message col-md-6">
                             @item.Content
                         </td>
-                        <td>
+                        <td class="col-md-2">
                             @item.Date
+                            @Html.ActionLink("Reply", "Reply", new { messageId = item.MessageId, senderId = item.Sender.Id }, new { @style = "float:right;margin-top:1%;" })
                         </td>
                     </tr>
                 }

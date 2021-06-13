@@ -16,12 +16,20 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 
-    <select name="teacherId">
-        @foreach (Tuple<ApplicationUser,string> t in ViewBag.Teachers)
-        {
-            <option value="@t.Item1.Id">@(t.Item2 +": "+  t.Item1.Name +" " + t.Item1.Surname)</option>
-        }
-    </select>
+    <div class="form-group">
+        <div class="control-label col-md-2">
+            <p id="bold">To:</p> 
+        </div>
+        <div class="col-md-10">
+            <select name="teacherId">
+                @foreach (Tuple<ApplicationUser, string> t in ViewBag.Teachers)
+                {
+                    <option value="@t.Item1.Id">@(t.Item2 +": "+  t.Item1.Name +" " + t.Item1.Surname)</option>
+                }
+            </select>
+        </div>
+    </div>
+    
 
     <div class="form-group">
         @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -41,7 +49,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Send" class="btn btn-default" />
         </div>
     </div>
 </div>
