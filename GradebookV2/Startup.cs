@@ -34,23 +34,64 @@ namespace GradebookV2
             private ApplicationDbContext db = new ApplicationDbContext();
             public void createAdmin()
             {
-                if(db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "1").ToList().Count == 0)
+                if(db.Roles.ToList().Count == 0)
                 {
-                    var store = new RoleStore<IdentityRole>(db);
-                    var manager = new RoleManager<IdentityRole>(store);
-                    var role = new IdentityRole();
-                    role.Name = "Admin";
+                    var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+                    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    // first we create Admin rool    
+
+                    
+                        var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                        role.Name = "Admin";
+                        role.Id = "1";
+                        try
+                        {
+                            roleManager.Create(role);
+                        }
+                        catch { }
 
 
-                    var userStore = new UserStore<ApplicationUser>(db);
-                    var userManager = new UserManager<ApplicationUser>(userStore);
-                    var admin = new ApplicationUser();
-                    admin.UserName = "admin";
-                    userManager.Create(admin, "admin");
-                    userManager.AddToRole(admin.Id, "Admin");
-                    db.SaveChanges();
+                        var user = new ApplicationUser();
+                        user.UserName = "admin";
+                        string userPWD = "admin1";
+                        var chkUser = UserManager.Create(user, userPWD);
+                        //Add default User to Role Admin    
+                        if (chkUser.Succeeded)
+                        {
+                            var result1 = UserManager.AddToRole(user.Id, "Admin");
+
+                        }
+                    
+
+                    var parent = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    parent.Name = "Parent";
+                    parent.Id = "4";
+                    try
+                    {
+                        roleManager.Create(parent);
+                    }
+                    catch { }
+
+                    var teacher = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    teacher.Name = "Teacher";
+                    teacher.Id = "2";
+                    try
+                    {
+                        roleManager.Create(teacher);
+                    }
+                    catch { }
+
+                    var student = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    student.Name = "Student";
+                    student.Id = "3";
+                    try
+                    {
+                        roleManager.Create(student);
+                    }
+                    catch { }
                 }
             }
+               
         }
 
         public class EmailSender
