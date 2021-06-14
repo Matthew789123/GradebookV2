@@ -1,11 +1,15 @@
 ﻿using GradebookV2.Models;
 using Hangfire;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
 
 [assembly: OwinStartupAttribute(typeof(GradebookV2.Startup))]
 namespace GradebookV2
@@ -15,19 +19,43 @@ namespace GradebookV2
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage("GradebookCS");
-
+            
             RecurringJob.AddOrUpdate<EmailSender>(x => x.SendMail(),Cron.Weekly());
-
+            var jobId = BackgroundJob.Enqueue<InitialDB>(x => x.createAdmin());
             app.UseHangfireDashboard();
             app.UseHangfireServer();
         }
 
+
+        public class InitialDB
+        {
+            private ApplicationDbContext db = new ApplicationDbContext();
+            public void createAdmin()
+            {
+                if(db.Users.Where(u => u.Roles.FirstOrDefault().RoleId == "1").ToList().Count == 0)
+                {
+                    var store = new RoleStore<IdentityRole>(db);
+                    var manager = new RoleManager<IdentityRole>(store);
+                    var role = new IdentityRole();
+                    role.Name = "Admin";
+
+
+                    var userStore = new UserStore<ApplicationUser>(db);
+                    var userManager = new UserManager<ApplicationUser>(userStore);
+                    var admin = new ApplicationUser();
+                    admin.UserName = "admin";
+                    userManager.Create(admin, "admin");
+                    userManager.AddToRole(admin.Id, "Admin");
+                    db.SaveChanges();
+                }
+            }
+        }
+
         public class EmailSender
         {
-            public ApplicationDbContext db = new ApplicationDbContext();
+            private ApplicationDbContext db = new ApplicationDbContext();
             public void SendMail()
             {
                 var senderEmail = new MailAddress("gradebookMVC@gmail.com", "Gradebook");

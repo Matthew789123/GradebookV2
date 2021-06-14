@@ -53,20 +53,20 @@
             <input id="AnswerC" type="text" style="border:none;margin-bottom:1%;box-shadow:none" value="Answer C" class="form-control" />
             <input id="AnswerD" type="text" style="border:none;margin-bottom:1%;box-shadow:none" value="Answer D" class="form-control" />
 
-            @Html.LabelFor(model => model.Questions.ToList()[0].CorrectAnswer, htmlAttributes: new { @class = "control-label" })
-            <select id="CorrectAnswer" style="margin-bottom:1%">
+            @Html.LabelFor(model => model.Questions.ToList()[0].CorrectAnswer, htmlAttributes: new { @class = "control-label", style = "margin: 10px" })
+            <select id="CorrectAnswer" style="margin:10px">
                 <option value="0" selected="selected">A</option>
                 <option value="1">B</option>
                 <option value="2">C</option>
                 <option value="3">D</option>
             </select>
             <br />
-            @Html.LabelFor(model => model.Questions.ToList()[0].Points, htmlAttributes: new { @class = "control-label" })
-            <input id="Points" type="number" style="border:none;margin-bottom:1%;box-shadow:none" value="2" />
+            @Html.LabelFor(model => model.Questions.ToList()[0].Points, htmlAttributes: new { @class = "control-label", style= "margin: 10px" })
+            <input id="Points" type="number" style="border: none;margin: 10px;box-shadow: none" value="2" />
         </div>
         <div class="row newsDataContainer">
-            <button type="button" id="newQuestion">Add question</button>
-            <input type="hidden" id="questions" name="questions" />
+            <button style="margin:10px" type="button" id="newQuestion">Add question</button>
+            <input style="margin:10px" type="hidden" id="questions" name="questions" />
         </div>
 
     </div>
