@@ -111,33 +111,80 @@ namespace GradebookV2.Controllers
             Grade grade = new Grade();
             decimal result = Decimal.Round((points / total) * 100, 2);
             if (result > 90)
+            {
                 grade.Value = 6;
+                grade.Name = "6";
+            }
             else if (result == 90)
+            {
                 grade.Value = 5.75M;
+                grade.Name = "6-";
+            }
             else if (result > 89)
+            {
                 grade.Value = 5.5M;
+                grade.Name = "5+";
+            }
             else if (result > 80)
+            {
                 grade.Value = 5;
+                grade.Name = "5";
+            }
             else if (result == 80)
+            {
                 grade.Value = 4.75M;
+                grade.Name = "5-";
+            }
             else if (result > 79)
+            {
                 grade.Value = 4.5M;
+                grade.Name = "4+";
+            }
             else if (result > 70)
+            {
                 grade.Value = 4;
+                grade.Name = "4";
+            }
             else if (result == 70)
+            {
                 grade.Value = 3.75M;
+                grade.Name = "4-";
+            }
             else if (result > 69)
+            {
                 grade.Value = 3.5M;
+                grade.Name = "3+";
+            }
             else if (result > 60)
+            {
                 grade.Value = 3;
+                grade.Name = "3";
+            }
             else if (result == 50)
+            {
                 grade.Value = 2.75M;
+                grade.Name = "3-";
+            }
             else if (result > 49)
+            {
                 grade.Value = 2.5M;
+                grade.Name = "2+";
+            }
             else if (result > 40)
+            {
                 grade.Value = 2;
+                grade.Name = "2";
+            }
+            else if (result == 40)
+            {
+                grade.Value = 1.75M;
+                grade.Name = "2-";
+            }
             else
+            {
                 grade.Value = 1;
+                grade.Name = "1";
+            }
             grade.Date = DateTime.Now;
             grade.Type = "Test";
             grade.Comment = test.Title;
