@@ -6,7 +6,7 @@
 
 @if (User.IsInRole("Teacher"))
 {
-    @Html.ActionLink("Add subject", "createLesson", new { classId = ViewBag.classId, subjectId = ViewBag.subjectId }, new { @style = "float:right;margin-top:1%;" })
+    @Html.ActionLink("Add lesson", "createLesson", new { classId = ViewBag.classId, subjectId = ViewBag.subjectId }, new { @style = "float:right;margin-top:1%;" })
     @Html.ActionLink("Add test", "createTest", "Tests", new { classId = ViewBag.classId, subjectId = ViewBag.subjectId }, new { @style = "float:right;margin-top:1%;margin-right:1%" })
 }
 <h2>Lesson - @ViewBag.subject</h2>
