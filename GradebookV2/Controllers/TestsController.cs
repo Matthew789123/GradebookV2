@@ -201,6 +201,7 @@ namespace GradebookV2.Controllers
             ViewBag.Total = total;
             ViewBag.Points = points;
             ViewBag.Value = grade.Value;
+            ViewBag.Name = grade.Name;
             return View("TestDone");
         }
     }

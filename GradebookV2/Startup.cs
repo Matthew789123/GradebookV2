@@ -1,11 +1,15 @@
 ﻿using GradebookV2.Models;
 using Hangfire;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
 
 [assembly: OwinStartupAttribute(typeof(GradebookV2.Startup))]
 namespace GradebookV2
@@ -15,19 +19,84 @@ namespace GradebookV2
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-
             GlobalConfiguration.Configuration
                 .UseSqlServerStorage("GradebookCS");
-
+            
             RecurringJob.AddOrUpdate<EmailSender>(x => x.SendMail(),Cron.Weekly());
-
+            var jobId = BackgroundJob.Enqueue<InitialDB>(x => x.createAdmin());
             app.UseHangfireDashboard();
             app.UseHangfireServer();
         }
 
+
+        public class InitialDB
+        {
+            private ApplicationDbContext db = new ApplicationDbContext();
+            public void createAdmin()
+            {
+                if(db.Roles.ToList().Count == 0)
+                {
+                    var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+                    var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                    // first we create Admin rool    
+
+                    
+                        var role = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                        role.Name = "Admin";
+                        role.Id = "1";
+                        try
+                        {
+                            roleManager.Create(role);
+                        }
+                        catch { }
+
+
+                        var user = new ApplicationUser();
+                        user.UserName = "admin";
+                        string userPWD = "admin1";
+                        var chkUser = UserManager.Create(user, userPWD);
+                        //Add default User to Role Admin    
+                        if (chkUser.Succeeded)
+                        {
+                            var result1 = UserManager.AddToRole(user.Id, "Admin");
+
+                        }
+                    
+
+                    var parent = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    parent.Name = "Parent";
+                    parent.Id = "4";
+                    try
+                    {
+                        roleManager.Create(parent);
+                    }
+                    catch { }
+
+                    var teacher = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    teacher.Name = "Teacher";
+                    teacher.Id = "2";
+                    try
+                    {
+                        roleManager.Create(teacher);
+                    }
+                    catch { }
+
+                    var student = new Microsoft.AspNet.Identity.EntityFramework.IdentityRole();
+                    student.Name = "Student";
+                    student.Id = "3";
+                    try
+                    {
+                        roleManager.Create(student);
+                    }
+                    catch { }
+                }
+            }
+               
+        }
+
         public class EmailSender
         {
-            public ApplicationDbContext db = new ApplicationDbContext();
+            private ApplicationDbContext db = new ApplicationDbContext();
             public void SendMail()
             {
                 var senderEmail = new MailAddress("gradebookMVC@gmail.com", "Gradebook");

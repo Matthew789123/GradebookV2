@@ -22,7 +22,7 @@ namespace GradebookV2
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            CultureInfo culture = new CultureInfo("es-CO");
+            CultureInfo culture = new CultureInfo("es-ES");
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
         }

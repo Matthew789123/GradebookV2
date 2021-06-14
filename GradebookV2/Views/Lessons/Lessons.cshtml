@@ -82,11 +82,14 @@
             $(".test").click(function (event) {
                 var val = $(event.target).attr("value");
                 var data = val.split(',');
-                let start = new Date(data[0]);
+                let split = data[0].split('/');
+                let split2 = split[2].split(' ');
+                let split3 = split2[1].split(':');
+                let start = new Date(split2[0], split[1], split[0], split3[0], split3[1], split3[2]);
                 let id = data[1];
                 let diff = new Date() - start;
                 let minutes = Math.round(((diff % 86400000) % 3600000) / 60000);
-                if ( new Date() < start) $(".testError").each((i, div) => {
+                if (minutes > 10 || new Date() < start) $(".testError").each((i, div) => {
                     if (div.getAttribute("value") == id) div.innerText = " This test is unavailable now";
                 });
                 else {
